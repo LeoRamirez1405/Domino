@@ -1,10 +1,5 @@
-<<<<<<< HEAD
-Prueba de sobreescritura
-=======
 # Informe de Cambios
+## Formato de los cambios:
+### <Contribuidor : Dia : Hora : "*Mensaje*"> 
 
-## Dia:
-### Formato de los cambios: <Contribuidor : Hora : "Mensaje"> 
-
-lkjhgfdsasdfghjkljhgfdfiukhjncsx
-
+>Leo 22/5/2022 17:26 "Jugador Aleatorio"
