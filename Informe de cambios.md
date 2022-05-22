@@ -1,4 +1,3 @@
 # Informe de Cambios
 
-## Dia:
-### Formato de los cambios: <Contribuidor : Hora : "Mensaje"> 
+## Formato de los cambios: <Contribuidor : Dia : Hora : "Mensaje"> 
