@@ -2,8 +2,11 @@
 
 public struct Ficha
 {
-    public readonly int arriba;
-    public readonly int abajo;
+    public int arriba{get;}
+    public int abajo{get;}
+    public Ficha(int arriba, int abajo)
+    {
+        this.abajo = abajo;
+        this.arriba = arriba;
+    }
 }
-
-
