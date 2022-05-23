@@ -1,5 +1,5 @@
-using Reglas;
 using Estructuras_Basicas;
+using Reglas;
 
 class Clasico : IReglas
 {
