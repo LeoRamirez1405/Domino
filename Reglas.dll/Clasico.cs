@@ -1,6 +1,5 @@
+namespace Reglas;
 using Estructuras_Basicas;
-using Reglas;
-
 class Clasico : IReglas
 {
     int cantJugadores;
@@ -16,6 +15,7 @@ class Clasico : IReglas
         return false;
     }
 
+    //Retorna dos enteros. El primer entero simboliza el equipo ganador y el segun la cant de puntos que gana
     public (int,int) Ganador(int fichasRestantesEquipoA, List<Ficha> equipaA, int fichasRestantesEquipoB, List<Ficha> equipoB)
     {
         int acumuladoEquipoA = 0;
@@ -28,7 +28,7 @@ class Clasico : IReglas
         if(fichasRestantesEquipoA == 0) return (0,acumuladoEquipoB);
         if(fichasRestantesEquipoB == 0) return (1,acumuladoEquipoA);
        
-        return acumuladoEquipoA < acumuladoEquipoB ? (0,acumuladoEquipoB) : (0,acumuladoEquipoA);
+        return acumuladoEquipoA < acumuladoEquipoB ? (0,acumuladoEquipoB) : (1,acumuladoEquipoA);
     }
 
     public int ProximoJugador(int jugadorActual)

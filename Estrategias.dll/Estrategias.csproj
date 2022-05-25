@@ -1,8 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
+<<<<<<< HEAD
     <ProjectReference Include="..\Reglas.dll\Reglas.csproj" />
     <ProjectReference Include="..\Estructuras_Basicas.dll\Estructuras_Basicas.csproj" />
+=======
+    <ProjectReference Include="..\Estructuras_Basicas.dll\Estructuras_Basicas.csproj" />
+    <ProjectReference Include="..\Reglas.dll\Reglas.csproj" />
+>>>>>>> b52235845526e1c87c9d16730b6925c14ec20983
   </ItemGroup>
 
   <PropertyGroup>
