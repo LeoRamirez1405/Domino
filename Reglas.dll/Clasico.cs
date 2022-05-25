@@ -1,13 +1,33 @@
 namespace Reglas;
 using Estructuras_Basicas;
+using System;
 class Clasico : IReglas
 {
     int cantJugadores;
-    public Clasico(int cantJugadores)
+    int cantFichas;
+    public Clasico(int cantJugadores, int cantFichas)
     {
-        this.cantJugadores = cantJugadores;
+        this.cantJugadores = cantJugadores;//4
+        this.cantFichas = cantFichas;//10
     }
 
+    public List<Ficha[]> Repartir(List<Ficha> todasFichas)//la lista de fichas que se recibe como paarametro son todas las fichas del juego
+    {
+        List<Ficha[]> result = new List<Ficha[]>();
+        System.Random r = new Random();
+        for(int i = 0; i < cantJugadores; i++)
+        {
+            Ficha[] resultemporal = new Ficha[cantFichas];
+            for(int j = 0; j < cantFichas; j++)
+            {
+                int pos = r.Next(todasFichas.Count);
+                resultemporal[j] = todasFichas[pos];
+                todasFichas.RemoveAt(pos);
+            }
+            result.Add(resultemporal);
+        }
+        return result;
+    }
     public bool FinalizoPartida(int cantFichasJugadorActual, int turnosSinJugar)
     {
         if(cantFichasJugadorActual == 0) return true;
