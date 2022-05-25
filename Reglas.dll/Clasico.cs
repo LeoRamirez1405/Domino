@@ -4,6 +4,10 @@ using Reglas;
 class Clasico : IReglas
 {
     int cantJugadores;
+    public Clasico(int cantJugadores)
+    {
+        this.cantJugadores = cantJugadores;
+    }
 
     public bool FinalizoPartida(int cantFichasJugadorActual, int turnosSinJugar)
     {

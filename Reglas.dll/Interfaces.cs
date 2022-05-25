@@ -1,7 +1,7 @@
 ﻿namespace Reglas;
 using Estructuras_Basicas;
 
-interface IReglas 
+public interface IReglas 
 {
     bool ValidarJugada(int cantFichasJugadorActual, int turnosSinJugar);
     bool FinalizoPartida(int jugoJugadorActual, int turnosSinJugar);
