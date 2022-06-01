@@ -1,19 +1,11 @@
-<<<<<<< HEAD
-﻿namespace Estrategias;
-using System;
-using Reglas;
-using Estructuras_Basicas;
-public class Aleatorio: Jugador, IJugar
-=======
 ﻿using Estructuras_Basicas;
 using Reglas;
 namespace Estrategias;
 public class Aleatorio:Jugador,IJugar
->>>>>>> b52235845526e1c87c9d16730b6925c14ec20983
 {
     public Aleatorio(List<Ficha> mano):base(mano){ }
 
-    public (int,Ficha,int)Jugar(int a, int b,IReglas reglas)
+    public (int,int)Jugar(int a, int b,IReglas reglas)
     {
         bool[] revisados = new bool[Mano.Count];
         Random r = new Random();
@@ -24,22 +16,14 @@ public class Aleatorio:Jugador,IJugar
             {
                 if(!revisados[num])
                 {
-                    if(reglas.ValidarJugada(a,Mano[num].arriba)) return (a,Mano[num],0);
-                    if(reglas.ValidarJugada(a,Mano[num].abajo)) return (a,Mano[num],1);
-<<<<<<< HEAD
-=======
-                    if(reglas.ValidarJugada(b,Mano[num].arriba)) return (b,Mano[num],0);
-                    if(reglas.ValidarJugada(b,Mano[num].abajo)) return (b,Mano[num],1);
->>>>>>> b52235845526e1c87c9d16730b6925c14ec20983
+                    if(reglas.ValidarJugada(a,Mano[num].arriba)) return (a,Mano[num].arriba);
+                    if(reglas.ValidarJugada(a,Mano[num].abajo)) return (a,Mano[num].abajo);
+                    if(reglas.ValidarJugada(b,Mano[num].arriba)) return (b,Mano[num].arriba);
+                    if(reglas.ValidarJugada(b,Mano[num].abajo)) return (b,Mano[num].abajo);
                     intentos++;
                 }
                 num = r.Next(0,Mano.Count);
             }
-<<<<<<< HEAD
         return (-1,Mano[0].arriba);
-=======
-            
-        return (-1,Mano[0],0);
->>>>>>> b52235845526e1c87c9d16730b6925c14ec20983
     }
 }
