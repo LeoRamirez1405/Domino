@@ -3,6 +3,7 @@ using Estructuras_Basicas;
 
 public interface IReglas 
 {
+    int JugadorInicial();
     int CantidadJugadores{ get; }
     (int,int) DimensionTablero { get; }
     List<Ficha[]> Repartir(List<Ficha> todasFichas);

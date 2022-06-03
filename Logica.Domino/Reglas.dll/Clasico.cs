@@ -35,6 +35,7 @@ class Clasico : IReglas
         }
         return result;
     }
+
     public bool FinalizoPartida(int cantFichasJugadorActual, int turnosSinJugar)
     {
         if(cantFichasJugadorActual == 0) return true;
@@ -68,5 +69,10 @@ class Clasico : IReglas
     {
         if(fichaMesa != fichaMano) return false;
         return true;
+    }
+
+    public int JugadorInicial()
+    {
+        return 0;
     }
 }
