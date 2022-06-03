@@ -48,10 +48,10 @@ class Clasico : IReglas
     {
         int acumuladoEquipoA = 0;
         foreach(Ficha x in equipaA)
-            acumuladoEquipoA += x.abajo + x.arriba;
+            acumuladoEquipoA += x.ValorAbajo + x.ValorArriba;
         int acumuladoEquipoB = 0;
         foreach(Ficha x in equipoB) 
-            acumuladoEquipoB += x.abajo + x.arriba;
+            acumuladoEquipoB += x.ValorAbajo + x.ValorArriba;
         
         if(fichasRestantesEquipoA == 0) return (0,acumuladoEquipoB);
         if(fichasRestantesEquipoB == 0) return (1,acumuladoEquipoA);
@@ -65,7 +65,7 @@ class Clasico : IReglas
         return ++cantJugadores;
     }
 
-    public bool ValidarJugada(int fichaMesa, int fichaMano)
+    public bool ValidarJugada(ParteFicha fichaMesa, ParteFicha fichaMano)
     {
         if(fichaMesa != fichaMano) return false;
         return true;
