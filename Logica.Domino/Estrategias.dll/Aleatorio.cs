@@ -1,19 +1,17 @@
-<<<<<<< HEAD
-﻿namespace Estrategias;
-using System;
-using Reglas;
 using Estructuras_Basicas;
-public class Aleatorio: Jugador, IJugar
-=======
-﻿using Estructuras_Basicas;
 using Reglas;
 namespace Estrategias;
-public class Aleatorio:Jugador,IJugar
->>>>>>> b52235845526e1c87c9d16730b6925c14ec20983
+public class Aleatorio<T>:Jugador<T>,IJugar<T>
 {
-    public Aleatorio(List<Ficha> mano):base(mano){ }
+    public Aleatorio(List<Ficha<T>> mano):base(mano){ }
 
-    public (int,Ficha,int)Jugar(int a, int b,IReglas reglas)
+    public Ficha<T>Jugar(IReglas<T> reglas)
+    {
+        Random r = new Random();
+        int num = r.Next(0,Mano.Count);
+        return (Mano[num]);
+    }
+    public (Ficha<T>,int)Jugar(ParteFicha<T> izquierda ,ParteFicha<T> derecha,IReglas<T> reglas)
     {
         bool[] revisados = new bool[Mano.Count];
         Random r = new Random();
@@ -24,17 +22,19 @@ public class Aleatorio:Jugador,IJugar
             {
                 if(!revisados[num])
                 {
-                    if(reglas.ValidarJugada(a,Mano[num].arriba)) return (a,Mano[num],Mano[num].arriba);
-                    if(reglas.ValidarJugada(a,Mano[num].abajo)) return (a,Mano[num],Mano[num].abajo);
-<<<<<<< HEAD
-=======
-                    if(reglas.ValidarJugada(b,Mano[num].arriba)) return (b,Mano[num],Mano[num].arriba);
-                    if(reglas.ValidarJugada(b,Mano[num].abajo)) return (b,Mano[num],Mano[num].abajo);
->>>>>>> b52235845526e1c87c9d16730b6925c14ec20983
+                    if(reglas.ValidarJugada(izquierda,Mano[num].Arriba)) 
+                    {Ficha<T> f = Mano[num]; Mano.RemoveAt(num); return (f,0);}
+                    if(reglas.ValidarJugada(izquierda,Mano[num].Abajo)) 
+                    {Ficha<T> f = Mano[num]; Mano.RemoveAt(num); return (f,0);}
+                    if(reglas.ValidarJugada(derecha,Mano[num].Arriba))
+                    {Ficha<T> f = Mano[num]; Mano.RemoveAt(num); return (f,1);}
+                    if(reglas.ValidarJugada(derecha,Mano[num].Abajo)) 
+                    {Ficha<T> f = Mano[num]; Mano.RemoveAt(num); return (f,1);}
+
                     intentos++;
                 }
                 num = r.Next(0,Mano.Count);
             }
-        return (-1,Mano[0],Mano[0].arriba);
+        return (Mano[0],-1);
     }
 }

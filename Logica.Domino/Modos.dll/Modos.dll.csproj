@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\Reglas.dll\Reglas.csproj" />
+    <ProjectReference Include="..\Estructuras_Basicas.dll\Estructuras_Basicas.csproj" />
+    <ProjectReference Include="..\Arbitro.dll\Arbitro.dll.csproj" />
+    <ProjectReference Include="..\Estrategias.dll\Estrategias.csproj" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+</Project>

@@ -1,7 +1,7 @@
 namespace Reglas;
 using Estructuras_Basicas;
 using System;
-class Clasico : IReglas
+class Clasico<T> : IReglas<T>
 {
     protected int cantJugadores;
     protected int cantFichas;//es protected para poder heredar de clasico y hacer un doble 6 (este es el doble 9)
@@ -18,13 +18,13 @@ class Clasico : IReglas
 
     public (int, int) DimensionTablero => (5,8);//5 filas 8 columnas
 
-    public List<Ficha[]> Repartir(List<Ficha> todasFichas)//la lista de fichas que se recibe como paarametro son todas las fichas del juego
+    public List<Ficha<T>[]> Repartir(List<Ficha<T>> todasFichas)//la lista de fichas que se recibe como paarametro son todas las fichas del juego
     {
-        List<Ficha[]> result = new List<Ficha[]>();
+        List<Ficha<T>[]> result = new List<Ficha<T>[]>();
         System.Random r = new Random();
         for(int i = 0; i < cantJugadores; i++)
         {
-            Ficha[] resultemporal = new Ficha[cantFichas];
+            Ficha<T>[] resultemporal = new Ficha<T>[cantFichas];
             for(int j = 0; j < cantFichas; j++)
             {
                 int pos = r.Next(todasFichas.Count);
@@ -35,6 +35,7 @@ class Clasico : IReglas
         }
         return result;
     }
+
     public bool FinalizoPartida(int cantFichasJugadorActual, int turnosSinJugar)
     {
         if(cantFichasJugadorActual == 0) return true;
@@ -43,14 +44,14 @@ class Clasico : IReglas
     }
 
     //Retorna dos enteros. El primer entero simboliza el equipo ganador y el segun la cant de puntos que gana
-    public (int,int) Ganador(int fichasRestantesEquipoA, List<Ficha> equipaA, int fichasRestantesEquipoB, List<Ficha> equipoB)
+    public (int,int) Ganador(int fichasRestantesEquipoA, List<Ficha<T>> equipaA, int fichasRestantesEquipoB, List<Ficha<T>> equipoB)
     {
         int acumuladoEquipoA = 0;
-        foreach(Ficha x in equipaA)
-            acumuladoEquipoA += x.abajo + x.arriba;
+        foreach(Ficha<T> x in equipaA)
+            acumuladoEquipoA += x.Abajo + x.Arriba;
         int acumuladoEquipoB = 0;
-        foreach(Ficha x in equipoB) 
-            acumuladoEquipoB += x.abajo + x.arriba;
+        foreach(Ficha<T> x in equipoB) 
+            acumuladoEquipoB += x.Abajo + x.Arriba;
         
         if(fichasRestantesEquipoA == 0) return (0,acumuladoEquipoB);
         if(fichasRestantesEquipoB == 0) return (1,acumuladoEquipoA);
@@ -64,9 +65,14 @@ class Clasico : IReglas
         return ++cantJugadores;
     }
 
-    public bool ValidarJugada(int fichaMesa, int fichaMano)
+    public bool ValidarJugada(ParteFicha<T> fichaMesa, ParteFicha<T> fichaMano)
     {
         if(fichaMesa != fichaMano) return false;
         return true;
+    }
+
+    public int JugadorInicial()
+    {
+        return 0;
     }
 }

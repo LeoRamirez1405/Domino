@@ -1,13 +1,9 @@
 namespace Estrategias;
 using Estructuras_Basicas;
-<<<<<<< HEAD
-=======
-
->>>>>>> b52235845526e1c87c9d16730b6925c14ec20983
-public abstract class Jugador
+public abstract class Jugador<T>
 {
-    public List<Ficha> Mano = new List<Ficha>();
-    public Jugador(List<Ficha> Mano)
+    public List<Ficha<T>> Mano = new List<Ficha<T>>();
+    public Jugador(List<Ficha<T>> Mano)
     {
         this.Mano = Mano;
     }
