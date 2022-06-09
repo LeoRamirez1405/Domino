@@ -7,7 +7,7 @@ class Clasico<T> : IReglas<T>
     protected int cantFichas;//es protected para poder heredar de clasico y hacer un doble 6 (este es el doble 9)
     //private (int, int) dimensionTablero;
 
-    public Clasico(int cantJugadores, int cantFichas)
+    public Clasico(int cantJugadores, int cantFichas)//aqui se deberia incializar de con valores
     {
         this.cantJugadores = 4;
         this.cantFichas = 10;
@@ -20,6 +20,7 @@ class Clasico<T> : IReglas<T>
 
     public List<Ficha<T>[]> Repartir(List<Ficha<T>> todasFichas)//la lista de fichas que se recibe como paarametro son todas las fichas del juego
     {
+        //aqui se modifica la coleccion de fichas general para que ell arbitro solo se quede con las fichas sobrantes luego de repartir
         List<Ficha<T>[]> result = new List<Ficha<T>[]>();
         System.Random r = new Random();
         for(int i = 0; i < cantJugadores; i++)
@@ -65,11 +66,17 @@ class Clasico<T> : IReglas<T>
         return ++cantJugadores;
     }
 
+    //Este metodo solo funciona se se juega en elmodo clasico con las fichas clasicas, si trato de jugar con otro tipo de ficha da error ent.. esto se soluciona redefinido el equals de PrteFicha
+    //luegi, la jugada de parte ficha sera valida si parteFicha fichaMano.Equals(fichaMes) == true
     public bool ValidarJugada(ParteFicha<T> fichaMesa, ParteFicha<T> fichaMano)
     {
-        if(fichaMesa != fichaMano) return false;
-        return true;
+        return fichaMano.Equals(fichaMesa);
     }
+    
+    // public bool ValidarJugada(ParteFicha<T> fichaMesa, ParteFicha<T> fichaMano)
+    // {
+    //     return fichaMano == fichaMesa;
+    // }
 
     public int JugadorInicial()
     {
