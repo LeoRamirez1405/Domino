@@ -2,7 +2,7 @@
 using Estructuras_Basicas;
 using Reglas;
 using Estrategias;
-using System.Diagnostics;
+//using System.Diagnostics;
 public class Arbitro<T> : GuiaJuego //no es estatico para poder variar las reglas y las estrategias de los jugadores
 {
     EstadoJuego estadoJuego;
@@ -48,7 +48,7 @@ public class Arbitro<T> : GuiaJuego //no es estatico para poder variar las regla
         estadoJuego = EstadoJuego.EnCurso;
         (int,int)[] pos = new (int,int)[2];//por el monento solo se puede jugar x dos lados pues las fichas son las tradicionales
 
-        // Stopwatch clock = new Stopwatch();
+        //Stopwatch clock = new Stopwatch();
         int jugadorActual = 0;
         //Hay que tener algo que sea una abstraccion de tablero que me diga las fichas disponibles por donde se puede jugar
 
@@ -80,6 +80,8 @@ public class Arbitro<T> : GuiaJuego //no es estatico para poder variar las regla
             }
             if(this.reglas.FinalizoPartida(jugadorActual,turnosSinJugar))
                 estadoJuego = EstadoJuego.Null;
+
+            System.Threading.Thread.Sleep(2000);//espera 2 segundos para hacer la proxima jugada
         }
         while(this.estadoJuego == EstadoJuego.EnCurso);
     }

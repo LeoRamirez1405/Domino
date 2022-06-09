@@ -26,6 +26,11 @@ public class ParteFicha<T>
         this.parte = parte;
         this.Valor = valor;
     }
+
+    public override bool Equals(ParteFicha<T> item)
+    {
+        return item.Valor == this.Valor;
+    }
 }
 
 public enum EstadoJuego
