@@ -1,13 +1,7 @@
 ﻿using Estructuras_Basicas; 
-interface IDomino<T>
-{
-    int maxJugadores();
-    int fichasPorJugador();
-    List<Ficha<T>> fichas();
-}
-
 public class Doble9 : IDomino<int>
 {
+    public bool Equals(ParteFicha<int> a, ParteFicha<int> b) => a.Valor == b.Valor;
     public List<Ficha<int>> fichas() => GeneraDomino();
     public int fichasPorJugador() => 10;
     public int maxJugadores() => 4;

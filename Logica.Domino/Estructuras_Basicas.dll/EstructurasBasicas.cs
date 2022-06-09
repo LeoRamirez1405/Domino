@@ -17,7 +17,7 @@ public class Ficha<T>
     public ParteFicha<T> Abajo { get => abajo;}
 }
 
-public class ParteFicha<T>
+public class ParteFicha<T>: IEquatable<ParteFicha<T>>
 {
     T parte;
     public int Valor {get;}
@@ -26,11 +26,9 @@ public class ParteFicha<T>
         this.parte = parte;
         this.Valor = valor;
     }
-
-    public override bool Equals(ParteFicha<T> item)
-    {
-        return item.Valor == this.Valor;
-    }
+    public bool Equals(ParteFicha<T>? parte) => this.Valor == parte?.Valor;
+    public static bool operator == (ParteFicha<T> a,ParteFicha<T> b) => a.Equals(b);
+    public static bool operator != (ParteFicha<T> a,ParteFicha<T> b) => !a.Equals(b);
 }
 
 public enum EstadoJuego
