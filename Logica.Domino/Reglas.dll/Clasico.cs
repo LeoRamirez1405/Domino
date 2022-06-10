@@ -1,6 +1,6 @@
-namespace Reglas;
-using Estructuras_Basicas;
 using System;
+using Estructuras_Basicas;
+namespace Reglas;
 class Clasico<T> : IReglas<T>
 {
     protected int cantJugadores;

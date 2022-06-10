@@ -1,7 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <ProjectReference Include="..\Estructuras_Basicas\Estructuras_Basicas.csproj" />
     <ProjectReference Include="..\Estructuras_Basicas.dll\Estructuras_Basicas.csproj" />
   </ItemGroup>
 

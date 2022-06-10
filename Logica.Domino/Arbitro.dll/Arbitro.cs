@@ -1,21 +1,25 @@
-﻿namespace Arbitro.dll;
-using Estructuras_Basicas;
+﻿using Estructuras_Basicas;
+using Dominoes;
 using Reglas;
 using Estrategias;
+using Modos;
+namespace Arbitro.dll;
 //using System.Diagnostics;
 public class Arbitro<T> : GuiaJuego //no es estatico para poder variar las reglas y las estrategias de los jugadores
 {
     EstadoJuego estadoJuego;
     IReglas<T> reglas;
+    IModo<T> modo;
+    IDomino<T> domino;
     int cantJugadores;//la cant de jugadores debe estar en las reglas
     List<IJugar<T>> estrategiasJugadores;
     Ficha<T>[,] tablero;
 
-    public Arbitro()//IReglas reglas
+    public Arbitro(IReglas<T> reglas,IModo<T> modo,IDomino<T> domino)//IReglas reglas
     {
         this.estadoJuego = EstadoJuego.Null;
-        // this.reglas = reglas;
-        // this.cantJugadores = reglas.CantidadJugadores;
+        this.reglas = reglas;
+        this.domino = domino;
     }
 
     public bool CrearJuego(IReglas<T> reglas, List<IJugar<T>> estrategiasJugadores)
@@ -76,6 +80,7 @@ public class Arbitro<T> : GuiaJuego //no es estatico para poder variar las regla
             }
             else if(jugada.Item2 == -1)
             {
+
                 turnosSinJugar += 1;
             }
             if(this.reglas.FinalizoPartida(jugadorActual,turnosSinJugar))

@@ -1,5 +1,5 @@
 using Estructuras_Basicas;
-interface IDomino<T>
+public interface IDomino<T>
 {
     int maxJugadores();
     int fichasPorJugador();
