@@ -7,4 +7,8 @@ build_property.InvariantGlobalization =
 build_property.PlatformNeutralAssembly = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = Reglas
+<<<<<<< HEAD
 build_property.ProjectDir = c:\Users\Naomi\Desktop\Domino\Logica.Domino\Reglas.dll\
+=======
+build_property.ProjectDir = d:\Matcom\Segundo Año Cibernética\2022\Programación\Domino\Logica.Domino\Reglas.dll\
+>>>>>>> 197984bc55f12d803883120658a5ee1d78efc156

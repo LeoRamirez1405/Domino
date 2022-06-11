@@ -1,13 +1,23 @@
+<<<<<<< HEAD
 namespace Reglas;
 using Estructuras_Basicas;
 using System;
+=======
+using System;
+using Estructuras_Basicas;
+namespace Reglas;
+>>>>>>> 197984bc55f12d803883120658a5ee1d78efc156
 class Clasico<T> : IReglas<T>
 {
     protected int cantJugadores;
     protected int cantFichas;//es protected para poder heredar de clasico y hacer un doble 6 (este es el doble 9)
     //private (int, int) dimensionTablero;
 
+<<<<<<< HEAD
     public Clasico(int cantJugadores, int cantFichas)
+=======
+    public Clasico(int cantJugadores, int cantFichas)//aqui se deberia incializar de con valores
+>>>>>>> 197984bc55f12d803883120658a5ee1d78efc156
     {
         this.cantJugadores = 4;
         this.cantFichas = 10;
@@ -20,6 +30,10 @@ class Clasico<T> : IReglas<T>
 
     public List<Ficha<T>[]> Repartir(List<Ficha<T>> todasFichas)//la lista de fichas que se recibe como paarametro son todas las fichas del juego
     {
+<<<<<<< HEAD
+=======
+        //aqui se modifica la coleccion de fichas general para que ell arbitro solo se quede con las fichas sobrantes luego de repartir
+>>>>>>> 197984bc55f12d803883120658a5ee1d78efc156
         List<Ficha<T>[]> result = new List<Ficha<T>[]>();
         System.Random r = new Random();
         for(int i = 0; i < cantJugadores; i++)
@@ -65,11 +79,25 @@ class Clasico<T> : IReglas<T>
         return ++cantJugadores;
     }
 
+<<<<<<< HEAD
     public bool ValidarJugada(ParteFicha<T> fichaMesa, ParteFicha<T> fichaMano)
     {
         if(fichaMesa != fichaMano) return false;
         return true;
     }
+=======
+    //Este metodo solo funciona se se juega en elmodo clasico con las fichas clasicas, si trato de jugar con otro tipo de ficha da error ent.. esto se soluciona redefinido el equals de PrteFicha
+    //luegi, la jugada de parte ficha sera valida si parteFicha fichaMano.Equals(fichaMes) == true
+    public bool ValidarJugada(ParteFicha<T> fichaMesa, ParteFicha<T> fichaMano)
+    {
+        return fichaMano.Equals(fichaMesa);
+    }
+    
+    // public bool ValidarJugada(ParteFicha<T> fichaMesa, ParteFicha<T> fichaMano)
+    // {
+    //     return fichaMano == fichaMesa;
+    // }
+>>>>>>> 197984bc55f12d803883120658a5ee1d78efc156
 
     public int JugadorInicial()
     {

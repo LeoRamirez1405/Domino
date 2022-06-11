@@ -4,6 +4,11 @@
     <ProjectReference Include="..\Estructuras_Basicas.dll\Estructuras_Basicas.csproj" />
     <ProjectReference Include="..\Reglas.dll\Reglas.csproj" />
     <ProjectReference Include="..\Estrategias.dll\Estrategias.csproj" />
+<<<<<<< HEAD
+=======
+    <ProjectReference Include="..\Modos.dll\Modos.dll.csproj" />
+    <ProjectReference Include="..\Dominoes.dll\Dominoes.dll.csproj" />
+>>>>>>> 197984bc55f12d803883120658a5ee1d78efc156
   </ItemGroup>
 
   <PropertyGroup>
