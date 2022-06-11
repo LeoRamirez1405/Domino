@@ -1,44 +1,25 @@
-<<<<<<< HEAD
-﻿namespace Arbitro.dll;
-using Estructuras_Basicas;
-using Reglas;
-using Estrategias;
-using System.Diagnostics;
-=======
-﻿using Estructuras_Basicas;
+﻿﻿using Estructuras_Basicas;
 using Dominoes;
 using Reglas;
 using Estrategias;
 using Modos;
 namespace Arbitro.dll;
 //using System.Diagnostics;
->>>>>>> 197984bc55f12d803883120658a5ee1d78efc156
 public class Arbitro<T> : GuiaJuego //no es estatico para poder variar las reglas y las estrategias de los jugadores
 {
     EstadoJuego estadoJuego;
     IReglas<T> reglas;
-<<<<<<< HEAD
-=======
     IModo<T> modo;
     IDomino<T> domino;
->>>>>>> 197984bc55f12d803883120658a5ee1d78efc156
     int cantJugadores;//la cant de jugadores debe estar en las reglas
-    List<IJugar<T>> estrategiasJugadores;
+    List<IJugar<T>> jugadores;
     Ficha<T>[,] tablero;
 
-<<<<<<< HEAD
-    public Arbitro()//IReglas reglas
-    {
-        this.estadoJuego = EstadoJuego.Null;
-        // this.reglas = reglas;
-        // this.cantJugadores = reglas.CantidadJugadores;
-=======
     public Arbitro(IReglas<T> reglas,IModo<T> modo,IDomino<T> domino)//IReglas reglas
     {
         this.estadoJuego = EstadoJuego.Null;
         this.reglas = reglas;
         this.domino = domino;
->>>>>>> 197984bc55f12d803883120658a5ee1d78efc156
     }
 
     public bool CrearJuego(IReglas<T> reglas, List<IJugar<T>> estrategiasJugadores)
@@ -47,7 +28,7 @@ public class Arbitro<T> : GuiaJuego //no es estatico para poder variar las regla
         //     return false;
 
         this.reglas = reglas;
-        this.estrategiasJugadores = estrategiasJugadores;
+        this.jugadores = estrategiasJugadores;
         tablero = new Ficha<T>[reglas.DimensionTablero.Item1,this.reglas.DimensionTablero.Item2];//el metodo retorna una tupla (contrarto jj)
         return true;
     }
@@ -62,8 +43,9 @@ public class Arbitro<T> : GuiaJuego //no es estatico para poder variar las regla
         return true;
     }
 
-    public void Jugando()
+    public (int,int) Jugando()
     {
+        (int,int) result = (-1,-1);
         ParteFicha<T> parteFichaDerecha = null;
         ParteFicha<T> parteFichaIzquierda = null;
         int turnosSinJugar = 0;
@@ -71,11 +53,7 @@ public class Arbitro<T> : GuiaJuego //no es estatico para poder variar las regla
         estadoJuego = EstadoJuego.EnCurso;
         (int,int)[] pos = new (int,int)[2];//por el monento solo se puede jugar x dos lados pues las fichas son las tradicionales
 
-<<<<<<< HEAD
-        // Stopwatch clock = new Stopwatch();
-=======
         //Stopwatch clock = new Stopwatch();
->>>>>>> 197984bc55f12d803883120658a5ee1d78efc156
         int jugadorActual = 0;
         //Hay que tener algo que sea una abstraccion de tablero que me diga las fichas disponibles por donde se puede jugar
 
@@ -103,19 +81,26 @@ public class Arbitro<T> : GuiaJuego //no es estatico para poder variar las regla
             }
             else if(jugada.Item2 == -1)
             {
-<<<<<<< HEAD
-=======
-
->>>>>>> 197984bc55f12d803883120658a5ee1d78efc156
                 turnosSinJugar += 1;
             }
+
             if(this.reglas.FinalizoPartida(jugadorActual,turnosSinJugar))
+            {
+                Dictionary<ParametrosDefinenGanador,object> argumentos = new Dictionary<ParametrosDefinenGanador, object>();
+                argumentos.Add(ParametrosDefinenGanador.TurnosSinJugar,turnosSinJugar);
+
+                argumentos.Add(ParametrosDefinenGanador.IndexJugadorActual, jugadorActual);
+
+                List<List<Ficha<T>>> fichasJugadores = new List<List<Fichal<T>>>();
+                foreach(var x in jugadores)
+                    fichasJugadores.Add(x.Mano);
+                argumentos.Add(ParametrosDefinenGanador.FichasJugadores, fichasJugadores);
+
+                result = this.reglas.Ganador(argumentos);
                 estadoJuego = EstadoJuego.Null;
-<<<<<<< HEAD
-=======
+            }
 
             System.Threading.Thread.Sleep(2000);//espera 2 segundos para hacer la proxima jugada
->>>>>>> 197984bc55f12d803883120658a5ee1d78efc156
         }
         while(this.estadoJuego == EstadoJuego.EnCurso);
     }

@@ -6,15 +6,5 @@ build_property.ProjectTypeGuids =
 build_property.InvariantGlobalization = 
 build_property.PlatformNeutralAssembly = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
-<<<<<<< HEAD
 build_property.RootNamespace = Consola
-build_property.ProjectDir = c:\Users\Naomi\Desktop\Domino\Consola\
-=======
-<<<<<<<< HEAD:Logica.Domino/Estrategias.dll/obj/Debug/net6.0/Estrategias.GeneratedMSBuildEditorConfig.editorconfig
-build_property.RootNamespace = Estrategias
-build_property.ProjectDir = c:\Users\Naomi\Desktop\Domino\Logica.Domino\Estrategias.dll\
-========
-build_property.RootNamespace = Consola
-build_property.ProjectDir = d:\Matcom\Segundo Año Cibernética\2022\Programación\Domino\Consola\
->>>>>>>> 197984bc55f12d803883120658a5ee1d78efc156:Consola/obj/Debug/net6.0/Consola.GeneratedMSBuildEditorConfig.editorconfig
->>>>>>> 197984bc55f12d803883120658a5ee1d78efc156
+build_property.ProjectDir = c:\Users\Naomi\Desktop\Proyecto 2022\Domino\Consola\

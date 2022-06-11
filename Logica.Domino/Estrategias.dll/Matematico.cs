@@ -3,7 +3,7 @@ using Reglas;
 namespace Estrategias;
 public class Matematico<T> : Jugador<T>, IJugar<T>
 {
-    public Matemático(List<Ficha<T>> mano) : base(mano)
+    public Matematico(List<Ficha<T>> mano) : base(mano)
     {
         Ordena(ref mano);
     }

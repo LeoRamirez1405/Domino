@@ -10,5 +10,5 @@ public interface IReglas<T>
     bool ValidarJugada(ParteFicha<T> fichaMesa, ParteFicha<T> fichaMano);
     bool FinalizoPartida(int jugoJugadorActual, int turnosSinJugar);
     int ProximoJugador(int jugadorActual);
-    (int,int) Ganador(int fichasRestantesEquipoA, List<Ficha<T>> equipaA, int fichasRestantesEquipoB, List<Ficha<T>> equipoB);
+    (int,int) Ganador(Dictionary<ParametrosDefinenGanador,object> definenGanador);//int fichasRestantesEquipoA, List<Ficha<T>> equipaA, int fichasRestantesEquipoB, List<Ficha<T>> equipoB
 }
