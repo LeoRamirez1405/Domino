@@ -1,9 +1,9 @@
 namespace Logica.domino.dll;
-public abstract class Jugador<T>
+public abstract class Jugador
 {
-    public List<Ficha<T>> Mano = new List<Ficha<T>>();//En la clase que hagas no pongas esto publico...
+    public List<Ficha> Mano = new List<Ficha>();//En la clase que hagas no pongas esto publico...
     //El arbitro necesita poder leer las fichas ...Hazme Una propiedad que se llame Mano 
-    public List<Ficha<T>> ObtenerFichas() => Mano;
+    public List<Ficha> ObtenerFichas() => Mano;
     public int ValorMano()
     {
         int total = 0;
@@ -14,7 +14,7 @@ public abstract class Jugador<T>
         return total;
     }
 
-    public void Ordena(ref List<Ficha<T>> mano)
+    public void Ordena(ref List<Ficha> mano)
     {
         for (int i = 0; i < mano.Count - 1; i++)
         {
@@ -30,7 +30,7 @@ public abstract class Jugador<T>
         }
     }
     public int FichasRestantes{get;}
-    public Jugador(List<Ficha<T>> Mano)
+    public Jugador(List<Ficha> Mano)
     {
         this.Mano = Mano;
         this.FichasRestantes = Mano.Count;

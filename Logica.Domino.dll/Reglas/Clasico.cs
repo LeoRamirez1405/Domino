@@ -1,7 +1,5 @@
-using Estructuras_Basicas;
-using System;
-namespace Reglas;
-class ClasicoIndividual<T> : IReglas<T>
+namespace Logica.domino.dll;
+public class ClasicoIndividual : IReglas
 {
     protected int cantJugadores;
     protected int cantFichas;//es protected para poder heredar de clasico y hacer un doble 6 (este es el doble 9)
@@ -18,14 +16,14 @@ class ClasicoIndividual<T> : IReglas<T>
 
     public (int, int) DimensionTablero => (5,8);//5 filas 8 columnas
 
-    public List<Ficha<T>[]> Repartir(List<Ficha<T>> todasFichas)//la lista de fichas que se recibe como paarametro son todas las fichas del juego
+    public List<Ficha[]> Repartir(List<Ficha> todasFichas)//la lista de fichas que se recibe como paarametro son todas las fichas del juego
     {
         //aqui se modifica la coleccion de fichas general para que ell arbitro solo se quede con las fichas sobrantes luego de repartir
-        List<Ficha<T>[]> result = new List<Ficha<T>[]>();
+        List<Ficha[]> result = new List<Ficha[]>();
         System.Random r = new Random();
         for(int i = 0; i < cantJugadores; i++)
         {
-            Ficha<T>[] resultemporal = new Ficha<T>[cantFichas];
+            Ficha[] resultemporal = new Ficha[cantFichas];
             for(int j = 0; j < cantFichas; j++)
             {
                 int pos = r.Next(todasFichas.Count);
@@ -45,13 +43,13 @@ class ClasicoIndividual<T> : IReglas<T>
     }
 
     //Retorna dos enteros. El primer entero simboliza el equipo ganador y el segun la cant de puntos que gana
-    public (int,int) Ganador(int fichasRestantesEquipoA, List<Ficha<T>> equipaA, int fichasRestantesEquipoB, List<Ficha<T>> equipoB)
+    public (int,int) Ganador(int fichasRestantesEquipoA, List<Ficha> equipaA, int fichasRestantesEquipoB, List<Ficha> equipoB)
     {
         int acumuladoEquipoA = 0;
-        foreach(Ficha<T> x in equipaA)
+        foreach(Ficha x in equipaA)
             acumuladoEquipoA += x.Abajo.Valor + x.Arriba.Valor;
         int acumuladoEquipoB = 0;
-        foreach(Ficha<T> x in equipoB) 
+        foreach(Ficha x in equipoB) 
             acumuladoEquipoB += x.Abajo.Valor + x.Arriba.Valor;
         
         if(fichasRestantesEquipoA == 0) return (0,acumuladoEquipoB);
@@ -66,8 +64,8 @@ class ClasicoIndividual<T> : IReglas<T>
         List<int> valorFichasPorJugador = new List<int>();
         if(definenGanador.ContainsKey(ParametrosDefinenGanador.FichasJugadores) && definenGanador.ContainsKey(ParametrosDefinenGanador.IndexJugadorActual))
         {
-            // int cantFichasJugadorActual = ((List<Ficha<T>>)definenGanador[ParametrosDefinenGanador.FichasJugadores])[];
-            List<List<Ficha<T>>> fichasJugadores = (List<List<Ficha<T>>>)definenGanador[ParametrosDefinenGanador.FichasJugadores];
+            // int cantFichasJugadorActual = ((List<Ficha>)definenGanador[ParametrosDefinenGanador.FichasJugadores])[];
+            List<List<Ficha>> fichasJugadores = (List<List<Ficha>>)definenGanador[ParametrosDefinenGanador.FichasJugadores];
             int jugadorActual = (int)definenGanador[ParametrosDefinenGanador.IndexJugadorActual];
 
             foreach(var x in fichasJugadores)
@@ -128,12 +126,12 @@ class ClasicoIndividual<T> : IReglas<T>
 
     //Este metodo solo funciona se se juega en elmodo clasico con las fichas clasicas, si trato de jugar con otro tipo de ficha da error ent.. esto se soluciona redefinido el equals de PrteFicha
     //luego, la jugada de parte ficha sera valida si parteFicha fichaMano.Equals(fichaMes) == true
-    public bool ValidarJugada(ParteFicha<T> fichaMesa, ParteFicha<T> fichaMano)
+    public bool ValidarJugada(ParteFicha fichaMesa, ParteFicha fichaMano)
     {
         return fichaMano == fichaMesa;//se redefinio el ==
     }
     
-    // public bool ValidarJugada(ParteFicha<T> fichaMesa, ParteFicha<T> fichaMano)
+    // public bool ValidarJugada(ParteFicha fichaMesa, ParteFicha fichaMano)
     // {
     //     return fichaMano == fichaMesa;
     // }

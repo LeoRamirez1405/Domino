@@ -1,35 +1,33 @@
-﻿using System.Collections;
-namespace Estructuras_Basicas;
-
-public class Ficha<T> 
+﻿namespace Logica.domino.dll;
+public class Ficha 
 {
-    ParteFicha<T> arriba;
-    ParteFicha<T> abajo;
+    ParteFicha arriba;
+    ParteFicha abajo;
     public int Valor {get ;}
-    public Ficha(ParteFicha<T> arriba,ParteFicha<T> abajo)
+    public Ficha(ParteFicha arriba,ParteFicha abajo)
     {
         this.abajo = abajo;
         this.arriba = arriba;
         this.Valor = this.abajo.Valor + this.arriba.Valor;
     }
 
-    public ParteFicha<T> Arriba { get => arriba;}
-    public ParteFicha<T> Abajo { get => abajo;}
+    public ParteFicha Arriba { get => arriba;}
+    public ParteFicha Abajo { get => abajo;}
 }
 
-public class ParteFicha<T>: IEquatable<ParteFicha<T>>
+public class ParteFicha: IEquatable<ParteFicha>
 {
-    T parte;
+    object parte;
     public int Valor {get;}
-    public ParteFicha(T parte,int valor)
+    public ParteFicha(object parte,int valor)
     {
         this.parte = parte;
         this.Valor = valor;
     }
 
-    public bool Equals(ParteFicha<T>? parte) => this.Valor == parte?.Valor;
-    public static bool operator == (ParteFicha<T> a,ParteFicha<T> b) => a.Equals(b);
-    public static bool operator != (ParteFicha<T> a,ParteFicha<T> b) => !a.Equals(b);
+    public bool Equals(ParteFicha? parte) => this.Valor == parte?.Valor;
+    public static bool operator == (ParteFicha a,ParteFicha b) => a.Equals(b);
+    public static bool operator != (ParteFicha a,ParteFicha b) => !a.Equals(b);
 }
 
 public enum EstadoJuego

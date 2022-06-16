@@ -1,17 +1,17 @@
 namespace Logica.domino.dll;
-public class Match<T> : IModo<T>
+public class Match : IModo
 {
     int cantidad;
-    List<Jugador<T>> jugadores;
+    List<Jugador> jugadores;
     int[] PuntosJugadores;
-    Arbitro<T> arbitro;
+    Arbitro arbitro;
 
-    public Match(int cantidad,List<Jugador<T>> jugadores,IReglas<T> reglas,IDomino<T> domino)
+    public Match(int cantidad,List<Jugador> jugadores,IReglas reglas,IDomino domino)
     {
         this.cantidad = cantidad;
         this.jugadores = jugadores;
         this.PuntosJugadores = new int[jugadores.Count];
-        this.arbitro = new Arbitro<T>(reglas,domino);
+        this.arbitro = new Arbitro(reglas,domino);
     }
         
     public (int,int) Gana()

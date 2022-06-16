@@ -1,7 +1,7 @@
 namespace Logica.domino.dll;
 
-public interface IDomino<T>
+public interface IDomino
 {
     int maxFichas();
-    List<Ficha<T>> fichas();
+    List<Ficha> fichas(int cant);
 }

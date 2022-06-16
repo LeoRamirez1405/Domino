@@ -1,23 +1,23 @@
 namespace Logica.domino.dll;
 
-public class Leo<T>:Jugador<T>,IJugar<T>
+public class Leo:Jugador,IJugar
 {
-    public Leo(List<Ficha<T>> mano):base(mano)
+    public Leo(List<Ficha> mano):base(mano)
     {
         Ordena(ref mano);
     }
 
-    public Ficha<T>Jugar(IReglas<T> reglas)
+    public Ficha Jugar(IReglas reglas)
     {
-        Ficha<T> gorda = Mano[0];
+        Ficha gorda = Mano[0];
         Mano.RemoveAt(0);
         return (gorda);
     }
-    public (Ficha<T>,int)Jugar(ParteFicha<T> izquierda ,ParteFicha<T> derecha,IReglas<T> reglas)
+    public (Ficha,int)Jugar(ParteFicha izquierda ,ParteFicha derecha,IReglas reglas)
     {   
-        List<Ficha<T>> posiblesIzquierdas = new List<Ficha<T>>();
+        List<Ficha> posiblesIzquierdas = new List<Ficha>();
         List<int> posManoIzq = new List<int>();
-        List<Ficha<T>> posiblesDerechas = new List<Ficha<T>>();
+        List<Ficha> posiblesDerechas = new List<Ficha>();
         List<int> posManoDer = new List<int>();
 
         for (int i = 0; i < Mano.Count; i++)
@@ -46,7 +46,7 @@ public class Leo<T>:Jugador<T>,IJugar<T>
         }
     }
 
-    public void Ordena(ref List<Ficha<T>> mano)
+    public void Ordena(ref List<Ficha> mano)
     {
         for (int i = 0; i < mano.Count-1; i++)
         {

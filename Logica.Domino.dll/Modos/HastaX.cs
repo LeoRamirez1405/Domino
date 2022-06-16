@@ -1,16 +1,16 @@
 namespace Logica.domino.dll;
-public class HastaX<T> : IModo<T>
+public class HastaX : IModo
 {
     int cantidad;
-    List<Jugador<T>> jugadores;
+    List<Jugador> jugadores;
     int[] PuntosJugadores;
-    Arbitro<T> arbitro;
-    public HastaX(int cantidad,List<Jugador<T>> jugadores,IReglas<T> reglas,IDomino<T> domino)
+    Arbitro arbitro;
+    public HastaX(int cantidad,List<Jugador> jugadores,IReglas reglas,IDomino domino)
     {
         this.cantidad = cantidad;
         this.jugadores = jugadores;
         this.PuntosJugadores = new int[jugadores.Count];
-        this.arbitro = new Arbitro<T>(reglas,domino);
+        this.arbitro = new Arbitro(reglas,domino);
     }
     public (int,int) Gana()
     {

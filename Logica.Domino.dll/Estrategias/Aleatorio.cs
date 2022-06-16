@@ -1,17 +1,17 @@
 namespace Logica.domino.dll;
-public class Aleatorio<T>:Jugador<T>,IJugar<T>
+public class Aleatorio :Jugador ,IJugar 
 {
-    public Aleatorio(List<Ficha<T>> mano):base(mano){ }
+    public Aleatorio(List<Ficha > mano):base(mano){ }
 
-    public Ficha<T>Jugar(IReglas<T> reglas)
+    public Ficha Jugar(IReglas  reglas)
     {
         Random r = new Random();
         int num = r.Next(0,Mano.Count);
-        Ficha<T> ficha = Mano[num];
+        Ficha  ficha = Mano[num];
         Mano.RemoveAt(num);
         return (ficha);
     }
-    public (Ficha<T>,int)Jugar(ParteFicha<T> izquierda ,ParteFicha<T> derecha,IReglas<T> reglas)
+    public (Ficha ,int)Jugar(ParteFicha  izquierda ,ParteFicha  derecha,IReglas  reglas)
     {
         bool[] revisados = new bool[Mano.Count];
         Random r = new Random();
@@ -23,13 +23,13 @@ public class Aleatorio<T>:Jugador<T>,IJugar<T>
                 if(!revisados[num])
                 {
                     if(reglas.ValidarJugada(izquierda,Mano[num].Arriba)) 
-                    {Ficha<T> f = Mano[num]; Mano.RemoveAt(num); return (f,0);}
+                    {Ficha  f = Mano[num]; Mano.RemoveAt(num); return (f,0);}
                     if(reglas.ValidarJugada(izquierda,Mano[num].Abajo)) 
-                    {Ficha<T> f = Mano[num]; Mano.RemoveAt(num); return (f,0);}
+                    {Ficha  f = Mano[num]; Mano.RemoveAt(num); return (f,0);}
                     if(reglas.ValidarJugada(derecha,Mano[num].Arriba))
-                    {Ficha<T> f = Mano[num]; Mano.RemoveAt(num); return (f,1);}
+                    {Ficha  f = Mano[num]; Mano.RemoveAt(num); return (f,1);}
                     if(reglas.ValidarJugada(derecha,Mano[num].Abajo)) 
-                    {Ficha<T> f = Mano[num]; Mano.RemoveAt(num); return (f,1);}
+                    {Ficha  f = Mano[num]; Mano.RemoveAt(num); return (f,1);}
 
                     intentos++;
                 }

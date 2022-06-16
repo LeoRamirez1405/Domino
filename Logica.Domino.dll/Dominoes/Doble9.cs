@@ -1,38 +1,33 @@
 ﻿namespace Logica.domino.dll;
-public class Doble9 : IDomino<int>
+public class Doble9 : IDomino
 {
-    int cantidad;
-    public Doble9(int cant)
+    int cantidad = 9;
+    
+    // public List<Ficha> fichas() => GeneraDomino(int cant);
+    public int maxFichas() => cantidad;
+
+    public List<Ficha> fichas(int cant)
     {
-        if(cantidad>maxFichas())
-            cantidad = maxFichas();
-        else
-            cantidad = cant;
-    }
-    public List<Ficha<int>> fichas() => GeneraDomino();
-    public int maxFichas() => 9;
+        if(cant > cantidad) cant = cantidad;
+        ParteFicha cero = new ParteFicha(0,0);
+        ParteFicha uno = new ParteFicha(1,1);
+        ParteFicha dos = new ParteFicha(2,2);
+        ParteFicha tres = new ParteFicha(3,3);
+        ParteFicha cuatro = new ParteFicha(4,4);
+        ParteFicha cinco = new ParteFicha(5,5);
+        ParteFicha seis = new ParteFicha(6,6);
+        ParteFicha siete = new ParteFicha(7,7);
+        ParteFicha ocho = new ParteFicha(8,8);
+        ParteFicha nueve = new ParteFicha(9,9);
 
-    List<Ficha<int>> GeneraDomino()
-    {
-        ParteFicha<int> cero = new ParteFicha<int>(0,0);
-        ParteFicha<int> uno = new ParteFicha<int>(1,1);
-        ParteFicha<int> dos = new ParteFicha<int>(2,2);
-        ParteFicha<int> tres = new ParteFicha<int>(3,3);
-        ParteFicha<int> cuatro = new ParteFicha<int>(4,4);
-        ParteFicha<int> cinco = new ParteFicha<int>(5,5);
-        ParteFicha<int> seis = new ParteFicha<int>(6,6);
-        ParteFicha<int> siete = new ParteFicha<int>(7,7);
-        ParteFicha<int> ocho = new ParteFicha<int>(8,8);
-        ParteFicha<int> nueve = new ParteFicha<int>(9,9);
+        List<ParteFicha> partes = new List<ParteFicha>{cero,uno,dos,tres,cuatro,cinco,seis,siete,ocho,nueve};
 
-        List<ParteFicha<int>> partes = new List<ParteFicha<int>>{cero,uno,dos,tres,cuatro,cinco,seis,siete,ocho,nueve};
-
-        List<Ficha<int>> fichas = new List<Ficha<int>>();
-        for (int i = 0; i < cantidad; i++)
+        List<Ficha> fichas = new List<Ficha>();
+        for (int i = 0; i < cant; i++)
         {
-            for (int j = i; j < cantidad; j++)
+            for (int j = i; j < cant; j++)
             {
-                fichas.Add(new Ficha<int>(partes[i],partes[j]));   
+                fichas.Add(new Ficha(partes[i],partes[j]));   
             }
         }
         return fichas;

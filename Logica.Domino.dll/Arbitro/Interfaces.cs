@@ -1,6 +1,5 @@
-namespace Arbitro;
-
+namespace Logica.domino.dll;
 public interface GuiaJuego//va guiando el juego
 {
-    void Jugando();
+    (int,int) Jugando();
 }

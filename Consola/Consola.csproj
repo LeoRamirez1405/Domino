@@ -1,12 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <ProjectReference Include="..\Logica.Domino\Arbitro.dll\Arbitro.dll.csproj" />
-    <ProjectReference Include="..\Logica.Domino\Estrategias.dll\Estrategias.csproj" />
-    <ProjectReference Include="..\Logica.Domino\Estructuras_Basicas.dll\Estructuras_Basicas.csproj" />
-    <ProjectReference Include="..\Logica.Domino\Modos.dll\Modos.dll.csproj" />
-    <ProjectReference Include="..\Logica.Domino\Reglas.dll\Reglas.csproj" />
-    <ProjectReference Include="..\Logica.Domino\Arbitro.dll\Arbitro.dll.csproj" />
+    <ProjectReference Include="..\Logica.Domino.dll\Logica.Domino.dll.csproj" />
      
   </ItemGroup>
 

@@ -1,35 +1,29 @@
-﻿﻿using Estructuras_Basicas;
-using Dominoes;
-using Reglas;
-using Estrategias;
-using Modos;
-namespace Arbitro.dll;
+﻿namespace Logica.domino.dll;
 //using System.Diagnostics;
-public class Arbitro<T> : GuiaJuego //no es estatico para poder variar las reglas y las estrategias de los jugadores
+public class Arbitro : GuiaJuego //no es estatico para poder variar las reglas y las estrategias de los jugadores
 {
     EstadoJuego estadoJuego;
-    IReglas<T> reglas;
-    IModo<T> modo;
-    IDomino<T> domino;
+    IReglas reglas;
+    IDomino domino;
     int cantJugadores;//la cant de jugadores debe estar en las reglas
-    List<IJugar<T>> jugadores;
-    Ficha<T>[,] tablero;
+    List<IJugar> jugadores;
+    Ficha[,] tablero;
 
-    public Arbitro(IReglas<T> reglas,IModo<T> modo,IDomino<T> domino)//IReglas reglas
+    public Arbitro(IReglas reglas,IDomino domino)//IReglas reglas
     {
         this.estadoJuego = EstadoJuego.Null;
         this.reglas = reglas;
         this.domino = domino;
     }
 
-    public bool CrearJuego(IReglas<T> reglas, List<IJugar<T>> estrategiasJugadores)
+    public bool CrearJuego(IReglas reglas, List<IJugar> estrategiasJugadores)
     {
         // if(this.estadoJuego != EstadoJuego.Null)
         //     return false;
 
         this.reglas = reglas;
         this.jugadores = estrategiasJugadores;
-        tablero = new Ficha<T>[reglas.DimensionTablero.Item1,this.reglas.DimensionTablero.Item2];//el metodo retorna una tupla (contrarto jj)
+        tablero = new Ficha[reglas.DimensionTablero.Item1,this.reglas.DimensionTablero.Item2];//el metodo retorna una tupla (contrarto jj)
         return true;
     }
 
@@ -46,8 +40,8 @@ public class Arbitro<T> : GuiaJuego //no es estatico para poder variar las regla
     public (int,int) Jugando()
     {
         (int,int) result = (-1,-1);
-        ParteFicha<T> parteFichaDerecha = null;
-        ParteFicha<T> parteFichaIzquierda = null;
+        ParteFicha parteFichaDerecha = null;
+        ParteFicha parteFichaIzquierda = null;
         int turnosSinJugar = 0;
 
         estadoJuego = EstadoJuego.EnCurso;
@@ -57,7 +51,7 @@ public class Arbitro<T> : GuiaJuego //no es estatico para poder variar las regla
         int jugadorActual = 0;
         //Hay que tener algo que sea una abstraccion de tablero que me diga las fichas disponibles por donde se puede jugar
 
-            Ficha<T> fichaIncial = estrategiasJugadores[reglas.JugadorInicial()].Jugar(this.reglas);
+            Ficha fichaIncial = estrategiasJugadores[reglas.JugadorInicial()].Jugar(this.reglas);
             parteFichaDerecha = fichaIncial.Abajo;
             parteFichaIzquierda = fichaIncial.Arriba;
 
@@ -66,7 +60,7 @@ public class Arbitro<T> : GuiaJuego //no es estatico para poder variar las regla
             int proximoJugador = this.reglas.ProximoJugador(jugadorActual);
             //aqui solol deberia pasar las dos fichas por donde se puede jugar y tendria que devolver la ficha que va a jugar y por donde la va ajugar
             //aqui no es necesario pasarle las reglas al los jugadores, pues las estrategias dben poder funcionar (No necesariamente se eficientes) con cualquier juego o regla
-            (Ficha<T>, int) jugada = estrategiasJugadores[reglas.JugadorInicial()].Jugar(parteFichaIzquierda,parteFichaDerecha,reglas);
+            (Ficha, int) jugada = estrategiasJugadores[reglas.JugadorInicial()].Jugar(parteFichaIzquierda,parteFichaDerecha,reglas);
             if(jugada.Item2 == 0) 
             {
                 //0 es la parte derecha
@@ -91,7 +85,7 @@ public class Arbitro<T> : GuiaJuego //no es estatico para poder variar las regla
 
                 argumentos.Add(ParametrosDefinenGanador.IndexJugadorActual, jugadorActual);
 
-                List<List<Ficha<T>>> fichasJugadores = new List<List<Fichal<T>>>();
+                List<List<Ficha>> fichasJugadores = new List<List<Fichal>>();
                 foreach(var x in jugadores)
                     fichasJugadores.Add(x.Mano);
                 argumentos.Add(ParametrosDefinenGanador.FichasJugadores, fichasJugadores);

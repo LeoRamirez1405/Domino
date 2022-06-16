@@ -1,15 +1,15 @@
 namespace Logica.domino.dll;
 
-public class Matematico<T> : Jugador<T>, IJugar<T>
+public class Matematico : Jugador, IJugar
 {
-    public Matematico(List<Ficha<T>> mano) : base(mano)
+    public Matematico(List<Ficha> mano) : base(mano)
     {
         Ordena(ref mano);
     }
 
-    public Ficha<T> Jugar(IReglas<T> reglas)
+    public Ficha Jugar(IReglas reglas)
     {
-        Ficha<T> gorda = Mano[0];
+        Ficha gorda = Mano[0];
         int suelto = 0;
         for (int i = 0; i < Mano.Count; i++)
         {
@@ -22,9 +22,9 @@ public class Matematico<T> : Jugador<T>, IJugar<T>
         Mano.RemoveAt(suelto);
         return (gorda);
     }
-    public (Ficha<T>, int) Jugar(ParteFicha<T> izquierda, ParteFicha<T> derecha, IReglas<T> reglas)
+    public (Ficha, int) Jugar(ParteFicha izquierda, ParteFicha derecha, IReglas reglas)
     {
-        Ficha<T> MejorFicha = Mano[0];
+        Ficha MejorFicha = Mano[0];
         int totalPuntos = 0;
         int posFicha = -1;
         int posFichaMano = 0;
@@ -86,7 +86,7 @@ public class Matematico<T> : Jugador<T>, IJugar<T>
     }
 
     
-    int Calcula(ParteFicha<T> fichaMano, ParteFicha<T> fichaTablero)
+    int Calcula(ParteFicha fichaMano, ParteFicha fichaTablero)
     {
         if (fichaMano.Valor + fichaTablero.Valor % 5 != 0)
             return fichaMano.Valor + fichaTablero.Valor;
