@@ -6,6 +6,8 @@
     <ProjectReference Include="..\Logica.Domino\Estructuras_Basicas.dll\Estructuras_Basicas.csproj" />
     <ProjectReference Include="..\Logica.Domino\Modos.dll\Modos.dll.csproj" />
     <ProjectReference Include="..\Logica.Domino\Reglas.dll\Reglas.csproj" />
+    <ProjectReference Include="..\Logica.Domino\Arbitro.dll\Arbitro.dll.csproj" />
+     
   </ItemGroup>
 
   <PropertyGroup>
