@@ -1,14 +1,14 @@
 ﻿namespace Logica.domino.dll;
 public class Amistoso : IModo
 {
-    List<Jugador> jugadores;
+    List<IJugar> jugadores;
     Arbitro arbitro;
     int[] PuntosJugadores;
 
-    public Amistoso(List<Jugador> jugadores,IReglas reglas,IDomino domino)
+    public Amistoso(IReglas reglas,IDomino domino)
     {
-        this.jugadores = jugadores;
         this.arbitro = new Arbitro(reglas,domino);
+        this.jugadores = this.arbitro.GetJugadores();
         this.PuntosJugadores = new int[jugadores.Count];
     }
     public (int,int) Gana()

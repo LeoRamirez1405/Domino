@@ -1,10 +1,16 @@
 namespace Logica.domino.dll;
 
-public class Leo:Jugador,IJugar
+public class Leo:IJugar
 {
-    public Leo(List<Ficha> mano):base(mano)
+    List<Ficha> Mano;  
+    public Leo(List<Ficha> mano)
     {
+        this.Mano = mano;
         Ordena(ref mano);
+    }
+    public List<Ficha> ObtenerFichas()
+    {
+       return Mano;
     }
 
     public Ficha Jugar(IReglas reglas)

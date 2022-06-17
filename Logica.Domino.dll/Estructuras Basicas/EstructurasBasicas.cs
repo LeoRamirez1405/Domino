@@ -13,16 +13,28 @@ public class Ficha
 
     public ParteFicha Arriba { get => arriba;}
     public ParteFicha Abajo { get => abajo;}
+
+    public override string ToString()
+    {
+        string ar = arriba.parte.ToString(); 
+        string ab = abajo.parte.ToString(); 
+        return $"[{ar}|{ab}]";
+    }
 }
 
 public class ParteFicha: IEquatable<ParteFicha>
 {
-    object parte;
+    public object parte;
     public int Valor {get;}
     public ParteFicha(object parte,int valor)
     {
         this.parte = parte;
         this.Valor = valor;
+    }
+
+    public override string ToString()
+    {
+        return (string)parte;
     }
 
     public bool Equals(ParteFicha? parte) => this.Valor == parte?.Valor;

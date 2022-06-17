@@ -2,7 +2,7 @@ namespace Logica.domino.dll;
 public class ClasicoIndividual : IReglas
 {
     protected int cantJugadores;
-    protected int cantFichas;//es protected para poder heredar de clasico y hacer un doble 6 (este es el doble 9)
+    public int cantFichas;//es protected para poder heredar de clasico y hacer un doble 6 (este es el doble 9)
     //private (int, int) dimensionTablero;
 
     public ClasicoIndividual(int cantJugadores, int cantFichas)//aqui se deberia incializar de con valores
@@ -141,5 +141,8 @@ public class ClasicoIndividual : IReglas
         return 0;
     }
 
-    
+    public int CantFichas()
+    {
+        return cantFichas;
+    }
 }

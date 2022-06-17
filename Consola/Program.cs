@@ -12,39 +12,37 @@ class Program
             else if(dom == 2)
                 {domino = new Emojis();}
 
-        System.Console.WriteLine("Con cuantos jugadores desea jugar (2 - 4): ");
-        int cantJugadores = int.Parse(Console.ReadLine());
-        List<Jugador> ListaJugadores = new List<Jugador>();
-       
-       //Aqui se empieza
-        for (int i = 0; i < cantJugadores; i++)
-        {
-            System.Console.WriteLine($"Escoja la estrategia del jugador {i}");
-            System.Console.WriteLine("1. Aleatorio");
-            System.Console.WriteLine("2. Botagorda");
-            System.Console.WriteLine("3. Leo");
-            System.Console.WriteLine("4. Matemático");
+        ClasicoIndividual reglas = new ClasicoIndividual(4,9);
+        
+        Amistoso amistoso = new Amistoso(reglas,domino);
+        (int,int) ganador = amistoso.Gana();
+        System.Console.WriteLine($"El ganador es el jugador {ganador.Item1} con {ganador.Item2} puntos.");
 
-            int jug = int.Parse(Console.ReadLine());
-            while(true)
+
+        // Metodo para imprimir la mano del jugador 
+        void imprimirMano(List<Ficha> mano)
+        {
+            foreach(Ficha ficha in mano)
             {
-                if(jug == 1) {ListaJugadores.Add(new Aleatorio()); break;}
-                else if(jug == 2) {ListaJugadores.Add(new Botagorda()); break;}
-                else if(jug == 3) {ListaJugadores.Add(new Leo()); break;}
-                else if(jug == 4) {ListaJugadores.Add(new Matemático()); break;}
-                else
-                {
-                    System.Console.WriteLine("Dato incorrecto. Vuelva a intentarlo: ");
-                    jug = int.Parse(Console.ReadLine());
-                }
+                System.Console.Write(ficha.ToString()+" "); 
             }
+            System.Console.WriteLine();
         }
 
-        ClasicoIndividual reglas = new ClasicoIndividual(cantJugadores,9);
-
-        Amistoso amistoso = new Amistoso(ListaJugadores,reglas,domino);
-        (int,int) ganador = amistoso.Gana();
-
-        System.Console.WriteLine($"El ganador es el jugador {ganador.Item1} con {ganador.Item2} puntos.");
+        void imprimirManoJugadores(List<IJugar> jugadores, List<Ficha> mano, int ganador)
+        {
+            int i = 0;
+            foreach (var jug in jugadores)
+            {
+                if(i == ganador) System.Console.WriteLine("Jugador Ganador. ");
+                foreach(Ficha ficha in jug.ObtenerFichas())
+                {
+                    System.Console.Write(ficha.ToString()+" "); 
+                }
+                System.Console.WriteLine();
+                i++;
+            }
+        }
+        
     }
 }

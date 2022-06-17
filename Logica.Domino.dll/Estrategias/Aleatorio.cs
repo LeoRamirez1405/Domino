@@ -1,7 +1,11 @@
 namespace Logica.domino.dll;
-public class Aleatorio :Jugador ,IJugar 
+public class Aleatorio :IJugar 
 {
-    public Aleatorio(List<Ficha > mano):base(mano){ }
+    List<Ficha> Mano;   
+    public Aleatorio(List<Ficha > mano)
+    {
+        this.Mano = mano;
+    }
 
     public Ficha Jugar(IReglas  reglas)
     {
@@ -36,5 +40,10 @@ public class Aleatorio :Jugador ,IJugar
                 num = r.Next(0,Mano.Count);
             }
         return (Mano[0],-1);
+    }
+
+    public List<Ficha> ObtenerFichas()
+    {
+       return Mano;
     }
 }

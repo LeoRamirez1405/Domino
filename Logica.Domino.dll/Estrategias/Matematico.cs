@@ -1,12 +1,18 @@
 namespace Logica.domino.dll;
 
-public class Matematico : Jugador, IJugar
+public class Matematico : IJugar
 {
-    public Matematico(List<Ficha> mano) : base(mano)
+    List<Ficha> Mano;  
+    public Matematico(List<Ficha> mano)
     {
-        Ordena(ref mano);
+        this.Mano = mano;
+        IJugar.Ordena(ref mano);
     }
 
+    public List<Ficha> ObtenerFichas()
+    {
+       return Mano;
+    }
     public Ficha Jugar(IReglas reglas)
     {
         Ficha gorda = Mano[0];

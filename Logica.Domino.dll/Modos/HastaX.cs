@@ -2,15 +2,15 @@ namespace Logica.domino.dll;
 public class HastaX : IModo
 {
     int cantidad;
-    List<Jugador> jugadores;
+    List<IJugar> jugadores;
     int[] PuntosJugadores;
     Arbitro arbitro;
-    public HastaX(int cantidad,List<Jugador> jugadores,IReglas reglas,IDomino domino)
+    public HastaX(int cantidad,IReglas reglas,IDomino domino)
     {
-        this.cantidad = cantidad;
-        this.jugadores = jugadores;
-        this.PuntosJugadores = new int[jugadores.Count];
         this.arbitro = new Arbitro(reglas,domino);
+        this.jugadores = this.arbitro.GetJugadores();
+        this.PuntosJugadores = new int[jugadores.Count];
+        this.cantidad = cantidad;
     }
     public (int,int) Gana()
     {
