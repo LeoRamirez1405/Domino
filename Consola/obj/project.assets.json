@@ -1,11 +1,30 @@
 {
   "version": 3,
   "targets": {
-    "net6.0": {}
+    "net6.0": {
+      "Logica.Domino.dll/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "compile": {
+          "bin/placeholder/Logica.Domino.dll.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Logica.Domino.dll.dll": {}
+        }
+      }
+    }
   },
-  "libraries": {},
+  "libraries": {
+    "Logica.Domino.dll/1.0.0": {
+      "type": "project",
+      "path": "../Logica.Domino.dll/Logica.Domino.dll.csproj",
+      "msbuildProject": "../Logica.Domino.dll/Logica.Domino.dll.csproj"
+    }
+  },
   "projectFileDependencyGroups": {
-    "net6.0": []
+    "net6.0": [
+      "Logica.Domino.dll >= 1.0.0"
+    ]
   },
   "packageFolders": {
     "C:\\Users\\Leo-Laptop\\.nuget\\packages\\": {}
@@ -31,7 +50,11 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "D:\\Matcom\\Segundo Año Cibernética\\2022\\Programación\\Domino\\Logica.Domino.dll\\Logica.Domino.dll.csproj": {
+              "projectPath": "D:\\Matcom\\Segundo Año Cibernética\\2022\\Programación\\Domino\\Logica.Domino.dll\\Logica.Domino.dll.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

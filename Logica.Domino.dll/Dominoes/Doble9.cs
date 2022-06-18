@@ -23,9 +23,9 @@ public class Doble9 : IDomino
         List<ParteFicha> partes = new List<ParteFicha>{cero,uno,dos,tres,cuatro,cinco,seis,siete,ocho,nueve};
 
         List<Ficha> fichas = new List<Ficha>();
-        for (int i = 0; i < cant; i++)
+        for (int i = 0; i <= cant; i++)
         {
-            for (int j = i; j < cant; j++)
+            for (int j = i; j <= cant; j++)
             {
                 fichas.Add(new Ficha(partes[i],partes[j]));   
             }

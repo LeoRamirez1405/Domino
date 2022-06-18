@@ -1,0 +1,36 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v6.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v6.0": {
+      "Consola/1.0.0": {
+        "dependencies": {
+          "Logica.Domino.dll": "1.0.0"
+        },
+        "runtime": {
+          "Consola.dll": {}
+        }
+      },
+      "Logica.Domino.dll/1.0.0": {
+        "runtime": {
+          "Logica.Domino.dll.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Consola/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Logica.Domino.dll/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

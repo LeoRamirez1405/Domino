@@ -21,9 +21,9 @@ public class Emojis : IDomino
 
         List<Ficha> fichas = new List<Ficha>();
 
-        for (int i = 0; i < cant; i++)
+        for (int i = 0; i <= cant; i++)
         {
-            for (int j = i; j < cant; j++)
+            for (int j = i; j <= cant; j++)
             {
                 fichas.Add(new Ficha(partes[i],partes[j]));   
             }

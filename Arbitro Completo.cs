@@ -1,4 +1,4 @@
-﻿namespace Logica.domino.dll;
+// namespace Logica.domino.dll;
 //using System.Diagnostics;
 public class Arbitro : GuiaJuego //no es estatico para poder variar las reglas y las estrategias de los jugadores
 {

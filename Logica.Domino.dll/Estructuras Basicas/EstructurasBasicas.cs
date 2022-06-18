@@ -34,11 +34,24 @@ public class ParteFicha: IEquatable<ParteFicha>
 
     public override string ToString()
     {
-        return (string)parte;
+        try
+        {
+            return (string)parte;
+        }
+        catch
+        {
+            return "NO";
+        }
     }
 
     public bool Equals(ParteFicha? parte) => this.Valor == parte?.Valor;
-    public static bool operator == (ParteFicha a,ParteFicha b) => a.Equals(b);
+    public static bool operator == (ParteFicha a,ParteFicha b) {
+   if ( a is null && b is not null) return false;
+   if ( a is not null && b is null) return false;
+   if ( a is null && b is null) return false;
+     return a.Equals(b);
+    } 
+         
     public static bool operator != (ParteFicha a,ParteFicha b) => !a.Equals(b);
 }
 
@@ -56,5 +69,5 @@ public enum ParametrosDefinenGanador
     TurnosSinJugar,
     IndexJugadorActual,
     // FichasJugadorActual,
-    FichasJugadores, // aqui se pasarian las fichas cada h=jugador en una lista d listas, luego con el index jugadore actual puedo ver las fichas del jugador actual
+    FichasJugadores, // aqui se pasarian las fichas cada jugador en una lista d listas, luego con el index jugadore actual puedo ver las fichas del jugador actual
 }

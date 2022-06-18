@@ -5,14 +5,14 @@ public class ClasicoIndividual : IReglas
     public int cantFichas;//es protected para poder heredar de clasico y hacer un doble 6 (este es el doble 9)
     //private (int, int) dimensionTablero;
 
-    public ClasicoIndividual(int cantJugadores, int cantFichas)//aqui se deberia incializar de con valores
+    public ClasicoIndividual()//aqui se deberia incializar de con valores
     {
         this.cantJugadores = 4;
         this.cantFichas = 10;
         //this.dimensionTablero = (5,8);//total de fichas que se pueden poner en un juego : cant jugadores * cant fichas = 40 
     }
 
-    public int CantidadJugadores => this.CantidadJugadores;
+    public int CantidadJugadores => cantJugadores;
 
     public (int, int) DimensionTablero => (5,8);//5 filas 8 columnas
 
@@ -93,7 +93,7 @@ public class ClasicoIndividual : IReglas
             else if(definenGanador.ContainsKey(ParametrosDefinenGanador.TurnosSinJugar))//else
             {
                 int min = int.MaxValue;
-                for(int i = 0; i < cantJugadores; i++)
+                for(int i = 0; i < this.cantJugadores; i++)
                 {
                     if(valorFichasPorJugador[i] < min)
                     {
@@ -120,8 +120,8 @@ public class ClasicoIndividual : IReglas
 
     public int ProximoJugador(int jugadorActual)
     {
-        if(jugadorActual == this.cantJugadores) return 0;
-        return ++cantJugadores;
+        if(jugadorActual == this.cantJugadores-1) return 0;
+        return jugadorActual + 1;
     }
 
     //Este metodo solo funciona se se juega en elmodo clasico con las fichas clasicas, si trato de jugar con otro tipo de ficha da error ent.. esto se soluciona redefinido el equals de PrteFicha
@@ -141,8 +141,13 @@ public class ClasicoIndividual : IReglas
         return 0;
     }
 
-    public int CantFichas()
+    public int CantFichasPorJugador()
     {
         return cantFichas;
+    }
+
+    public int CantFichasTotalJuego()
+    {
+        return this.cantFichas * this.cantJugadores;
     }
 }

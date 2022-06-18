@@ -1,0 +1,12 @@
+D:\Matcom\Segundo Año Cibernética\2022\Programación\Domino\Logica.Domino.dll\bin\Debug\net6.0\Logica.Domino.dll.deps.json
+D:\Matcom\Segundo Año Cibernética\2022\Programación\Domino\Logica.Domino.dll\bin\Debug\net6.0\Logica.Domino.dll.dll
+D:\Matcom\Segundo Año Cibernética\2022\Programación\Domino\Logica.Domino.dll\bin\Debug\net6.0\ref\Logica.Domino.dll.dll
+D:\Matcom\Segundo Año Cibernética\2022\Programación\Domino\Logica.Domino.dll\bin\Debug\net6.0\Logica.Domino.dll.pdb
+D:\Matcom\Segundo Año Cibernética\2022\Programación\Domino\Logica.Domino.dll\obj\Debug\net6.0\Logica.Domino.dll.csproj.AssemblyReference.cache
+D:\Matcom\Segundo Año Cibernética\2022\Programación\Domino\Logica.Domino.dll\obj\Debug\net6.0\Logica.Domino.dll.GeneratedMSBuildEditorConfig.editorconfig
+D:\Matcom\Segundo Año Cibernética\2022\Programación\Domino\Logica.Domino.dll\obj\Debug\net6.0\Logica.Domino.dll.AssemblyInfoInputs.cache
+D:\Matcom\Segundo Año Cibernética\2022\Programación\Domino\Logica.Domino.dll\obj\Debug\net6.0\Logica.Domino.dll.AssemblyInfo.cs
+D:\Matcom\Segundo Año Cibernética\2022\Programación\Domino\Logica.Domino.dll\obj\Debug\net6.0\Logica.Domino.dll.csproj.CoreCompileInputs.cache
+D:\Matcom\Segundo Año Cibernética\2022\Programación\Domino\Logica.Domino.dll\obj\Debug\net6.0\Logica.Domino.dll.dll
+D:\Matcom\Segundo Año Cibernética\2022\Programación\Domino\Logica.Domino.dll\obj\Debug\net6.0\ref\Logica.Domino.dll.dll
+D:\Matcom\Segundo Año Cibernética\2022\Programación\Domino\Logica.Domino.dll\obj\Debug\net6.0\Logica.Domino.dll.pdb

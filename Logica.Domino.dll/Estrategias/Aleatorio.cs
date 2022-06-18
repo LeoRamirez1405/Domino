@@ -11,9 +11,9 @@ public class Aleatorio :IJugar
     {
         Random r = new Random();
         int num = r.Next(0,Mano.Count);
-        Ficha  ficha = Mano[num];
+        Ficha ficha = Mano[num];
         Mano.RemoveAt(num);
-        return (ficha);
+        return ficha;
     }
     public (Ficha ,int)Jugar(ParteFicha  izquierda ,ParteFicha  derecha,IReglas  reglas)
     {
