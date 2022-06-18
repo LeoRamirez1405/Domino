@@ -81,7 +81,6 @@ public class Matematico : IJugar
                     posFichaMano = i;
                 }
             }
-
         }
         if (posFicha != -1)
         {
@@ -92,9 +91,9 @@ public class Matematico : IJugar
     }
 
     
-    int Calcula(ParteFicha fichaMano, ParteFicha fichaTablero)
+    int Calcula(ParteFicha fichaTablero, ParteFicha fichaMano)
     {
-        if (fichaMano.Valor + fichaTablero.Valor % 5 != 0)
+        if (fichaMano.Valor + fichaTablero.Valor % 5 == 0)
             return fichaMano.Valor + fichaTablero.Valor;
         return 0;
     }

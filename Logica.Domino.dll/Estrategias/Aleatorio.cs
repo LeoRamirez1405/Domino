@@ -7,7 +7,7 @@ public class Aleatorio :IJugar
         this.Mano = mano;
     }
 
-    public Ficha Jugar(IReglas  reglas)
+    public Ficha Jugar(IReglas reglas)
     {
         Random r = new Random();
         int num = r.Next(0,Mano.Count);
@@ -19,10 +19,10 @@ public class Aleatorio :IJugar
     {
         bool[] revisados = new bool[Mano.Count];
         Random r = new Random();
-        int num = r.Next(0,Mano.Count);
+        int num = r.Next(0,revisados.Length);
         int intentos = 0;
         
-            while(intentos<Mano.Count)
+            while(intentos<=revisados.Length)
             {
                 if(!revisados[num])
                 {
@@ -37,7 +37,7 @@ public class Aleatorio :IJugar
 
                     intentos++;
                 }
-                num = r.Next(0,Mano.Count);
+                num = r.Next(0,revisados.Length);
             }
         return (Mano[0],-1);
     }

@@ -70,10 +70,14 @@ public class Arbitro : GuiaJuego //no es estatico para poder variar las reglas y
 
         do
         {
-            // int proximoJugador = this.reglas.ProximoJugador(jugadorActual);
             jugadorActual = this.reglas.ProximoJugador(jugadorActual);
-            // jugadorActual = proximoJugador;
-            System.Console.WriteLine($"Jugador Actual: {jugadorActual}🧑‍💻");
+            // if(jugadorActual == 1)
+            // {
+                System.Console.WriteLine($"Jugador Actual: {jugadorActual}🧑‍💻");
+                // System.Console.WriteLine("Mano :"); 
+                // imprimirMano(jugadores[jugadorActual].ObtenerFichas());
+                // System.Console.WriteLine("-------");
+            // }
             //aqui solol deberia pasar las dos fichas por donde se puede jugar y tendria que devolver la ficha que va a jugar y por donde la va ajugar
             //aqui no es necesario pasarle las reglas al los jugadores, pues las estrategias dben poder funcionar (No necesariamente se eficientes) con cualquier juego o regla
             (Ficha, int) jugada = jugadores[jugadorActual].Jugar(parteFichaIzquierda,parteFichaDerecha,reglas);
