@@ -70,4 +70,10 @@ public enum ParametrosDefinenGanador
     IndexJugadorActual,
     // FichasJugadorActual,
     FichasJugadores, // aqui se pasarian las fichas cada jugador en una lista d listas, luego con el index jugadore actual puedo ver las fichas del jugador actual
+    SeTrancoElJuego,
 }
+
+// public enum ParametrosParaFinalizarPartida
+// {
+
+// }

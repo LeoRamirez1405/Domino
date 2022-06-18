@@ -1,18 +1,9 @@
 namespace Logica.domino.dll;
-public class ClasicoIndividual : IReglas
+public class ClasicoIndividual : ClaseComunReglas, IReglas
 {
-    protected int cantJugadores;
-    public int cantFichas;//es protected para poder heredar de clasico y hacer un doble 6 (este es el doble 9)
-    //private (int, int) dimensionTablero;
+    public ClasicoIndividual(int cantJugadores, int cantFichas, int valorMaxFichas) : base(2,4,cantFichas,cantJugadores,valorMaxFichas){}//aqui se deberia incializar de con valores
 
-    public ClasicoIndividual()//aqui se deberia incializar de con valores
-    {
-        this.cantJugadores = 4;
-        this.cantFichas = 10;
-        //this.dimensionTablero = (5,8);//total de fichas que se pueden poner en un juego : cant jugadores * cant fichas = 40 
-    }
-
-    public int CantidadJugadores => cantJugadores;
+    public int CantidadJugadores => base.cantJugadoresEnJuego;
 
     public (int, int) DimensionTablero => (5,8);//5 filas 8 columnas
 
@@ -21,10 +12,10 @@ public class ClasicoIndividual : IReglas
         //aqui se modifica la coleccion de fichas general para que ell arbitro solo se quede con las fichas sobrantes luego de repartir
         List<Ficha[]> result = new List<Ficha[]>();
         System.Random r = new Random();
-        for(int i = 0; i < cantJugadores; i++)
+        for(int i = 0; i < CantidadJugadores; i++)//cantJugadores
         {
-            Ficha[] resultemporal = new Ficha[cantFichas];
-            for(int j = 0; j < cantFichas; j++)
+            Ficha[] resultemporal = new Ficha[base.cantFichasPorJugador];//cantFichas
+            for(int j = 0; j < resultemporal.Length; j++)//cantFichas
             {
                 int pos = r.Next(todasFichas.Count);
                 resultemporal[j] = todasFichas[pos];
@@ -35,36 +26,19 @@ public class ClasicoIndividual : IReglas
         return result;
     }
 
-    public bool FinalizoPartida(int cantFichasJugadorActual, int turnosSinJugar)
+    public virtual bool FinalizoPartida(int cantFichasJugadorActual, int turnosSinJugar)
     {
         if(cantFichasJugadorActual == 0) return true;
-        if(turnosSinJugar == cantJugadores) return true;
+        if(turnosSinJugar == CantidadJugadores) return true;
         return false;
     }
 
-    //Retorna dos enteros. El primer entero simboliza el equipo ganador y el segun la cant de puntos que gana
-    public (int,int) Ganador(int fichasRestantesEquipoA, List<Ficha> equipaA, int fichasRestantesEquipoB, List<Ficha> equipoB)
-    {
-        int acumuladoEquipoA = 0;
-        foreach(Ficha x in equipaA)
-            acumuladoEquipoA += x.Abajo.Valor + x.Arriba.Valor;
-        int acumuladoEquipoB = 0;
-        foreach(Ficha x in equipoB) 
-            acumuladoEquipoB += x.Abajo.Valor + x.Arriba.Valor;
-        
-        if(fichasRestantesEquipoA == 0) return (0,acumuladoEquipoB);
-        if(fichasRestantesEquipoB == 0) return (1,acumuladoEquipoA);
-       
-        return acumuladoEquipoA < acumuladoEquipoB ? (0,acumuladoEquipoB) : (1,acumuladoEquipoA);
-    }
-
-    public (int, int) Ganador(Dictionary<ParametrosDefinenGanador, object> definenGanador)
+    virtual public (int, int) Ganador(Dictionary<ParametrosDefinenGanador, object> definenGanador)
     {
         int jugadorGanador = -1;
         List<int> valorFichasPorJugador = new List<int>();
         if(definenGanador.ContainsKey(ParametrosDefinenGanador.FichasJugadores) && definenGanador.ContainsKey(ParametrosDefinenGanador.IndexJugadorActual))
         {
-            // int cantFichasJugadorActual = ((List<Ficha>)definenGanador[ParametrosDefinenGanador.FichasJugadores])[];
             List<List<Ficha>> fichasJugadores = (List<List<Ficha>>)definenGanador[ParametrosDefinenGanador.FichasJugadores];
             int jugadorActual = (int)definenGanador[ParametrosDefinenGanador.IndexJugadorActual];
 
@@ -81,19 +55,11 @@ public class ClasicoIndividual : IReglas
             if(fichasJugadores[jugadorActual].Count == 0)//esto seria equivalente a ver si al jugador actual le quedan 0 fichas
             {
                 jugadorGanador = jugadorActual;
-                // int puntos = 0;
-                // for(int i = 0; i < cantJugadores; i++)
-                // {
-                //     if(i == jugadorActual) continue;
-                //     puntos += valorFichasPorJugador[i];
-                // }
-                // return (jugadorActual,puntos);
-                //CalcularPuntosGanoJugador(jugadorActual,valorFichasPorJugador);
             }
             else if(definenGanador.ContainsKey(ParametrosDefinenGanador.TurnosSinJugar))//else
             {
                 int min = int.MaxValue;
-                for(int i = 0; i < this.cantJugadores; i++)
+                for(int i = 0; i < CantidadJugadores; i++)//this.cantJugadores
                 {
                     if(valorFichasPorJugador[i] < min)
                     {
@@ -120,7 +86,7 @@ public class ClasicoIndividual : IReglas
 
     public int ProximoJugador(int jugadorActual)
     {
-        if(jugadorActual == this.cantJugadores-1) return 0;
+        if(jugadorActual == CantidadJugadores - 1) return 0;//cantJugadores
         return jugadorActual + 1;
     }
 
@@ -130,24 +96,19 @@ public class ClasicoIndividual : IReglas
     {
         return fichaMano == fichaMesa;//se redefinio el ==
     }
-    
-    // public bool ValidarJugada(ParteFicha fichaMesa, ParteFicha fichaMano)
-    // {
-    //     return fichaMano == fichaMesa;
-    // }
-
-    public int JugadorInicial()
-    {
-        return 0;
-    }
 
     public int CantFichasPorJugador()
     {
-        return cantFichas;
+        return base.cantFichasPorJugador;//
     }
 
     public int CantFichasTotalJuego()
     {
-        return this.cantFichas * this.cantJugadores;
+        return CantFichasPorJugador() * CantidadJugadores;//
+    }
+
+    public virtual void AccionDespuesDeLaJugada(int jugadorActual, bool hubojugada, ParteFicha izquierda, ParteFicha Derecha)
+    {
+        return;
     }
 }

@@ -11,4 +11,5 @@ public interface IReglas
     bool FinalizoPartida(int jugoJugadorActual, int turnosSinJugar);
     int ProximoJugador(int jugadorActual);
     (int,int) Ganador(Dictionary<ParametrosDefinenGanador,object> definenGanador);//int fichasRestantesEquipoA, List<Ficha> equipaA, int fichasRestantesEquipoB, List<Ficha> equipoB
+    void AccionDespuesDeLaJugada(int jugadoractual, bool huboJugada, ParteFicha izquierda, ParteFicha derecha);
 }

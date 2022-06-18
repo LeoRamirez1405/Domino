@@ -12,7 +12,7 @@ class Program
         //     else if(dom == 2)
         //         {domino = new Emojis();}
 
-        ClasicoIndividual reglas = new ClasicoIndividual();
+        ClasicoIndividual reglas = new ClasicoIndividual(4,10,9);
         
         Amistoso amistoso = new Amistoso(reglas,domino);
         (int,int) ganador = amistoso.Gana();
