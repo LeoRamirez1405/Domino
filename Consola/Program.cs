@@ -15,6 +15,7 @@ class Program
         Console.Clear();
         ClasicoIndividual reglas = new ClasicoIndividual();
         
+        #region "Modo"
         System.Console.WriteLine("Qué modo desea jugar ?: ");
         IModo modo = null;
         System.Console.WriteLine("1. Amistoso");
@@ -26,21 +27,26 @@ class Program
         {
             modo = new Amistoso(reglas,domino);
         }
-        if(respuesta == 2)
+        else if(respuesta == 2)
         {
             System.Console.WriteLine("Hasta cuantos puntos desea jugar ?");
             int result = int.Parse(Console.ReadLine());
             if(result > 0) modo = new HastaX(result,reglas,domino);
             else modo = new HastaX(100,reglas,domino);
         }
-        if(respuesta == 3)
+        else if(respuesta == 3)
         {
             System.Console.WriteLine("Hasta cuantos partidos desea jugar ?");
             int result = int.Parse(Console.ReadLine());
             if(result > 0) modo = new Match(result,reglas,domino);
             else modo = new Match(2,reglas,domino);
         }
-
+        else
+        {
+           modo = new Amistoso(reglas,domino); 
+        }
+        #endregion 
+        
         (int,int) ganador = modo.Gana();
         System.Console.WriteLine($"El ganador es el jugador {ganador.Item1} con {ganador.Item2} puntos.");
     }

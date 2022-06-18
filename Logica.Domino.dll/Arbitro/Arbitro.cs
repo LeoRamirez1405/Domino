@@ -38,6 +38,14 @@ public class Arbitro : GuiaJuego //no es estatico para poder variar las reglas y
         Jugando();
         return true;
     }
+    public static void imprimirMano(List<Ficha> mano)
+    {
+        foreach(Ficha ficha in mano)
+        {
+            System.Console.Write(ficha.ToString()+" "); 
+        }
+        System.Console.WriteLine();
+    }
 
     public (int,int) Jugando()
     {
@@ -168,14 +176,7 @@ public class Arbitro : GuiaJuego //no es estatico para poder variar las reglas y
         while(this.estadoJuego == EstadoJuego.EnCurso);
 
         // Metodo para imprimir la mano del jugador 
-        void imprimirMano(List<Ficha> mano)
-        {
-            foreach(Ficha ficha in mano)
-            {
-                System.Console.Write(ficha.ToString()+" "); 
-            }
-            System.Console.WriteLine();
-        }
+        
         foreach (var jug in jugadores)
         {
             imprimirMano(jug.ObtenerFichas());
@@ -267,19 +268,20 @@ public class Arbitro : GuiaJuego //no es estatico para poder variar las reglas y
         System.Console.WriteLine("2. Botagorda");
         System.Console.WriteLine("3. Leo");
         System.Console.WriteLine("4. Matemático");
+        System.Console.WriteLine("5. Humano");
        //Aqui se empieza
        List<Ficha[]> fichasJugadores = reglas.Repartir(domino.fichas(reglas.CantFichasPorJugador()));
         for (int i = 0; i < cantJugadores; i++)
         {
             System.Console.WriteLine($"Escoja la estrategia del jugador {i}");
             int jug = int.Parse(Console.ReadLine());
-            // int jug = 1;
             while(true)
             {
                 if(jug == 1) {ListaJugadores.Add(new Aleatorio(fichasJugadores[i].ToList())); break;}
                 else if(jug == 2) {ListaJugadores.Add(new Botagorda(fichasJugadores[i].ToList())); break;}
                 else if(jug == 3) {ListaJugadores.Add(new Leo(fichasJugadores[i].ToList())); break;}
                 else if(jug == 4) {ListaJugadores.Add(new Matematico(fichasJugadores[i].ToList())); break;}
+                else if(jug == 5) {ListaJugadores.Add(new Humano(fichasJugadores[i].ToList())); break;}
                 else
                 {
                     System.Console.WriteLine("Dato incorrecto. Vuelva a intentarlo: ");
@@ -289,7 +291,7 @@ public class Arbitro : GuiaJuego //no es estatico para poder variar las reglas y
         }
 
         jugadores = ListaJugadores;
-        //System.Console.Clear();
+        System.Console.Clear();
     }
     public List<IJugar> GetJugadores() => jugadores;
 }
