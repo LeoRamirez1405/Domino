@@ -2,19 +2,17 @@ namespace Logica.domino.dll;
 public class Match : IModo
 {
     int cantidad;
-    List<IJugar> jugadores;
+    int noJug;
+    // List<IJugar> jugadores;
     int[] PuntosJugadores;
     Arbitro arbitro;
-    IReglas reglas;
-    IDomino domino;
-    public Match(int cantidad,IReglas reglas,IDomino domino)
+    public Match(int cantidad,int noJug)
     {
-        this.arbitro = new Arbitro(reglas,domino);
-        this.jugadores = this.arbitro.GetJugadores();
-        this.PuntosJugadores = new int[jugadores.Count];
+        this.arbitro = new Arbitro(noJug);
+        // this.jugadores = this.arbitro.GetJugadores();
+        this.PuntosJugadores = new int[arbitro.GetJugadores().Count];
         this.cantidad = cantidad;
-        this.domino = domino;
-        this.reglas = reglas;
+        
     }
         
     (int,int) jugPuntos = (0,0);
@@ -25,13 +23,13 @@ public class Match : IModo
         {
             jugPuntos = arbitro.Jugando();
             PuntosJugadores[jugPuntos.Item1] += 1;
-            for (int i = 0; i < jugadores.Count; i++)
+            for (int i = 0; i < PuntosJugadores.Length; i++)
             {
                 int pji =  PuntosJugadores[i];
                 System.Console.WriteLine($"Jugador {i} = {pji}");   
             }
             if(PuntosJugadores[jugPuntos.Item1]< cantidad)
-                arbitro = new Arbitro(reglas,domino);
+                arbitro = new Arbitro(noJug);
         }
    
         return (jugPuntos.Item1,PuntosJugadores[jugPuntos.Item1]);

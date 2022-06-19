@@ -22,7 +22,7 @@ public class Aleatorio :IJugar
         int num = r.Next(0,revisados.Length);
         int intentos = 0;
         
-            while(intentos<=revisados.Length)
+            while(intentos<revisados.Length)
             {
                 if(!revisados[num])
                 {
@@ -36,6 +36,7 @@ public class Aleatorio :IJugar
                     {Ficha  f = Mano[num]; Mano.RemoveAt(num); return (f,1);}
 
                     intentos++;
+                    revisados[num] = true;
                 }
                 num = r.Next(0,revisados.Length);
             }

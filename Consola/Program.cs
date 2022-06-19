@@ -3,17 +3,8 @@ class Program
 {
     public static void Main()
     {
-        IDomino domino = new Doble9();
-        System.Console.WriteLine("Con qué domino desea jugar ?: ");
-        System.Console.WriteLine("1. Normal (números)\n2. Emojis\n");
-        int dom = int.Parse(Console.ReadLine());
-            if(dom == 1)
-                {domino = new Doble9();}
-            else if(dom == 2)
-                {domino = new Emojis();}
-
-        Console.Clear();
-        ClasicoIndividual reglas = new ClasicoIndividual();
+        System.Console.WriteLine("Con cuantos jugadores desea jugar?: ");
+        int noJug = int.Parse(Console.ReadLine());
         
         #region "Modo"
         System.Console.WriteLine("Qué modo desea jugar ?: ");
@@ -22,28 +13,27 @@ class Program
         System.Console.WriteLine("2. Hasta X");
         System.Console.WriteLine("3. Match");
         int respuesta = int.Parse(Console.ReadLine());
-
         if(respuesta == 1)
         {
-            modo = new Amistoso(reglas,domino);
+            modo = new Amistoso(noJug);
         }
         else if(respuesta == 2)
         {
             System.Console.WriteLine("Hasta cuantos puntos desea jugar ?");
             int result = int.Parse(Console.ReadLine());
-            if(result > 0) modo = new HastaX(result,reglas,domino);
-            else modo = new HastaX(100,reglas,domino);
+            if(result > 0) modo = new HastaX(result,noJug);
+            else modo = new HastaX(100,noJug);
         }
         else if(respuesta == 3)
         {
             System.Console.WriteLine("Hasta cuantos partidos desea jugar ?");
             int result = int.Parse(Console.ReadLine());
-            if(result > 0) modo = new Match(result,reglas,domino);
-            else modo = new Match(2,reglas,domino);
+            if(result > 0) modo = new Match(result,noJug);
+            else modo = new Match(2,noJug);
         }
         else
         {
-           modo = new Amistoso(reglas,domino); 
+           modo = new Amistoso(noJug); 
         }
         #endregion 
         

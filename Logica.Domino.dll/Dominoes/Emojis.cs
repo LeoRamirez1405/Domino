@@ -2,7 +2,7 @@ namespace Logica.domino.dll;
 public class Emojis : IDomino
 {
     int cantidad = 9;
-    public int maxFichas() => cantidad;
+    public int maxFichas() => cantidad+1;
     public List<Ficha> fichas(int cant)
     {
         if(cant > cantidad) cant = cantidad;
