@@ -2,13 +2,16 @@ namespace Logica.domino.dll;
 
 public class ClaseComunReglas
 {
-    protected int cantMinJugadores;
-    protected int cantMaxJugadores;
-    protected int cantJugadoresEnJuego;
-    protected int cantFichasPorJugador;
+    public int cantMinJugadores   {get;}
+    public int cantMaxJugadores   {get;}
+    public int cantJugadoresEnJuego{get;}
+    public int cantFichasPorJugador{get;}
+    public List<int> puntosPorJugador;
+    //public IContarPuntos contarPuntos;
 
     public ClaseComunReglas(int cantFichas, int cantJugadores, int valorMaximoFichaDomino)
     {
+        //this.contarPuntos = contarPuntos;
         this.cantMinJugadores = 2;
         this.cantMaxJugadores = 4;
 
@@ -21,6 +24,12 @@ public class ClaseComunReglas
             this.cantFichasPorJugador = valorMaximoFichaDomino + 1;
         else
             this.cantFichasPorJugador = cantFichas;
+
+        this.puntosPorJugador = new List<int>();
+        for (int i = 0; i < cantJugadores; i++)
+        {
+            puntosPorJugador.Add(0);
+        }
     }
 
     public int JugadorInicial()

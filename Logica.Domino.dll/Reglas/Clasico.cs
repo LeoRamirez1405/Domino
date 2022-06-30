@@ -1,13 +1,55 @@
 namespace Logica.domino.dll;
 public class ClasicoIndividual : ClaseComunReglas, IReglas
 {
+    IRepartir repartir = new Repartir_Clasico();
+    IContarPuntos ContarPuntos => new ContarPuntos_Clasico();
+    IFinalizarJugada finalizarPartida = new FinalizarJugada_Clasico();
+    IGanador ganador = new Ganador_Clasico(); 
+    IProximoJugador proximoJugador = new ProximoJugador_Clasico();
+    IValidarJugada validarPartida = new ValidarJugada_Clasica();
+    ICalculaPuntos calcula = new CalcularPuntosGanoJugador_Clasico();
     public ClasicoIndividual(int cantJugadores, int cantFichas, int valorMaxFichas) : base(cantFichas,cantJugadores,valorMaxFichas){}//aqui se deberia incializar de con valores
-
     public int CantidadJugadores => base.cantJugadoresEnJuego;
-
     public (int, int) DimensionTablero => (5,8);//5 filas 8 columnas
+    public void AccionDespuesDeLaJugada(int jugadorActual, bool huboJugada, ParteFicha izquierda, ParteFicha derecha, ref List<int> puntosPorJugador, ref List<IJugar> jugadores)
+    {
+        return;
+    }
+    public int CalcularPuntosGanoJugador(int jugadorGanador, List<int> puntosPorJugador)
+    {
+        return calcula.CalcularPuntosGanoJugador(jugadorGanador,puntosPorJugador);   
+    }
+    public int CantFichasPorJugador()
+    {
+        return cantFichasPorJugador;
+    }
+    public int CantFichasTotalJuego()
+    {
+        return CantFichasPorJugador() * CantidadJugadores;
+    }
+    public bool FinalizoPartida(int cantFichasJugadorActual, int turnosSinJugar, List<int> puntosPorJugador)
+    {
+        return finalizarPartida.FinalizoPartida(cantFichasJugadorActual , turnosSinJugar , puntosPorJugador);
+    }
+    public (int, List<int>) Ganador(Dictionary<ParametrosDefinenGanador, object> definenGanador, int cantidadJugadores, IContarPuntos contarPuntos)
+    {
+        return ganador.Ganador(definenGanador, cantidadJugadores, contarPuntos);
+    }
+    public int ProximoJugador(int jugadorActual, int totalJugadores)
+    {
+        return proximoJugador.ProximoJugador(jugadorActual, totalJugadores);    
+    }
+    public List<Ficha[]> Repartir(List<Ficha> todasFichas, int CantidadJugadores, int cantFichasPorJugador)
+    {
+        return repartir.Repartir(todasFichas,CantidadJugadores,base.cantFichasPorJugador);
+    }
+    public bool ValidarJugada(ParteFicha fichaMesa, ParteFicha fichaMano)
+    {
+        return validarPartida.ValidarJugada(fichaMesa, fichaMano);
+    }
+    public IContarPuntos contarPuntos => ContarPuntos;
 
-    public List<Ficha[]> Repartir(List<Ficha> todasFichas)//la lista de fichas que se recibe como paarametro son todas las fichas del juego
+    /*public List<Ficha[]> Repartir(List<Ficha> todasFichas)//la lista de fichas que se recibe como paarametro son todas las fichas del juego
     {
         //aqui se modifica la coleccion de fichas general para que ell arbitro solo se quede con las fichas sobrantes luego de repartir
         List<Ficha[]> result = new List<Ficha[]>();
@@ -110,5 +152,7 @@ public class ClasicoIndividual : ClaseComunReglas, IReglas
     public virtual void AccionDespuesDeLaJugada(int jugadorActual, bool hubojugada, ParteFicha izquierda, ParteFicha Derecha)
     {
         return;
-    }
+    }*/
+
+
 }

@@ -1,5 +1,5 @@
 namespace Logica.domino.dll;
 public interface IModo
 {
-   (int,int) Gana();
+   (int,int) Gana(bool EnEquipo);
 }

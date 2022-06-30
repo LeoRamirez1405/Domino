@@ -5,33 +5,61 @@ public class Match : IModo
     int noJug;
     // List<IJugar> jugadores;
     int[] PuntosJugadores;
+    int[] PuntosEquipo;
     Arbitro arbitro;
-    public Match(int cantidad,int noJug)
+    bool EnEquipo;
+    public Match(int cantidad, int noJug, bool EnEquipo)
     {
+        this.EnEquipo = EnEquipo;
+        this.PuntosEquipo = new int[2];
         this.arbitro = new Arbitro(noJug);
         // this.jugadores = this.arbitro.GetJugadores();
         this.PuntosJugadores = new int[arbitro.GetJugadores().Count];
         this.cantidad = cantidad;
-        
+
     }
-        
-    (int,int) jugPuntos = (0,0);
-    public (int,int) Gana()
+
+    (int, List<int>) jugPuntos = (0, new List<int>());
+
+    public (int, int) Gana(bool EnEquipo)
     {
-        //jugadorGanador tienen que empezarlo en 0
-        while(PuntosJugadores[jugPuntos.Item1]< cantidad)
+        if (EnEquipo)
         {
-            jugPuntos = arbitro.Jugando();
-            PuntosJugadores[jugPuntos.Item1] += 1;
-            for (int i = 0; i < PuntosJugadores.Length; i++)
+            while (PuntosEquipo[jugPuntos.Item1 % 2] < cantidad)
             {
-                int pji =  PuntosJugadores[i];
-                System.Console.WriteLine($"Jugador {i} = {pji}");   
+                jugPuntos = arbitro.Jugando();
+                if (jugPuntos.Item1 == -1) continue;
+                if (jugPuntos.Item1 % 2 == 0)
+                {
+                    PuntosEquipo[0] += 1;
+                }
+                else
+                {
+                    PuntosEquipo[1] += 1;
+                }
+
+                if (PuntosEquipo[jugPuntos.Item1 % 2] < cantidad)
+                    arbitro = new Arbitro(noJug);
             }
-            if(PuntosJugadores[jugPuntos.Item1]< cantidad)
-                arbitro = new Arbitro(noJug);
+            return (jugPuntos.Item1 % 2, PuntosEquipo[jugPuntos.Item1 % 2]);
         }
-   
-        return (jugPuntos.Item1,PuntosJugadores[jugPuntos.Item1]);
+        else
+        {
+            while (PuntosJugadores[jugPuntos.Item1] < cantidad)
+            {
+                if (jugPuntos.Item1 == -1) continue;
+                jugPuntos = arbitro.Jugando();
+                PuntosJugadores[jugPuntos.Item1] += 1;
+                for (int i = 0; i < PuntosJugadores.Length; i++)
+                {
+                    int pji = PuntosJugadores[i];
+                    System.Console.WriteLine($"Jugador {i} = {pji}");
+                }
+                if (PuntosJugadores[jugPuntos.Item1] < cantidad)
+                    arbitro = new Arbitro(noJug);
+            }
+            return (jugPuntos.Item1, PuntosJugadores[jugPuntos.Item1]);
+        }
+
     }
 }

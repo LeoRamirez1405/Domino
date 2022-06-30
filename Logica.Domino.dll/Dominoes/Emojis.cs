@@ -6,12 +6,12 @@ public class Emojis : IDomino
     public List<Ficha> fichas(int cant)
     {
         if(cant > cantidad) cant = cantidad;
-        ParteFicha cero = new ParteFicha("😙",0);
-        ParteFicha uno = new ParteFicha("😎",1);
-        ParteFicha dos = new ParteFicha("👍",2);
-        ParteFicha tres = new ParteFicha("👌",3);
+        ParteFicha cinco = new ParteFicha("😒",0);
+        ParteFicha dos = new ParteFicha("👍",1);
+        ParteFicha tres = new ParteFicha("👌",2);
+        ParteFicha uno = new ParteFicha("😎",3);
         ParteFicha cuatro = new ParteFicha("😁",4);
-        ParteFicha cinco = new ParteFicha("😒",5);
+        ParteFicha cero = new ParteFicha("😙",5);
         ParteFicha seis = new ParteFicha("😂",6);
         ParteFicha siete = new ParteFicha("😊",7);
         ParteFicha ocho = new ParteFicha("😘",8);

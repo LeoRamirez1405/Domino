@@ -2,7 +2,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Logica.Domino.dll\Logica.Domino.dll.csproj" />
-     
   </ItemGroup>
 
   <PropertyGroup>

@@ -18,6 +18,8 @@ public class Ficha
     {
         string ar = arriba.parte.ToString(); 
         string ab = abajo.parte.ToString(); 
+        // if(arriba.Valor == abajo.Valor)
+            // return $"[{ar}]\n[{ab}]";
         return $"[{ar}|{ab}]";
     }
 }
