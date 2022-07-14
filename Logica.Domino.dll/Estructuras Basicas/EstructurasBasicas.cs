@@ -4,15 +4,18 @@ public class Ficha
     ParteFicha arriba;
     ParteFicha abajo;
     public int Valor {get ;}
+    string name;
     public Ficha(ParteFicha arriba,ParteFicha abajo)
     {
         this.abajo = abajo;
         this.arriba = arriba;
         this.Valor = this.abajo.Valor + this.arriba.Valor;
+        name = this.arriba.Valor.ToString() + "_" + this.abajo.ToString();
     }
 
     public ParteFicha Arriba { get => arriba;}
     public ParteFicha Abajo { get => abajo;}
+    public string Name { get => name;}
 
     public override string ToString()
     {
@@ -75,7 +78,70 @@ public enum ParametrosDefinenGanador
     SeTrancoElJuego,
 }
 
-// public enum ParametrosParaFinalizarPartida
-// {
+public enum CategoriasReglas
+{
+    Clasico,
+    Quincena,
+    Personalizada
+}
 
-// }
+public enum ReglasPersonalizadas
+{
+    Repartir,
+    ValidarJugada,
+    ProximoJuagdor,
+    AccionDespuesDeLaJugada,
+    CalcularPuntos,
+    ContarPuntos,
+    FinalizarPartida,
+    Ganador
+}
+
+public enum AccionDespueusDeLaJugada
+{
+    Quincena,
+    Clasico,
+    IvertirJugadores
+}
+
+public enum CalcularPuntosGanadosEnLaPartida
+{
+    Clasico,
+    SoloYo,
+    Comunista,
+    Capitalsita
+}
+
+public enum ContarPuntos
+{
+    Clasico,
+    DobleDoble,
+    ManoDura
+}
+
+public enum FinalizarPartida
+{
+    Clasico,
+    Llegue_100
+}
+
+public enum ProximoJugador
+{
+    Clasico,
+    Aleatorio
+}
+
+public enum ValidarJugada
+{
+    Menor,
+    Mayor
+}
+
+public enum EstrategiasEnum
+{
+    Aleatorio,
+    Botagorda,
+    Leo,
+    Matematico,
+    //Humano//este no deberia esta
+}

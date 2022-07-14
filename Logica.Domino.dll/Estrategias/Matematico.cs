@@ -1,100 +1,18 @@
 namespace Logica.domino.dll;
 
-public class Matematico : IJugar
+public class Matematico:Jugador, IEstrategiasSalir, IEstrategias
 {
-    List<Ficha> Mano;  
-    public Matematico(List<Ficha> mano)
+    public Matematico(int ID,string nombre,List<Ficha> fichas)
+                   :base(ID,nombre,fichas)
+    { }
+    public Ficha Jugar(ref List<Ficha> Mano, IReglas reglas)
+    //public Ficha Jugar(IReglas reglas)
     {
-        this.Mano = mano;
-        IJugar.Ordena(ref mano);
+        return this.estrategiasSalir[3].Jugar(ref Mano,reglas);     
     }
-
-    public List<Ficha> ObtenerFichas()
+    public (Ficha, int) Jugar(ref List<Ficha> Mano,ParteFicha izquierda, ParteFicha derecha, IReglas reglas,int jugadorActual)
+    //public (Ficha ,int)Jugar(ParteFicha  izquierda ,ParteFicha  derecha,IReglas  reglas)
     {
-       return Mano;
-    }
-    public Ficha Jugar(IReglas reglas)
-    {
-        Ficha gorda = Mano[0];
-        int suelto = 0;
-        for (int i = 0; i < Mano.Count; i++)
-        {
-            if (Mano[i].Valor % 5 == 0)
-            {
-                gorda = Mano[i];
-                suelto = i;
-            }
-        }
-        Mano.RemoveAt(suelto);
-        return (gorda);
-    }
-    public (Ficha, int) Jugar(ParteFicha izquierda, ParteFicha derecha, IReglas reglas)
-    {
-        Ficha MejorFicha = Mano[0];
-        int totalPuntos = 0;
-        int posFicha = -1;
-        int posFichaMano = 0;
-
-        for (int i = 0; i < Mano.Count; i++)
-        {
-            if (reglas.ValidarJugada(izquierda, Mano[i].Arriba))
-            {
-                int actual = Calcula(izquierda, Mano[i].Arriba);
-                if (Calcula(izquierda, Mano[i].Arriba) >= totalPuntos)
-                {
-                    MejorFicha = Mano[i];
-                    totalPuntos = actual;
-                    posFicha = 0;
-                    posFichaMano = i;
-                }
-            }
-            if (reglas.ValidarJugada(izquierda, Mano[i].Abajo))
-            {
-                int actual = Calcula(izquierda, Mano[i].Arriba);
-                if (Calcula(izquierda, Mano[i].Arriba) >= totalPuntos)
-                {
-                    MejorFicha = Mano[i];
-                    totalPuntos = actual;
-                    posFicha = 0;
-                    posFichaMano = i;
-                }
-            }
-            if (reglas.ValidarJugada(derecha, Mano[i].Arriba))
-            {
-                int actual = Calcula(izquierda, Mano[i].Arriba);
-                if (Calcula(izquierda, Mano[i].Arriba) >= totalPuntos)
-                {
-                    MejorFicha = Mano[i];
-                    totalPuntos = actual;
-                    posFicha = 1;
-                    posFichaMano = i;
-                }
-            }
-            if (reglas.ValidarJugada(derecha, Mano[i].Abajo))
-            {
-                int actual = Calcula(izquierda, Mano[i].Arriba);
-                if (Calcula(izquierda, Mano[i].Arriba) >= totalPuntos)
-                {
-                    MejorFicha = Mano[i];
-                    totalPuntos = actual;
-                    posFicha = 1;
-                    posFichaMano = i;
-                }
-            }
-        }
-        if (posFicha != -1)
-        {
-            Mano.RemoveAt(posFichaMano);
-            return (MejorFicha, posFicha);
-        }
-        return (Mano[0],-1);
-    }
-
-    
-    int Calcula(ParteFicha fichaTablero, ParteFicha fichaMano)
-    {
-        if (fichaMano.Valor + fichaTablero.Valor % 5 == 0)
-            return fichaMano.Valor + fichaTablero.Valor;
-        return 0;
+        return this.estrategias[3].Jugar(ref Mano,izquierda,derecha,reglas, jugadorActual);     
     }
 }

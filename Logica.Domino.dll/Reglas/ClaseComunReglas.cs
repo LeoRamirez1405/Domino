@@ -2,19 +2,23 @@ namespace Logica.domino.dll;
 
 public class ClaseComunReglas
 {
+    public bool equipo;
     public int cantMinJugadores   {get;}
     public int cantMaxJugadores   {get;}
     public int cantJugadoresEnJuego{get;}
     public int cantFichasPorJugador{get;}
     public List<int> puntosPorJugador;
+    public bool invertido;
+
     //public IContarPuntos contarPuntos;
 
-    public ClaseComunReglas(int cantFichas, int cantJugadores, int valorMaximoFichaDomino)
+    public ClaseComunReglas(int cantFichas, int cantJugadores, int valorMaximoFichaDomino, bool equipo)
     {
         //this.contarPuntos = contarPuntos;
         this.cantMinJugadores = 2;
         this.cantMaxJugadores = 4;
-
+        this.equipo = equipo;
+        this.invertido = false;
         if(cantJugadores < cantMinJugadores || cantJugadores > cantMaxJugadores)
             this.cantJugadoresEnJuego = 4;
         else

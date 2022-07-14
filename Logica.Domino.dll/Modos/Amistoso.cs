@@ -8,19 +8,22 @@ public class Amistoso : IModo
     public Amistoso(int noJug,bool EnEquipo)
     {
         this.EnEquipo = EnEquipo;
-        this.arbitro = new Arbitro(noJug);
+        this.EnEquipo = EnEquipo;
+        this.arbitro = new Arbitro(noJug,EnEquipo);
         this.PuntosJugadores = new int[arbitro.GetJugadores().Count];
     }
     public (int,int) Gana(bool EnEquipo)
     {
         (int,List<int>) ganadorEs =  arbitro.Jugando();
-
+        if (ganadorEs.Item1 == -1) return (-1, -1);
+        
         if(EnEquipo)
         {
             if (ganadorEs.Item1 % 2 == 0)
                 return (0, ganadorEs.Item2[ganadorEs.Item1]);
             return (1, ganadorEs.Item2[ganadorEs.Item1]);
         }
+
         return (ganadorEs.Item1, ganadorEs.Item2[ganadorEs.Item1]);
 
     }

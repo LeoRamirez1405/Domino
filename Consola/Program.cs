@@ -3,9 +3,10 @@ class Program
 {
     public static void Main()
     {
-        Console.Clear();
+         Console.Clear();
         System.Console.WriteLine("Con cuantos jugadores desea jugar?: ");
         int noJug = int.Parse(Console.ReadLine());
+        
         bool equipo = false;
 
         if (noJug > 2 && noJug % 2 == 0)
@@ -14,10 +15,10 @@ class Program
             string resp = Console.ReadLine();
             if (resp.ToLower() == "si") equipo = true;
         }
+        IModo modo = null;
 
         #region "Modo"
         System.Console.WriteLine("Qué modo desea jugar ?: ");
-        IModo modo = null;
         System.Console.WriteLine("1. Amistoso");
         System.Console.WriteLine("2. Hasta X");
         System.Console.WriteLine("3. Match");
@@ -44,10 +45,13 @@ class Program
         {
             modo = new Amistoso(noJug, equipo);
         }
-        #endregion
+        #endregion*/
 
         (int, int) ganador = modo.Gana(equipo);
         if (ganador.Item1 == -1) System.Console.WriteLine("El juego quedó empatado");
-        System.Console.WriteLine($"El ganador es el jugador {ganador.Item1} con {ganador.Item2} puntos.");
+        else if(!equipo)
+            System.Console.WriteLine($"El ganador es el jugador {ganador.Item1} con {ganador.Item2} puntos.");
+        else
+            System.Console.WriteLine($"El ganador es el equipo {ganador.Item1%2} con {ganador.Item2} puntos.");
     }
 }

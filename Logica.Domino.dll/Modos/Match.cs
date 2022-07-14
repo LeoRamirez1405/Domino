@@ -12,7 +12,7 @@ public class Match : IModo
     {
         this.EnEquipo = EnEquipo;
         this.PuntosEquipo = new int[2];
-        this.arbitro = new Arbitro(noJug);
+        this.arbitro = new Arbitro(noJug,EnEquipo);
         // this.jugadores = this.arbitro.GetJugadores();
         this.PuntosJugadores = new int[arbitro.GetJugadores().Count];
         this.cantidad = cantidad;
@@ -39,7 +39,7 @@ public class Match : IModo
                 }
 
                 if (PuntosEquipo[jugPuntos.Item1 % 2] < cantidad)
-                    arbitro = new Arbitro(noJug);
+                    arbitro = new Arbitro(noJug,EnEquipo);
             }
             return (jugPuntos.Item1 % 2, PuntosEquipo[jugPuntos.Item1 % 2]);
         }
@@ -56,7 +56,7 @@ public class Match : IModo
                     System.Console.WriteLine($"Jugador {i} = {pji}");
                 }
                 if (PuntosJugadores[jugPuntos.Item1] < cantidad)
-                    arbitro = new Arbitro(noJug);
+                    arbitro = new Arbitro(noJug,EnEquipo);
             }
             return (jugPuntos.Item1, PuntosJugadores[jugPuntos.Item1]);
         }

@@ -6,16 +6,16 @@ public class Quincena : ClasicoIndividual
     IFinalizarJugada finalizarPartida = new FinalizarJugada_Llegue100();
     IGanador ganador = new Ganador_Quincena();
 
-    public Quincena(int cantJugadores, int cantFichasPorJugador, int valorMaxFichas) : base(cantJugadores, cantFichasPorJugador, valorMaxFichas){}
+    public Quincena(int cantJugadores, int cantFichasPorJugador, int valorMaxFichas,bool equipo) : base(cantJugadores, cantFichasPorJugador, valorMaxFichas,equipo){}
 
-    public new (int, List<int>) Ganador(Dictionary<ParametrosDefinenGanador, object> definenGanador, int cantidadJugadores, IContarPuntos contarPuntos)
+    public new (int, List<int>) Ganador(Dictionary<ParametrosDefinenGanador, object> definenGanador, int cantidadJugadores, IContarPuntos contarPuntos,ICalculaPuntos calculaPuntos, bool equipo, List<int> puntosPorJugador,List<Jugador> jugadores)
     {
-        return ganador.Ganador(definenGanador, cantidadJugadores, contarPuntos);
+        return ganador.Ganador(definenGanador, cantidadJugadores, contarPuntos,calculaPuntos,equipo,puntosPorJugador,jugadores);
     }
 
-    public new void AccionDespuesDeLaJugada(int jugadorActual, bool huboJugada, ParteFicha izquierda, ParteFicha derecha, ref List<int> puntosPorJugador, ref List<IJugar> jugadores)
+    public new void AccionDespuesDeLaJugada(int jugadorActual, bool huboJugada, ParteFicha izquierda, ParteFicha derecha, ref List<int> puntosPorJugador, ref List<Jugador> jugadores, ref bool invertido)
     {
-        adj.AccionDespuesDeLaJugada(jugadorActual,huboJugada,izquierda,derecha,ref puntosPorJugador,ref jugadores);
+        adj.AccionDespuesDeLaJugada(jugadorActual,huboJugada,izquierda,derecha,ref puntosPorJugador,ref jugadores, ref invertido);
     }
 
     public new bool FinalizoPartida(int cantFichasJugadorActual, int turnosSinJugar, List<int> puntosPorJugador)

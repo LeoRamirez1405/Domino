@@ -3,15 +3,19 @@ public class Personalizada : ClaseComunReglas, IReglas
 {
     IRepartir repartir = new Repartir_Clasico();
     IContarPuntos ContarPuntos;
-    IFinalizarJugada finalizarPartida;
+    IFinalizarJugada finalizarPartida = new FinalizarJugada_Clasico();
     IGanador ganador;
     IProximoJugador proximoJugador;
     IValidarJugada validarPartida;
     ICalculaPuntos calcula;
     IAccionDespuesDeLaJugada adj;
+    public bool equipo => base.equipo;
+    public bool invertido => base.invertido;
+    public ICalculaPuntos calculaPuntos => calcula;
 
-    public Personalizada(int cantJugadores, int cantFichas, int valorMaxFichas, IContarPuntos ContarPuntos,IGanador ganador,IProximoJugador proximoJugador,
-                         IValidarJugada validarPartida,ICalculaPuntos calcula, IAccionDespuesDeLaJugada adj) : base(cantFichas, cantJugadores, valorMaxFichas) 
+
+    public Personalizada(int cantJugadores, int cantFichas, int valorMaxFichas, bool equipo ,IContarPuntos ContarPuntos,IGanador ganador,IProximoJugador proximoJugador,
+                         IValidarJugada validarPartida,ICalculaPuntos calcula, IAccionDespuesDeLaJugada adj) : base(cantFichas, cantJugadores, valorMaxFichas,equipo) 
     {
         this.ganador = ganador ;
         this.proximoJugador = proximoJugador ;
@@ -22,13 +26,13 @@ public class Personalizada : ClaseComunReglas, IReglas
 
     }//aqui se deberia incializar de con valores
 
-    public void AccionDespuesDeLaJugada(int jugadorActual, bool huboJugada, ParteFicha izquierda, ParteFicha derecha, ref List<int> puntosPorJugador, ref List<IJugar> jugadores)
+    public void AccionDespuesDeLaJugada(int jugadorActual, bool huboJugada, ParteFicha izquierda, ParteFicha derecha, ref List<int> puntosPorJugador, ref List<Jugador> jugadores, ref bool invertido)
     {
-        adj.AccionDespuesDeLaJugada(jugadorActual, huboJugada, izquierda, derecha, ref puntosPorJugador, ref jugadores);
+        adj.AccionDespuesDeLaJugada(jugadorActual, huboJugada, izquierda, derecha, ref puntosPorJugador, ref jugadores, ref invertido);
     }
-    public int CalcularPuntosGanoJugador(int jugadorGanador, List<int> puntosPorJugador)
+    public int CalcularPuntosGanoJugador(int jugadorGanador, List<int> puntosPorJugador,bool equipo)
     {
-        return calcula.CalcularPuntosGanoJugador(jugadorGanador, puntosPorJugador);
+        return calcula.CalcularPuntosGanoJugador(jugadorGanador, puntosPorJugador,equipo);
     }
     public int CantFichasPorJugador()
     {
@@ -42,13 +46,13 @@ public class Personalizada : ClaseComunReglas, IReglas
     {
         return finalizarPartida.FinalizoPartida(cantFichasJugadorActual, turnosSinJugar, puntosPorJugador);
     }
-    public (int, List<int>) Ganador(Dictionary<ParametrosDefinenGanador, object> definenGanador, int cantidadJugadores, IContarPuntos contarPuntos)
+    public (int, List<int>) Ganador(Dictionary<ParametrosDefinenGanador, object> definenGanador, int cantidadJugadores, IContarPuntos contarPuntos,ICalculaPuntos calculaPuntos,bool equipo, List<int> puntosPorJugador,List<Jugador> jugadores)
     {
-        return ganador.Ganador(definenGanador, cantidadJugadores, contarPuntos);
+        return ganador.Ganador(definenGanador, cantidadJugadores, contarPuntos,calculaPuntos,equipo, puntosPorJugador,jugadores);
     }
-    public int ProximoJugador(int jugadorActual, int totalJugadores)
+    public int ProximoJugador(int jugadorActual, int totalJugadores,bool invertido)
     {
-        return proximoJugador.ProximoJugador(jugadorActual, totalJugadores);
+        return proximoJugador.ProximoJugador(jugadorActual, totalJugadores, invertido);
     }
     public List<Ficha[]> Repartir(List<Ficha> todasFichas, int CantidadJugadores, int cantFichasPorJugador)
     {

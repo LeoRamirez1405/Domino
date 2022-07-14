@@ -6,12 +6,15 @@ public class Arbitro : GuiaJuego //no es estatico para poder variar las reglas y
     IReglas reglas;
     IDomino domino;
     int cantJugadores;//la cant de jugadores debe estar en las reglas
-    List<IJugar> jugadores;
+    List<Jugador> jugadores;
     ParteFicha[,] tablero;
     List<int> puntosPorJugadores;
-    public Arbitro(int cantJug)//IReglas reglas
-    {   
-        this.puntosPorJugadores = new List<int>(cantJug);
+    bool equipo;
+    Mesa mesa = new Mesa();
+    public Arbitro(int cantJug, bool equipo)//IReglas reglas
+    {
+        this.equipo = equipo;
+        this.puntosPorJugadores = new int[cantJug].ToList();
         this.cantJugadores = cantJug;
         this.estadoJuego = EstadoJuego.Null;
         this.domino = IniciaDomino();
@@ -30,10 +33,10 @@ public class Arbitro : GuiaJuego //no es estatico para poder variar las reglas y
     //     tablero = new ParteFicha[reglas.DimensionTablero.Item1,this.reglas.DimensionTablero.Item2];//el metodo retorna una tupla (contrarto jj)
     //     return true;
     // }
-// public int MyProperty { get; private set; }
+    // public int MyProperty { get; private set; }
     public bool ComenzarJuego()
     {
-        if(this.estadoJuego != EstadoJuego.ListoParaComenzar)
+        if (this.estadoJuego != EstadoJuego.ListoParaComenzar)
             return false;
 
         //este estado es en el que no se han puesto fichas
@@ -42,17 +45,17 @@ public class Arbitro : GuiaJuego //no es estatico para poder variar las reglas y
     }
     public static void imprimirMano(List<Ficha> mano)
     {
-        foreach(Ficha ficha in mano)
+        foreach (Ficha ficha in mano)
         {
-            System.Console.Write(ficha.ToString()+" "); 
+            System.Console.Write(ficha.ToString() + " ");
         }
         System.Console.WriteLine();
     }
 
     public static string recorrido = "";
-    public (int,List<int>) Jugando()
+    public (int, List<int>) Jugando()
     {
-        (int,List<int>) result = (-1, new List<int>());
+        (int, List<int>) result = (-1, new List<int>());
 
         ParteFicha parteFichaDerecha = null;
         // (int,int) posParteFichaderecha = (-1,-1);
@@ -63,45 +66,48 @@ public class Arbitro : GuiaJuego //no es estatico para poder variar las reglas y
         int turnosSinJugar = 0;
 
         estadoJuego = EstadoJuego.EnCurso;
-        (int,int)[] pos = new (int,int)[2];//por el monento solo se puede jugar x dos lados pues las fichas son las tradicionales
+        (int, int)[] pos = new (int, int)[2];//por el monento solo se puede jugar x dos lados pues las fichas son las tradicionales
 
         //Stopwatch clock = new Stopwatch();
         int jugadorActual = reglas.JugadorInicial();
         //Hay que tener algo que sea una abstraccion de tablero que me diga las fichas disponibles por donde se puede jugar
-
-        Ficha fichaIncial = jugadores[jugadorActual].Jugar(this.reglas);
+        Ficha fichaIncial = ((IEstrategiasSalir)jugadores[jugadorActual]).Jugar(ref jugadores[jugadorActual].fichas,this.reglas);
+        mesa.AddDer(fichaIncial,jugadorActual);
         parteFichaDerecha = fichaIncial.Abajo;
         parteFichaIzquierda = fichaIncial.Arriba;
         pos = PonerFichaTablero(fichaIncial);
         // PonerFichaTablero(pos,fichaIncial,(-1,-1));
         //--------------------------
-        reglas.AccionDespuesDeLaJugada(jugadorActual,true,parteFichaIzquierda,parteFichaDerecha,ref puntosPorJugadores,ref jugadores);
-        System.Console.WriteLine($"Jugador Inicial: {jugadorActual}");
-        recorrido = fichaIncial.ToString();
-        System.Console.WriteLine(recorrido+"\n");
+        reglas.AccionDespuesDeLaJugada(jugadorActual, true, parteFichaIzquierda, parteFichaDerecha, ref puntosPorJugadores, ref jugadores,ref ((ClaseComunReglas)reglas).invertido);
+        foreach (var item in jugadores)
+        {
+            if(item is IJuegaConMesa) ((IJuegaConMesa)item).juegaConMesa(mesa,mesa.fichaActual_jugador,true);
+        }
+        System.Console.WriteLine("Jugador Inicial: "+jugadores[jugadorActual].ID);
+        System.Console.Write("Mesa: "); mesa.imprimirMesa(); System.Console.WriteLine();
 
         do
         {
-            System.Console.WriteLine("\nMesa: "+recorrido+"\n");
-            jugadorActual = this.reglas.ProximoJugador(jugadorActual,cantJugadores);
+            jugadorActual = this.reglas.ProximoJugador(jugadorActual, cantJugadores, reglas.invertido);
             // if(jugadorActual == 1)
             // {
-                System.Console.WriteLine($"Jugador Actual: {jugadorActual}🧑‍💻");
-                // System.Console.WriteLine("Mano :"); 
-                // imprimirMano(jugadores[jugadorActual].ObtenerFichas());
-                // System.Console.WriteLine("-------");
+            System.Console.WriteLine("Jugador Actual: "+jugadores[jugadorActual].nombre+"🧑‍💻");
+            // System.Console.WriteLine("Mano :"); 
+            // imprimirMano(jugadores[jugadorActual].ObtenerFichas());
+            // System.Console.WriteLine("-------");
             // }
             //aqui solol deberia pasar las dos fichas por donde se puede jugar y tendria que devolver la ficha que va a jugar y por donde la va ajugar
             //aqui no es necesario pasarle las reglas al los jugadores, pues las estrategias dben poder funcionar (No necesariamente se eficientes) con cualquier juego o regla
-            (Ficha, int) jugada = jugadores[jugadorActual].Jugar(parteFichaIzquierda,parteFichaDerecha,reglas);
-            if(jugada.Item2 == 1) 
+            (Ficha, int) jugada = ((IEstrategias)jugadores[jugadorActual]).Jugar(ref jugadores[jugadorActual].fichas,parteFichaIzquierda, parteFichaDerecha, reglas,jugadorActual);
+            if (jugada.Item2 == 1)
             {
                 //1 es la parte derecha
                 // parteFichaDerecha = jugada.Item1.Abajo.Equals(parteFichaDerecha) ? jugada.Item1.Arriba : jugada.Item1.Abajo;
-                if(jugada.Item1.Abajo.Equals(parteFichaDerecha))
+                //if(jugada.Item1.Abajo.Equals(parteFichaDerecha))
+                if (reglas.ValidarJugada(parteFichaDerecha, jugada.Item1.Abajo))
                 {
-                   parteFichaDerecha = jugada.Item1.Arriba;
-                   jugada.Item1 = new Ficha(jugada.Item1.Abajo,jugada.Item1.Arriba);
+                    parteFichaDerecha = jugada.Item1.Arriba;
+                    jugada.Item1 = new Ficha(jugada.Item1.Abajo, jugada.Item1.Arriba);
                 }
                 else
                 {
@@ -109,55 +115,74 @@ public class Arbitro : GuiaJuego //no es estatico para poder variar las reglas y
                 }
                 turnosSinJugar = 0;
                 pos[1] = PonerFichaTablero(pos[1], jugada.Item1);
-                reglas.AccionDespuesDeLaJugada(jugadorActual,true,parteFichaIzquierda,parteFichaDerecha, ref puntosPorJugadores, ref jugadores);
+                reglas.AccionDespuesDeLaJugada(jugadorActual, true, parteFichaIzquierda, parteFichaDerecha, ref puntosPorJugadores, ref jugadores,ref ((ClaseComunReglas)reglas).invertido);
                 //-----------------------------------
-                recorrido = recorrido+jugada.Item1.ToString();
-                System.Console.WriteLine(recorrido + "\n");
+                mesa.AddDer(jugada.Item1,jugadorActual);
+                System.Console.Write("Mesa: "); mesa.imprimirMesa();System.Console.WriteLine();
+                foreach (var item in jugadores)
+                {
+                    if(item is IJuegaConMesa) ((IJuegaConMesa)item).juegaConMesa(mesa,mesa.fichaActual_jugador,true);
+                }
+                // recorrido = recorrido + jugada.Item1.ToString();
+                // System.Console.WriteLine(recorrido + "\n");
                 //System.Threading.Thread.Sleep(5000);//espera 2 segundos para hacer la proxima jugada
-                Console.Clear();
+                // Console.Clear();
 
             }
-            else if(jugada.Item2 == 0)
+            else if (jugada.Item2 == 0)
             {
                 //0 es la parte izquierda
                 // parteFichaIzquierda = jugada.Item1.Abajo.Equals(parteFichaIzquierda) ? jugada.Item1.Arriba : jugada.Item1.Abajo;
-                if(jugada.Item1.Abajo.Equals(parteFichaIzquierda))
+                //if(jugada.Item1.Abajo.Equals(parteFichaIzquierda))
+                if (reglas.ValidarJugada(parteFichaIzquierda, jugada.Item1.Abajo))
                 {
-                   parteFichaIzquierda = jugada.Item1.Arriba;
+                    parteFichaIzquierda = jugada.Item1.Arriba;
                 }
                 else
                 {
                     parteFichaIzquierda = jugada.Item1.Abajo;
-                    jugada.Item1 = new Ficha(jugada.Item1.Abajo,jugada.Item1.Arriba);
+                    jugada.Item1 = new Ficha(jugada.Item1.Abajo, jugada.Item1.Arriba);
                 }
                 turnosSinJugar = 0;
-                reglas.AccionDespuesDeLaJugada(jugadorActual,true,parteFichaIzquierda,parteFichaDerecha, ref puntosPorJugadores, ref jugadores);
+                reglas.AccionDespuesDeLaJugada(jugadorActual, true, parteFichaIzquierda, parteFichaDerecha, ref puntosPorJugadores, ref jugadores,ref ((ClaseComunReglas)reglas).invertido);
                 pos[0] = PonerFichaTablero(pos[0], jugada.Item1);
                 //-----------------------------------
-                recorrido = jugada.Item1.ToString()+ recorrido;
-                System.Console.WriteLine(recorrido+"\n");
-                // System.Threading.Thread.Sleep(5000);//espera 2 segundos para hacer la proxima jugada
-                Console.Clear();
+                mesa.AddIzq(jugada.Item1,jugadorActual);
+                System.Console.Write("Mesa: "); mesa.imprimirMesa();
+                foreach (var item in jugadores)
+                {
+                    if(item is IJuegaConMesa) ((IJuegaConMesa)item).juegaConMesa(mesa,mesa.fichaActual_jugador,true);
+                }
+                //recorrido = jugada.Item1.ToString() + recorrido;
+                //System.Console.WriteLine(recorrido + "\n");
+                // System.Threading.Thread.Sleep(2000);//espera 2 segundos para hacer la proxima jugada
+                // Console.Clear();
             }
-            else if(jugada.Item2 == -1)
+            else if (jugada.Item2 == -1)
             {
-                reglas.AccionDespuesDeLaJugada(jugadorActual,false,parteFichaIzquierda,parteFichaDerecha, ref puntosPorJugadores, ref jugadores);
-                System.Console.WriteLine($"El jugador {jugadorActual} no lleva 🧑‍⚖️\n");
+                string jugPasado = jugadores[jugadorActual].nombre;
+                reglas.AccionDespuesDeLaJugada(jugadorActual, false, parteFichaIzquierda, parteFichaDerecha, ref puntosPorJugadores, ref jugadores,ref ((ClaseComunReglas)reglas).invertido);
+                foreach (var item in jugadores)
+                {
+                    if(item is IJuegaConMesa) ((IJuegaConMesa)item).juegaConMesa(mesa,mesa.fichaActual_jugador,false);
+                }
+                System.Console.WriteLine("El jugador "+jugPasado+" no lleva 🧑‍⚖️\n");
+                // System.Console.Write("Mesa: "); mesa.imprimirMesa();System.Console.WriteLine();
                 turnosSinJugar += 1;
             }
 
-            if(this.reglas.FinalizoPartida(jugadores[jugadorActual].ObtenerFichas().Count,turnosSinJugar,puntosPorJugadores))
+            if (this.reglas.FinalizoPartida(jugadores[jugadorActual].fichas.Count, turnosSinJugar, puntosPorJugadores))
             {
-                Dictionary<ParametrosDefinenGanador,object> argumentos = new Dictionary<ParametrosDefinenGanador, object>();
-                argumentos.Add(ParametrosDefinenGanador.TurnosSinJugar,turnosSinJugar);
+                Dictionary<ParametrosDefinenGanador, object> argumentos = new Dictionary<ParametrosDefinenGanador, object>();
+                argumentos.Add(ParametrosDefinenGanador.TurnosSinJugar, turnosSinJugar);
                 argumentos.Add(ParametrosDefinenGanador.IndexJugadorActual, jugadorActual);
                 // List<List<Ficha<T>>> fichasJugadores = new List<List<Fichal<T>>>();
                 List<List<Ficha>> fichasJugadores = new List<List<Ficha>>();
-                foreach(var x in jugadores)
-                    fichasJugadores.Add(x.ObtenerFichas());
+                foreach (var x in jugadores)
+                    fichasJugadores.Add(x.fichas);
                 argumentos.Add(ParametrosDefinenGanador.FichasJugadores, fichasJugadores);
 
-                result = this.reglas.Ganador(argumentos,cantJugadores,reglas.contarPuntos);
+                result = this.reglas.Ganador(argumentos, cantJugadores, reglas.contarPuntos, reglas.calculaPuntos, equipo,puntosPorJugadores,jugadores);
                 estadoJuego = EstadoJuego.Null;
             }
 
@@ -170,44 +195,44 @@ public class Arbitro : GuiaJuego //no es estatico para poder variar las reglas y
             //             // System.Console.Write(new Ficha(new ParteFicha(-1,-1),new ParteFicha(-1,-1)).ToString());
             //             continue;
             //         }
-                //     string ar = tablero[i,j].ToString(); 
-                //     // string ab = tablero[i,j + 1].ToString(); 
-                //     if(i % 2 == 0)
-                //         System.Console.WriteLine($"[{ar}|"); //{ab}]
-                //     else
-                //         System.Console.WriteLine($"{ar}]"); //[{ar}|
-                //     // System.Console.Write(tablero[i,j] .ToString());
-                // }
-                // System.Console.WriteLine();
+            //     string ar = tablero[i,j].ToString(); 
+            //     // string ab = tablero[i,j + 1].ToString(); 
+            //     if(i % 2 == 0)
+            //         System.Console.WriteLine($"[{ar}|"); //{ab}]
+            //     else
+            //         System.Console.WriteLine($"{ar}]"); //[{ar}|
+            //     // System.Console.Write(tablero[i,j] .ToString());
+            // }
+            // System.Console.WriteLine();
             // }
 
         }
-        while(this.estadoJuego == EstadoJuego.EnCurso);
+        while (this.estadoJuego == EstadoJuego.EnCurso);
 
         // Metodo para imprimir la mano del jugador
-        System.Console.WriteLine(jugadores.Count); 
+        //System.Console.WriteLine(jugadores.Count);
         foreach (var jug in jugadores)
         {
-            imprimirMano(jug.ObtenerFichas());
+            imprimirMano(jug.fichas);
         }
 
         return result;
-    }   
-    (int,int)[] PonerFichaTablero(Ficha ficha)
+    }
+    (int, int)[] PonerFichaTablero(Ficha ficha)
     {
         int x = this.tablero.GetLength(0) / 2;
         int y = this.tablero.GetLength(1) / 2;
 
         tablero[x, y] = ficha.Arriba;
-        if(y + 1 < tablero.GetLength(1))
+        if (y + 1 < tablero.GetLength(1))
             tablero[x, y + 1] = ficha.Abajo;
-        return new (int,int)[]{(x, y), (x, y + 1)};
+        return new (int, int)[] { (x, y), (x, y + 1) };
     }
-    (int,int) PonerFichaTablero((int,int) pos, Ficha ficha)
+    (int, int) PonerFichaTablero((int, int) pos, Ficha ficha)
     {
-        return PonerFichaTablero(pos, ficha, 0, (-1,-1));
+        return PonerFichaTablero(pos, ficha, 0, (-1, -1));
     }
-    (int,int) PonerFichaTablero((int,int) pos, Ficha ficha, int index, (int, int) newPos)
+    (int, int) PonerFichaTablero((int, int) pos, Ficha ficha, int index, (int, int) newPos)
     {
         // if(index >= 2)
         //     return newPos;
@@ -238,59 +263,62 @@ public class Arbitro : GuiaJuego //no es estatico para poder variar las reglas y
         //     PonerParteFicha(x + 1, y, ficha);
         //     // return PonerFichaTablero((x + 1, y), ficha, index + 1, newPos);
         // }
-        
+
         // return PonerFichaTablero(newPos, ficha, index + 1, pos);
         // throw new System.Exception();
-        return (0,0);
+        return (0, 0);
     }
     void PonerParteFicha(int x, int y, Ficha ficha)
     {
-        if(tablero[x, y] == ficha.Abajo) 
-                tablero[x, y] = ficha.Abajo;
-            else
-                tablero[x, y] = ficha.Arriba;
+        if (tablero[x, y] == ficha.Abajo)
+            tablero[x, y] = ficha.Abajo;
+        else
+            tablero[x, y] = ficha.Arriba;
     }
     bool HayFichaEnFila(int fila)
     {
-        if(!PosValida(fila, tablero.GetLength(0))) return true;
+        if (!PosValida(fila, tablero.GetLength(0))) return true;
 
-        for(int i = 0; i < tablero.GetLength(1); i ++)
+        for (int i = 0; i < tablero.GetLength(1); i++)
         {
-            if(tablero[fila,i] is not null)
+            if (tablero[fila, i] is not null)
                 return true;
         }
         return false;
     }
     bool PosValida(int x, int length)
     {
-        if(x < 0 || x >= tablero.GetLength(0))
+        if (x < 0 || x >= tablero.GetLength(0))
             return false;
 
         return true;
     }
     void IniciaJugadores(int noJug)
     {
-        List<IJugar> ListaJugadores = new List<IJugar>();
+        List<Jugador> ListaJugadores = new List<Jugador>();
         int cantJugadores = noJug;
-    
+
         System.Console.WriteLine("1. Aleatorio");
         System.Console.WriteLine("2. Botagorda");
         System.Console.WriteLine("3. Leo");
         System.Console.WriteLine("4. Matemático");
         System.Console.WriteLine("5. Humano");
-       //Aqui se empieza
-       List<Ficha[]> fichasJugadores = reglas.Repartir(domino.fichas(reglas.CantFichasPorJugador()),cantJugadores,reglas.CantFichasPorJugador());
+        System.Console.WriteLine("6. Pasador");
+        //Aqui se empieza
+        List<Ficha[]> fichasJugadores = reglas.Repartir(domino.fichas(reglas.CantFichasPorJugador()), cantJugadores, reglas.CantFichasPorJugador());
         for (int i = 0; i < cantJugadores; i++)
         {
             System.Console.WriteLine($"Escoja la estrategia del jugador {i}");
             int jug = int.Parse(Console.ReadLine());
-            while(true)
+
+            while (true)
             {
-                if(jug == 1) {ListaJugadores.Add(new Aleatorio(fichasJugadores[i].ToList())); break;}
-                else if(jug == 2) {ListaJugadores.Add(new Botagorda(fichasJugadores[i].ToList())); break;}
-                else if(jug == 3) {ListaJugadores.Add(new Leo(fichasJugadores[i].ToList())); break;}
-                else if(jug == 4) {ListaJugadores.Add(new Matematico(fichasJugadores[i].ToList())); break;}
-                else if(jug == 5) {ListaJugadores.Add(new Humano(fichasJugadores[i].ToList())); break;}
+                if (jug == 1) { ListaJugadores.Add(new Aleatorio(i,$"Aleatorio{i}",fichasJugadores[i].ToList())); break; }
+                else if (jug == 2) { ListaJugadores.Add(new Botagorda(i,$"Botagorda{i}",fichasJugadores[i].ToList())); break; }
+                else if (jug == 3) { ListaJugadores.Add(new Leo(i,$"Leo{i}",fichasJugadores[i].ToList())); break; }
+                else if (jug == 4) { ListaJugadores.Add(new Matematico(i,$"Matemático{i}",fichasJugadores[i].ToList())); break; }
+                else if (jug == 5) { ListaJugadores.Add(new Humano(i,$"Humano{i}",fichasJugadores[i].ToList())); break; }
+                else if (jug == 6) { ListaJugadores.Add(new Pasador(i,$"Pasador{i}",fichasJugadores[i].ToList())); break; }
                 else
                 {
                     System.Console.WriteLine("Dato incorrecto. Vuelva a intentarlo: ");
@@ -300,7 +328,7 @@ public class Arbitro : GuiaJuego //no es estatico para poder variar las reglas y
         }
 
         jugadores = ListaJugadores;
-        System.Console.Clear();
+        // System.Console.Clear();
     }
     IReglas IniciaRegla(int cantJug)
     {
@@ -309,74 +337,80 @@ public class Arbitro : GuiaJuego //no es estatico para poder variar las reglas y
         try
         {
             FichasDomino = int.Parse(Console.ReadLine());
-            if(FichasDomino > domino.maxFichas()  || FichasDomino < 6) 
+            if (FichasDomino > domino.maxFichas() || FichasDomino < 6)
                 FichasDomino = domino.maxFichas();
-        } catch{FichasDomino = domino.maxFichas();}
+        }
+        catch { FichasDomino = domino.maxFichas(); }
         System.Console.WriteLine("Con cuantas fichas por jugador?: ");
         int noFichPorJug;
         try
         {
             noFichPorJug = int.Parse(Console.ReadLine());
             // if(noFichPorJug > FichasDomino+1  || noFichPorJug < 2) 
-                // noFichPorJug = FichasDomino+1;
-        } catch{noFichPorJug = FichasDomino+1;}
-        
+            // noFichPorJug = FichasDomino+1;
+        }
+        catch { noFichPorJug = FichasDomino + 1; }
+
         IReglas reglas = null;
         System.Console.WriteLine("Con qué reglas desea jugar ?: ");
         System.Console.WriteLine("1. Clásicas \n2. Quincena\n3. Personalizadas");
 
         int reg = int.Parse(Console.ReadLine());
-        if(reg == 1)
-            {reglas = new ClasicoIndividual(cantJug,noFichPorJug,FichasDomino);}
-        if(reg == 2)
-            {reglas = new Quincena(cantJug,noFichPorJug,FichasDomino);}
-         if(reg == 3)
-         {
-             //IRepartir repartir = new Repartir_Clasico();
-             IGanador ganador = new Ganador_Clasico(); 
-             IProximoJugador proximoJugador = new ProximoJugador_Clasico();
-             IValidarJugada validarPartida = new ValidarJugada_Clasica();
-             ICalculaPuntos calcula = new CalcularPuntosGanoJugador_Clasico();
-             IContarPuntos ContarPuntos = new ContarPuntos_Clasico();
-             IAccionDespuesDeLaJugada adj = new AccionDespuesDeLaJugada_Clasico();
-             RellenarReglaPersonalizada(ref adj,ref ganador,ref proximoJugador,ref validarPartida,ref calcula,ref ContarPuntos);
-             reglas = new Personalizada(cantJugadores, noFichPorJug, FichasDomino, ContarPuntos, ganador, proximoJugador,validarPartida, calcula,  adj);
-    ;
-         }
-        else 
-            {reglas = new ClasicoIndividual(cantJug,noFichPorJug,FichasDomino);}
-        return reglas;   
+        
+        { reglas = new ClasicoIndividual(cantJug, noFichPorJug, FichasDomino, equipo); }
+        if (reg == 2)
+        { reglas = new Quincena(cantJug, noFichPorJug, FichasDomino, equipo); }
+        if (reg == 3)
+        {
+        IRepartir repartir = new Repartir_Clasico();
+        IGanador ganador = new Ganador_Clasico();
+        IProximoJugador proximoJugador = new ProximoJugador_Clasico();
+        IValidarJugada validarPartida = new ValidarJugada_Clasica();
+        ICalculaPuntos calcula = new CalcularPuntosGanoJugador_Clasico();
+        IContarPuntos ContarPuntos = new ContarPuntos_Clasico();
+        IAccionDespuesDeLaJugada adj = new AccionDespuesDeLaJugada_Clasico();
+        RellenarReglaPersonalizada(ref adj, ref ganador, ref proximoJugador, ref validarPartida, ref calcula, ref ContarPuntos);
+        reglas = new Personalizada(cantJugadores, noFichPorJug, FichasDomino, equipo, ContarPuntos, ganador, proximoJugador, validarPartida, calcula, adj);
+        
+        }
+        else
+            { reglas = new ClasicoIndividual(cantJug, noFichPorJug, FichasDomino,equipo); }
+            return reglas;
     }
     IDomino IniciaDomino()
     {
         IDomino domino = new Doble9();
         System.Console.WriteLine("Con qué domino desea jugar ?: ");
         System.Console.WriteLine("1. Normal (números)\n2. Emojis\n");
-         int dom = int.Parse(Console.ReadLine());
-            if(dom == 1)
-                {domino = new Doble9();}
-            else if(dom == 2)
-                {domino = new Emojis();}
+        int dom = int.Parse(Console.ReadLine());
+
+        if (dom == 1)
+        { domino = new Doble9(); }
+        else if (dom == 2)
+        { domino = new Emojis(); }
         return domino;
     }
-    public List<IJugar> GetJugadores() => jugadores;
-
-    void RellenarReglaPersonalizada(ref IAccionDespuesDeLaJugada adj,ref IGanador ganador,ref IProximoJugador proximoJugador,
-                                    ref IValidarJugada validarPartida,ref ICalculaPuntos calcula,ref IContarPuntos ContarPuntos)
+    public List<Jugador> GetJugadores() => jugadores;
+    void RellenarReglaPersonalizada(ref IAccionDespuesDeLaJugada adj, ref IGanador ganador, ref IProximoJugador proximoJugador,
+                                    ref IValidarJugada validarPartida, ref ICalculaPuntos calcula, ref IContarPuntos ContarPuntos)
     {
         Console.WriteLine("Como desea que se gane la partida: ");
         Console.WriteLine("1. Clásico\n2. Inverso al Clásico\n3. Estilo Quincena\n4. Si se tranca se acumulan los puntos");
         string resp = Console.ReadLine();
+        ganador = new Ganador_Clasico();
+
         try
         {
             int r = int.Parse(resp);
-            if(r == 2) { ganador = new Ganador_Inverso();}
-            if(r == 3) { ganador = new Ganador_Quincena();} 
-            if(r == 4) { ganador = new Ganador_SiTrancaAcumulaSusPuntos();}
-        }  catch { }
+            if (r == 2) { ganador = new Ganador_Inverso(); }
+            if (r == 3) { ganador = new Ganador_Quincena(); }
+            if (r == 4) { ganador = new Ganador_SiEmpataAcumulaSusPuntos(); }
+        }
+        catch { }
 
 
 
+       proximoJugador = new ProximoJugador_Clasico();
 
         Console.WriteLine("Como desea que se escoja el próximo jugador: ");
         Console.WriteLine("1. Clásico\n2. Aleatorio");
@@ -384,9 +418,11 @@ public class Arbitro : GuiaJuego //no es estatico para poder variar las reglas y
         try
         {
             int r = int.Parse(resp);
-            if(r == 2) { proximoJugador = new ProximoJugador_Aleatorio();}
-        }   catch { }
+            if (r == 2) { proximoJugador = new ProximoJugador_Aleatorio(); }
+        }
+        catch { }
 
+        //validarPartida = new ValidarJugada_Clasico();
 
         Console.WriteLine("Como desea que se valide la jugada: ");
         Console.WriteLine("1. Clásico(si las fichas son iguales )\n2. Si son menores o iguales\n3. Si son mayores o iguales");
@@ -394,10 +430,12 @@ public class Arbitro : GuiaJuego //no es estatico para poder variar las reglas y
         try
         {
             int r = int.Parse(resp);
-            if(r == 2) { validarPartida = new ValidarJugada_Menor();}
-            if(r == 3) { validarPartida = new ValidarJugada_Mayor();}
-        }   catch { }
+            if (r == 2) { validarPartida = new ValidarJugada_Menor(); }
+            if (r == 3) { validarPartida = new ValidarJugada_Mayor(); }
+        }
+        catch { }
 
+        ContarPuntos = new ContarPuntos_Clasico();
 
         Console.WriteLine("Como desea que se calcule la mano: ");
         Console.WriteLine("1. Clásico\n2. Los dobles valen dobles\n3. Los puntos se multiplican por la cantidad de fichas en mano");
@@ -405,10 +443,13 @@ public class Arbitro : GuiaJuego //no es estatico para poder variar las reglas y
         try
         {
             int r = int.Parse(resp);
-            if(r == 2) { ContarPuntos = new ContarPuntos_DobleDoble();}
-            if(r == 3) { ContarPuntos = new ContarPuntos_ManoDura();}
-        }  catch { }
+            if (r == 2) { ContarPuntos = new ContarPuntos_DobleDoble(); }
+            if (r == 3) { ContarPuntos = new ContarPuntos_ManoDura(); }
+        }
+        catch { }
 
+
+        calcula = new CalcularPuntosGanoJugador_Clasico();
 
         Console.WriteLine("Como desea que se calculen los puntos del ganador: ");
         Console.WriteLine("1. Clásico(suma todos menos el de él)\n2. Solo el de él\n3. El promedio de todo\n4.El total");
@@ -416,11 +457,13 @@ public class Arbitro : GuiaJuego //no es estatico para poder variar las reglas y
         try
         {
             int r = int.Parse(resp);
-            if(r == 2) { calcula = new CalcularPuntosGanoJugador_SoloYo();}
-            if(r == 3) { calcula = new CalcularPuntosGanoJugador_Comunista();}
-            if(r == 4) { calcula = new CalcularPuntosGanoJugador_Capitalista();}
-        } catch { }
+            if (r == 2) { calcula = new CalcularPuntosGanoJugador_SoloYo(); }
+            if (r == 3) { calcula = new CalcularPuntosGanoJugador_Comunista(); }
+            if (r == 4) { calcula = new CalcularPuntosGanoJugador_Capitalista(); }
+        }
+        catch { }
 
+        adj = new AccionDespuesDeLaJugada_Quincena();
 
         Console.WriteLine("Que desea que pase luego de una jugada?: ");
         Console.WriteLine("1. Clásico(nada)\n2.Si pasa el jugador se invierte la mesa\n3. Si es multipo de 5 la suma de las cabezas se reciben dichos puntos");
@@ -428,9 +471,10 @@ public class Arbitro : GuiaJuego //no es estatico para poder variar las reglas y
         try
         {
             int r = int.Parse(resp);
-            if(r == 2) { adj = new AccionDespuesDeLaJugada_InvertirJugadores();}
-            if(r == 3) { adj = new AccionDespuesDeLaJugada_Quincena();}
-        }  catch { }
+            if (r == 2) { adj = new AccionDespuesDeLaJugada_InvertirJugadores(); }
+            if (r == 3) { adj = new AccionDespuesDeLaJugada_Quincena(); }
+        }
+        catch { }
     }
 }
 

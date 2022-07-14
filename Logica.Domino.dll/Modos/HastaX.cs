@@ -11,7 +11,7 @@ public class HastaX : IModo
     public HastaX(int cantidad, int noJug, bool EnEquipo)
     {
         this.EnEquipo = EnEquipo;
-        this.arbitro = new Arbitro(noJug);
+        this.arbitro = new Arbitro(noJug,EnEquipo);
         this.noJug = noJug;
         this.PuntosEquipo = new int[2];
         // this.jugadores = this.arbitro.GetJugadores();
@@ -41,7 +41,7 @@ public class HastaX : IModo
                     }
                 }
                 if (PuntosEquipo[jugPuntos.Item1%2] < cantidad)
-                    arbitro = new Arbitro(noJug);
+                    arbitro = new Arbitro(noJug,EnEquipo);
             }
             return (jugPuntos.Item1%2, PuntosEquipo[jugPuntos.Item1%2]);
         }
@@ -59,7 +59,7 @@ public class HastaX : IModo
                     System.Console.WriteLine($"Jugador {i} = {pji}");
                 }
                 if (PuntosJugadores[jugPuntos.Item1] < cantidad)
-                    arbitro = new Arbitro(noJug);
+                    arbitro = new Arbitro(noJug,EnEquipo);
             }
             return (jugPuntos.Item1, PuntosJugadores[jugPuntos.Item1]);
         }

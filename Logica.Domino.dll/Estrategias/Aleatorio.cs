@@ -1,50 +1,19 @@
 namespace Logica.domino.dll;
-public class Aleatorio :IJugar 
+public class Aleatorio : Jugador, IEstrategiasSalir, IEstrategias
 {
-    List<Ficha> Mano;   
-    public Aleatorio(List<Ficha > mano)
+    public Aleatorio(int ID,string nombre,List<Ficha> fichas)
+                   :base(ID,nombre,fichas)
+    { }
+    //public Ficha Jugar(IReglas reglas)
+    public Ficha Jugar(ref List<Ficha> Mano, IReglas reglas)
     {
-        this.Mano = mano;
+        return this.estrategiasSalir[0].Jugar(ref Mano,reglas);     
+    }
+    public (Ficha, int) Jugar(ref List<Ficha> Mano,ParteFicha izquierda, ParteFicha derecha, IReglas reglas,int jugadorActual)
+    //public (Ficha ,int)Jugar(ParteFicha  izquierda ,ParteFicha  derecha,IReglas  reglas)
+    {
+        return this.estrategias[0].Jugar(ref Mano,izquierda,derecha,reglas, jugadorActual);     
     }
 
-    public Ficha Jugar(IReglas reglas)
-    {
-        Random r = new Random();
-        int num = r.Next(0,Mano.Count);
-        Ficha ficha = Mano[num];
-        Mano.RemoveAt(num);
-        return ficha;
-    }
-    public (Ficha ,int)Jugar(ParteFicha  izquierda ,ParteFicha  derecha,IReglas  reglas)
-    {
-        bool[] revisados = new bool[Mano.Count];
-        Random r = new Random();
-        int num = r.Next(0,revisados.Length);
-        int intentos = 0;
-        
-            while(intentos<revisados.Length)
-            {
-                if(!revisados[num])
-                {
-                    if(reglas.ValidarJugada(izquierda,Mano[num].Arriba)) 
-                    {Ficha  f = Mano[num]; Mano.RemoveAt(num); return (f,0);}
-                    if(reglas.ValidarJugada(izquierda,Mano[num].Abajo)) 
-                    {Ficha  f = Mano[num]; Mano.RemoveAt(num); return (f,0);}
-                    if(reglas.ValidarJugada(derecha,Mano[num].Arriba))
-                    {Ficha  f = Mano[num]; Mano.RemoveAt(num); return (f,1);}
-                    if(reglas.ValidarJugada(derecha,Mano[num].Abajo)) 
-                    {Ficha  f = Mano[num]; Mano.RemoveAt(num); return (f,1);}
-
-                    intentos++;
-                    revisados[num] = true;
-                }
-                num = r.Next(0,revisados.Length);
-            }
-        return (Mano[0],-1);
-    }
-
-    public List<Ficha> ObtenerFichas()
-    {
-       return Mano;
-    }
 }
+

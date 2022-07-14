@@ -21,7 +21,7 @@ public class FinalizarJugada_Clasico: IFinalizarJugada
     public bool FinalizoPartida(int cantFichasJugadorActual, int turnosSinJugar, List<int> puntosPorJugador)
     {
         if (cantFichasJugadorActual == 0 || turnosSinJugar == puntosPorJugador.Count) return true;
-        return false;
+        else return false;
     }
 }
 

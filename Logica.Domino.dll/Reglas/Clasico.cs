@@ -1,23 +1,27 @@
 namespace Logica.domino.dll;
 public class ClasicoIndividual : ClaseComunReglas, IReglas
 {
+    
     IRepartir repartir = new Repartir_Clasico();
     IContarPuntos ContarPuntos => new ContarPuntos_Clasico();
     IFinalizarJugada finalizarPartida = new FinalizarJugada_Clasico();
     IGanador ganador = new Ganador_Clasico(); 
     IProximoJugador proximoJugador = new ProximoJugador_Clasico();
     IValidarJugada validarPartida = new ValidarJugada_Clasica();
-    ICalculaPuntos calcula = new CalcularPuntosGanoJugador_Clasico();
-    public ClasicoIndividual(int cantJugadores, int cantFichas, int valorMaxFichas) : base(cantFichas,cantJugadores,valorMaxFichas){}//aqui se deberia incializar de con valores
+    public bool equipo => base.equipo;
+    // bool IReglas.invertido { get => base.invertido; set => base.invertido; }
+    public bool invertido => base.invertido;
+    public ICalculaPuntos calculaPuntos => new CalcularPuntosGanoJugador_Clasico();
+    public ClasicoIndividual(int cantJugadores, int cantFichas, int valorMaxFichas,bool equipo) : base(cantFichas,cantJugadores,valorMaxFichas,equipo){}//aqui se deberia incializar de con valores
     public int CantidadJugadores => base.cantJugadoresEnJuego;
     public (int, int) DimensionTablero => (5,8);//5 filas 8 columnas
-    public void AccionDespuesDeLaJugada(int jugadorActual, bool huboJugada, ParteFicha izquierda, ParteFicha derecha, ref List<int> puntosPorJugador, ref List<IJugar> jugadores)
+    public void AccionDespuesDeLaJugada(int jugadorActual, bool huboJugada, ParteFicha izquierda, ParteFicha derecha, ref List<int> puntosPorJugador, ref List<Jugador> jugadores, ref bool invertido)
     {
         return;
     }
     public int CalcularPuntosGanoJugador(int jugadorGanador, List<int> puntosPorJugador)
     {
-        return calcula.CalcularPuntosGanoJugador(jugadorGanador,puntosPorJugador);   
+        return calculaPuntos.CalcularPuntosGanoJugador(jugadorGanador,puntosPorJugador,equipo);   
     }
     public int CantFichasPorJugador()
     {
@@ -31,13 +35,13 @@ public class ClasicoIndividual : ClaseComunReglas, IReglas
     {
         return finalizarPartida.FinalizoPartida(cantFichasJugadorActual , turnosSinJugar , puntosPorJugador);
     }
-    public (int, List<int>) Ganador(Dictionary<ParametrosDefinenGanador, object> definenGanador, int cantidadJugadores, IContarPuntos contarPuntos)
+    public (int, List<int>) Ganador(Dictionary<ParametrosDefinenGanador, object> definenGanador, int cantidadJugadores, IContarPuntos contarPuntos, ICalculaPuntos calculaPuntos,bool equipo, List<int> puntosPorJugador,List<Jugador> jugadores)
     {
-        return ganador.Ganador(definenGanador, cantidadJugadores, contarPuntos);
+        return ganador.Ganador(definenGanador, cantidadJugadores, contarPuntos,calculaPuntos,equipo,puntosPorJugador,jugadores);
     }
-    public int ProximoJugador(int jugadorActual, int totalJugadores)
+    public int ProximoJugador(int jugadorActual, int totalJugadores,bool invertido)
     {
-        return proximoJugador.ProximoJugador(jugadorActual, totalJugadores);    
+        return proximoJugador.ProximoJugador(jugadorActual, totalJugadores, invertido);    
     }
     public List<Ficha[]> Repartir(List<Ficha> todasFichas, int CantidadJugadores, int cantFichasPorJugador)
     {
@@ -47,7 +51,10 @@ public class ClasicoIndividual : ClaseComunReglas, IReglas
     {
         return validarPartida.ValidarJugada(fichaMesa, fichaMano);
     }
+
     public IContarPuntos contarPuntos => ContarPuntos;
+
+
 
     /*public List<Ficha[]> Repartir(List<Ficha> todasFichas)//la lista de fichas que se recibe como paarametro son todas las fichas del juego
     {

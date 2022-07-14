@@ -1,37 +1,17 @@
 namespace Logica.domino.dll;
-public class Botagorda:IJugar
+public class Botagorda:Jugador, IEstrategiasSalir, IEstrategias
 {
-    List<Ficha> Mano;   
-    public Botagorda(List<Ficha> mano)
+    public Botagorda(int ID,string nombre,List<Ficha> fichas)
+                   :base(ID,nombre,fichas)
+    { }
+    public Ficha Jugar(ref List<Ficha> Mano, IReglas reglas)
+    //public Ficha Jugar(IReglas reglas)
     {
-        this.Mano = mano;
-        IJugar.Ordena(ref mano);
+        return this.estrategiasSalir[1].Jugar(ref Mano,reglas);     
     }
-
-    public List<Ficha> ObtenerFichas()
+    public (Ficha, int) Jugar(ref List<Ficha> Mano,ParteFicha izquierda, ParteFicha derecha, IReglas reglas,int jugadorActual)
+    //public (Ficha ,int)Jugar(ParteFicha  izquierda ,ParteFicha  derecha,IReglas  reglas)
     {
-       return Mano;
+        return this.estrategias[1].Jugar(ref Mano,izquierda,derecha,reglas, jugadorActual);     
     }
-    public Ficha Jugar(IReglas reglas)
-    {
-        Ficha gorda = Mano[0];
-        Mano.RemoveAt(0);
-        return (gorda);
-    }
-    public (Ficha,int)Jugar(ParteFicha izquierda ,ParteFicha derecha,IReglas reglas)
-    {   
-        for (int i = 0; i < Mano.Count; i++)
-        {
-            if(reglas.ValidarJugada(izquierda,Mano[i].Arriba)) 
-            {Ficha f = Mano[i]; Mano.RemoveAt(i); return (f,0);}
-            if(reglas.ValidarJugada(izquierda,Mano[i].Abajo)) 
-            {Ficha f = Mano[i]; Mano.RemoveAt(i); return (f,0);}
-            if(reglas.ValidarJugada(derecha,Mano[i].Arriba))
-            {Ficha f = Mano[i]; Mano.RemoveAt(i); return (f,1);}
-            if(reglas.ValidarJugada(derecha,Mano[i].Abajo)) 
-            {Ficha f = Mano[i]; Mano.RemoveAt(i); return (f,1);} 
-        }
-        return (Mano[0],-1);
-    }
-
 }
