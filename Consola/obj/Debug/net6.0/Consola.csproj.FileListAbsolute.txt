@@ -34,3 +34,29 @@ D:\Matcom\Segundo Año Cibernética\2022\Programación\Domino - copia\Consola\ob
 D:\Matcom\Segundo Año Cibernética\2022\Programación\Domino - copia\Consola\obj\Debug\net6.0\Consola.csproj.CoreCompileInputs.cache
 D:\Matcom\Segundo Año Cibernética\2022\Programación\Domino - copia\Consola\obj\Debug\net6.0\Consola.csproj.CopyComplete
 D:\Matcom\Segundo Año Cibernética\2022\Programación\Domino - copia\Consola\obj\Debug\net6.0\Consola.genruntimeconfig.cache
+C:\Users\Naomi\Desktop\new proyecto\Leo\Domino\Consola\obj\Debug\net6.0\Consola.dll
+C:\Users\Naomi\Desktop\new proyecto\Leo\Domino\Consola\obj\Debug\net6.0\ref\Consola.dll
+C:\Users\Naomi\Desktop\new proyecto\Leo\Domino\Consola\obj\Debug\net6.0\Consola.pdb
+C:\Users\Naomi\Desktop\new proyecto\Leo\Domino\Consola\obj\Debug\net6.0\Consola.csproj.AssemblyReference.cache
+C:\Users\Naomi\Desktop\new proyecto\Leo\Domino\Consola\obj\Debug\net6.0\Consola.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Naomi\Desktop\new proyecto\Leo\Domino\Consola\obj\Debug\net6.0\Consola.AssemblyInfoInputs.cache
+C:\Users\Naomi\Desktop\new proyecto\Leo\Domino\Consola\obj\Debug\net6.0\Consola.AssemblyInfo.cs
+C:\Users\Naomi\Desktop\new proyecto\Leo\Domino\Consola\obj\Debug\net6.0\Consola.csproj.CoreCompileInputs.cache
+D:\Matcom\Segundo Año Cibernética\2022\Programación\prueba runtime\Consola\obj\Debug\net6.0\Consola.dll
+D:\Matcom\Segundo Año Cibernética\2022\Programación\prueba runtime\Consola\obj\Debug\net6.0\ref\Consola.dll
+D:\Matcom\Segundo Año Cibernética\2022\Programación\prueba runtime\Consola\obj\Debug\net6.0\Consola.pdb
+D:\Matcom\Segundo Año Cibernética\2022\Programación\prueba runtime\Consola\obj\Debug\net6.0\Consola.csproj.AssemblyReference.cache
+D:\Matcom\Segundo Año Cibernética\2022\Programación\prueba runtime\Consola\obj\Debug\net6.0\Consola.GeneratedMSBuildEditorConfig.editorconfig
+D:\Matcom\Segundo Año Cibernética\2022\Programación\prueba runtime\Consola\obj\Debug\net6.0\Consola.AssemblyInfoInputs.cache
+D:\Matcom\Segundo Año Cibernética\2022\Programación\prueba runtime\Consola\obj\Debug\net6.0\Consola.AssemblyInfo.cs
+D:\Matcom\Segundo Año Cibernética\2022\Programación\prueba runtime\Consola\obj\Debug\net6.0\Consola.csproj.CoreCompileInputs.cache
+D:\Matcom\Segundo Año Cibernética\2022\Programación\prueba runtime\Consola\bin\Debug\net6.0\Consola.exe
+D:\Matcom\Segundo Año Cibernética\2022\Programación\prueba runtime\Consola\bin\Debug\net6.0\Consola.deps.json
+D:\Matcom\Segundo Año Cibernética\2022\Programación\prueba runtime\Consola\bin\Debug\net6.0\Consola.runtimeconfig.json
+D:\Matcom\Segundo Año Cibernética\2022\Programación\prueba runtime\Consola\bin\Debug\net6.0\Consola.dll
+D:\Matcom\Segundo Año Cibernética\2022\Programación\prueba runtime\Consola\bin\Debug\net6.0\ref\Consola.dll
+D:\Matcom\Segundo Año Cibernética\2022\Programación\prueba runtime\Consola\bin\Debug\net6.0\Consola.pdb
+D:\Matcom\Segundo Año Cibernética\2022\Programación\prueba runtime\Consola\bin\Debug\net6.0\Logica.Domino.dll.dll
+D:\Matcom\Segundo Año Cibernética\2022\Programación\prueba runtime\Consola\bin\Debug\net6.0\Logica.Domino.dll.pdb
+D:\Matcom\Segundo Año Cibernética\2022\Programación\prueba runtime\Consola\obj\Debug\net6.0\Consola.csproj.CopyComplete
+D:\Matcom\Segundo Año Cibernética\2022\Programación\prueba runtime\Consola\obj\Debug\net6.0\Consola.genruntimeconfig.cache

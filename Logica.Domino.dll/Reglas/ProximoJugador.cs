@@ -3,7 +3,6 @@ namespace Logica.domino.dll;
 public interface IProximoJugador
 {
     int ProximoJugador(int jugadorActual,int totalJugadores,bool invertido);
-
 }
 
 public class ProximoJugador_Clasico:IProximoJugador

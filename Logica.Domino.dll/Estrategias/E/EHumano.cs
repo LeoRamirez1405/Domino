@@ -4,7 +4,7 @@ public class EHumano: IEstrategias
     //public (Ficha, int) Jugar(ParteFicha izquierda, ParteFicha derecha, IReglas reglas)
     public (Ficha, int) Jugar(ref List<Ficha> Mano,ParteFicha izquierda, ParteFicha derecha, IReglas reglas,int jugadorActual)
     {
-        Arbitro.imprimirMano(Mano);
+        //Arbitro.imprimirMano(Mano);
         System.Console.WriteLine("Cual desea jugar? (comienza por el 0) ({0 - izquierda} {1 - derecha}) (-1 si no lleva)");
         string respuesta = Console.ReadLine();
         (Ficha, int) result = (Mano[0], -1);

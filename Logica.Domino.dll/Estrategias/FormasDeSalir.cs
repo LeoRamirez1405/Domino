@@ -60,7 +60,7 @@ public class ESHumano:IEstrategiasSalir
     public Ficha Jugar(ref List<Ficha> Mano, IReglas reglas)
      //public Ficha Jugar(IReglas reglas)
     {
-        Arbitro.imprimirMano(Mano);
+        //Arbitro.imprimirMano(Mano);
         System.Console.WriteLine("Cual desea jugar? (comienza por el 0)");   
         int respuesta = int.Parse(Console.ReadLine());
             Ficha ficha = Mano[0];
