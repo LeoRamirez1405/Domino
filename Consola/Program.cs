@@ -7,8 +7,13 @@ class Program
         System.Console.WriteLine("Con cuantos jugadores desea jugar?: ");
         int noJug = int.Parse(Console.ReadLine());
         bool equipo = false;
-
-        if (noJug > 2 && noJug % 2 == 0)
+        if(noJug <= 1 || noJug > 4)
+        {
+            noJug = 2;
+            System.Console.WriteLine("Se escogio la cantidad de jugadores por defecto. Cant de jugadores : {0} ", 2);
+            System.Console.WriteLine();
+        }
+        else if (noJug > 2 && noJug % 2 == 0)
         {
             System.Console.WriteLine("Desea jugar en equipo: Si - No");
             string resp = Console.ReadLine();
@@ -31,7 +36,12 @@ class Program
             System.Console.WriteLine("Hasta cuantos puntos desea jugar ?");
             int result = int.Parse(Console.ReadLine());
             if (result > 0) modo = new HastaX(result, noJug, equipo);
-            else modo = new HastaX(100, noJug, equipo);
+            else 
+            {
+                modo = new HastaX(100, noJug, equipo);
+                System.Console.WriteLine("Se escogio la cantidad de puntos a terminar por defecto. Cantidad de puntos a terminar : {0}", 100);
+                System.Console.WriteLine();
+            }
         }
         else if (respuesta == 3)
         {
@@ -46,31 +56,65 @@ class Program
         }
 #endregion
 
-        int ganador = -1;
-        while (!modo.TerminoModo(ganador, null))
+        (int, List<int>) ganador = (-1, null);
+        while (!modo.TerminoModo(ganador.Item1, ganador.Item2))
         {
             IDomino domino = IniciaDomino();
             Arbitro arbitro = CrearArbitro(modo.CantidadJugadores, domino, equipo);
-            int numJugada = 1;
+            bool numJugada = true;//dice si es la primera jugada o no
 
             while(!arbitro.TerminoPartida())
             {
-                System.Console.WriteLine(arbitro.JugadorActual);//dice el jugador que va a jugar
-                ImprimirFichasJugador(arbitro.GetFichasJugador());// se imprimen las fichas del jugador q va a jugar arbitro.GetFichasJugador() : me da la Mano del jugador actual
-
-                arbitro.Jugar(numJugada == 1);
-                ImprimirTablero(arbitro.GetTablero);
-
-                numJugada++;
+                System.Console.WriteLine();
+                Ficha fichaActual = arbitro.Jugar(numJugada);
+                if(fichaActual is null)
+                    System.Console.WriteLine("El jugador "+arbitro.GetJugadores()[arbitro.JugadorActual].nombre+" no lleva.");
+                else 
+                {   
+                    System.Console.WriteLine("Jugó el jugador {0} ", arbitro.GetJugadores()[arbitro.JugadorActual].nombre);//dice el jugador que va a jugar
+                    arbitro.ImprimirMesa();
+                }
+                //ImprimirTablero(arbitro.GetTablero);
+                numJugada = false;
+            }
+            System.Console.WriteLine();
+            foreach (var jugador in arbitro.GetJugadores())
+            {
+                System.Console.WriteLine(jugador.nombre);
+                foreach (var ficha in jugador.fichas)
+                {
+                    System.Console.Write(ficha+" ");
+                }
+                System.Console.WriteLine("\n");
             }
 
             (int, List<int>) resulPartida = arbitro.GetGanador();//da el ganador y una lista con los puntos de cada jugador
-            ganador = resulPartida.Item1;//es el ganador
+            ganador = resulPartida;//es el ganador
+            modo.TerminoUnaPratida(resulPartida.Item1, resulPartida.Item2);
+            string stringEquipo = equipo ? "equipo" : "jugador";
+            if (resulPartida.Item1 == -1)
+                System.Console.WriteLine("Hubo empate");
+            else
+            {
+                //if(resulPartida.Item2[resulPartida.Item1] == 0) 
+                //    System.Console.WriteLine("El ganador de la partida es el {0} {1} ", stringEquipo, arbitro.GetJugadores()[resulPartida.Item1].nombre);
+                //else
+                    System.Console.WriteLine("El ganador de la partida es el {0} {1} con {2} puntos", stringEquipo, arbitro.GetJugadores()[resulPartida.Item1].nombre , resulPartida.Item2[resulPartida.Item1]);
+            }
+            System.Console.WriteLine();
         }
-
-        //(int, int) ganador = modo.Gana(equipo);
-        //if (ganador.Item1 == -1) System.Console.WriteLine("El juego quedó empatado");
-        //System.Console.WriteLine($"El ganador es el jugador {ganador.Item1} con {ganador.Item2} puntos.");
+        
+        (int, int) ganadorModo = modo.GetGanador(equipo);
+        // if (ganador.Item1 == -1) 
+        //     System.Console.WriteLine("El juego quedó empatado");
+        // else
+        //     System.Console.WriteLine($"El ganador es el jugador {ganadorModo.Item1} con {ganadorModo.Item2} puntos.");
+        string stringEquipoModo = equipo ? "equipo" : "jugador";
+        if (ganadorModo.Item1 == -1)
+            System.Console.WriteLine("Hubo empate");
+        else
+            System.Console.WriteLine("El ganador del Modo es el {0} {1} con {2} puntos", stringEquipoModo, ganadorModo.Item1, ganadorModo.Item2);
+        System.Console.WriteLine();
     }
 
 
@@ -92,15 +136,22 @@ class Program
         {
             FichasDomino = int.Parse(Console.ReadLine());
             if(FichasDomino > domino.maxFichas()  || FichasDomino < 6) 
+            {
                 FichasDomino = domino.maxFichas();
+                System.Console.WriteLine("Se escogio el doble maximo por defecto. Doble Maximo : {0} ", domino.maxFichas());
+                System.Console.WriteLine();
+            }
         } catch{FichasDomino = domino.maxFichas();}
         System.Console.WriteLine("Con cuantas fichas por jugador?: ");
         int noFichPorJug;
         try
         {
             noFichPorJug = int.Parse(Console.ReadLine());
-            // if(noFichPorJug > FichasDomino+1  || noFichPorJug < 2) 
-                // noFichPorJug = FichasDomino+1;
+            if(noFichPorJug > FichasDomino+1  || noFichPorJug < 2) 
+            {
+                System.Console.WriteLine("Se escogio la cantidad de fichas por defecto. Cantidad de fichas : {0} ", FichasDomino + 1);
+                noFichPorJug = FichasDomino+1;
+            }
         } catch{noFichPorJug = FichasDomino+1;}
         
         IReglas reglas = null;
@@ -132,7 +183,7 @@ class Program
     }
 #endregion
 
-#region "Iniciar regls personalizadas"
+#region "Iniciar reglas personalizadas"
     public static void RellenarReglaPersonalizada(ref IAccionDespuesDeLaJugada adj, ref IGanador ganador, ref IProximoJugador proximoJugador,
                                     ref IValidarJugada validarPartida, ref ICalculaPuntos calcula, ref IContarPuntos ContarPuntos)
     {
@@ -205,7 +256,7 @@ class Program
         }
         catch { }
 
-        adj = new AccionDespuesDeLaJugada_Quincena();
+        adj = new AccionDespuesDeLaJugada_Clasico();
 
         Console.WriteLine("Que desea que pase luego de una jugada?: ");
         Console.WriteLine("1. Clásico(nada)\n2.Si pasa el jugador se invierte la mesa\n3. Si es multipo de 5 la suma de las cabezas se reciben dichos puntos");
@@ -268,7 +319,10 @@ class Program
         for(int i = 0; i < tablero.GetLength(0); i++)
         {
             for(int j = 0; j < tablero.GetLength(1); j++)
+            {
+                if(tablero[i,j] is null) continue;
                 System.Console.WriteLine(tablero[i,j]);
+            }
         }
     }
 #endregion

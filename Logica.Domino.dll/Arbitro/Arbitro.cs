@@ -7,6 +7,11 @@ public class Arbitro
     List<int> puntosPorJugadores;
     bool equipo;
     Mesa mesa = new Mesa();
+
+    public void ImprimirMesa()
+    {
+        mesa.imprimirMesa();
+    }
     IReglas reglas;
     int jugadorActual;
     int turnosSinJugar;
@@ -22,8 +27,8 @@ public class Arbitro
         this.cantJugadores = cantJug;
         this.reglas = reglas;
         this.jugadores = jugadores;
-        this.tablero = new Ficha[this.reglas.CantFichasTotalJuego(), this.reglas.CantFichasTotalJuego()];
-        this.jugadorActual = reglas.JugadorInicial();
+        this.tablero = new Ficha[4,8];
+        // this.jugadorActual = reglas.JugadorInicial();
         this.posFichasAJugar = new (int, int)[2];
         this.turnosSinJugar = 0;
     }
@@ -104,43 +109,72 @@ public class Arbitro
         tablero = newTablero;
     }
 
-    public void Jugar(bool esLaPrimeraJugada)
+    public Ficha Jugar(bool esLaPrimeraJugada)
     {
+            (Ficha,int) jugada;
+        bool huboJugada = true;
         if(esLaPrimeraJugada)
         {
-            Ficha result = ((IEstrategiasSalir)this.jugadores[jugadorActual]).Jugar(ref jugadores[jugadorActual].fichas,this.reglas);
-            izquierdaParteFicha = result.Arriba;
-            derechaParteFicha = result.Abajo;
-            posFichasAJugar = PonerFichaTablero(result);
+            jugadorActual = reglas.JugadorInicial();
+            jugada.Item1 = ((IEstrategiasSalir)this.jugadores[jugadorActual]).Jugar(ref jugadores[jugadorActual].fichas,this.reglas);
+            izquierdaParteFicha = jugada.Item1.Arriba;
+            derechaParteFicha = jugada.Item1.Abajo;
+            posFichasAJugar = PonerFichaTablero(jugada.Item1);
+            mesa.AddDer(jugada.Item1,jugadorActual);
+            return jugada.Item1;
         }
         else
         {
-            jugadorActual = reglas.ProximoJugador(jugadorActual, cantJugadores, reglas.invertido);
-            (Ficha, int) jugada = ((IEstrategias)jugadores[jugadorActual]).Jugar(ref jugadores[jugadorActual].fichas, izquierdaParteFicha, derechaParteFicha, this.reglas, jugadorActual);
+            jugadorActual = reglas.ProximoJugador(jugadorActual, cantJugadores,((ClaseComunReglas)reglas).invertido);
+            jugada = ((IEstrategias)jugadores[jugadorActual]).Jugar(ref jugadores[jugadorActual].fichas, izquierdaParteFicha, derechaParteFicha, this.reglas, jugadorActual);
 
             if(jugada.Item2 == -1)
+            {
                 turnosSinJugar ++;
+                huboJugada = false;
+                jugada.Item1 = null;
+            }
             else
             {
                 int posParaJugar = jugada.Item2 == 0 ? 0 : 1;
-                ((int, int), bool) resultPos = PonerFichaTablero(posFichasAJugar[posParaJugar], jugada.Item1, 1);
-                if(resultPos.Item2)
-                    posFichasAJugar[posParaJugar] = resultPos.Item1;
-                else 
+                if(posParaJugar == 0)
                 {
-                    resultPos = PonerFichaTablero(posFichasAJugar[posParaJugar], jugada.Item1, -1);
-                    if(resultPos.Item2)
-                        posFichasAJugar[posParaJugar] = resultPos.Item1;
-                    else
-                    {
-                        AgrandarTablero();
-                        //Aqui faltan cosas..esto se soluciona si nunk hay q agrandar el tablero
-                    }
+                    if( jugada.Item1.Abajo  != mesa.recorrido[0].Item1.Arriba )
+                        jugada.Item1 = new Ficha(jugada.Item1.Abajo,jugada.Item1.Arriba);
+                    mesa.AddIzq(jugada.Item1,jugadorActual);
+                    izquierdaParteFicha = jugada.Item1.Arriba;
                 }
+                else if(posParaJugar == 1)
+                {
+                    if( mesa.recorrido[mesa.recorrido.Count-1].Item1.Abajo != jugada.Item1.Arriba )
+                        jugada.Item1 = new Ficha(jugada.Item1.Abajo,jugada.Item1.Arriba);
+                    mesa.AddDer(jugada.Item1,jugadorActual);
+                    derechaParteFicha = jugada.Item1.Abajo;
+                }
+                // ((int, int), bool) jugadaPos = PonerFichaTablero(posFichasAJugar[posParaJugar], jugada.Item1, 1);
+                // if(jugadaPos.Item2)
+                //     posFichasAJugar[posParaJugar] = jugadaPos.Item1;
+                // else 
+                // {
+                //     jugadaPos = PonerFichaTablero(posFichasAJugar[posParaJugar], jugada.Item1, -1);
+                //     if(jugadaPos.Item2)
+                //         posFichasAJugar[posParaJugar] = jugadaPos.Item1;
+                //     else
+                //     {
+                //         AgrandarTablero();
+                //         //Aqui faltan cosas..esto se soluciona si nunk hay q agrandar el tablero
+                //     }
+                // }
+                turnosSinJugar = 0;
             }
         }
         
-        reglas.AccionDespuesDeLaJugada(jugadorActual, true, izquierdaParteFicha, derechaParteFicha, ref puntosPorJugadores, ref jugadores, ref ((ClaseComunReglas)reglas).invertido);
+        reglas.AccionDespuesDeLaJugada(jugadorActual, huboJugada, izquierdaParteFicha, derechaParteFicha, ref puntosPorJugadores, ref jugadores, ref ((ClaseComunReglas)reglas).invertido);
+        foreach (var item in jugadores)
+        {
+            if(item is IJuegaConMesa) ((IJuegaConMesa)item).juegaConMesa(mesa,mesa.fichaActual_jugador,huboJugada);
+        }
+        return jugada.Item1;
     }
 
     public bool TerminoPartida()

@@ -5,7 +5,7 @@ public class HastaX : IModo
     int noJug;
     // List<IJugar> jugadores;
     int[] PuntosJugadores;
-    int[] PuntosEquipo;
+    //int[] PuntosEquipo;
     //Arbitro arbitro;
     bool EnEquipo;
     (int,List<int>) ganadorEs;
@@ -14,12 +14,11 @@ public class HastaX : IModo
         this.EnEquipo = EnEquipo;
         //this.arbitro = new Arbitro(noJug,EnEquipo);
         this.noJug = noJug;
-        this.PuntosEquipo = new int[2];
+        //this.PuntosEquipo = new int[2];
         // this.jugadores = this.arbitro.GetJugadores();
-        this.PuntosJugadores = EnEquipo ? new int[noJug/2] : new int[noJug];
+        this.PuntosJugadores = EnEquipo ? new int[2] : new int[noJug];
         this.cantidad = cantidad;
     }
-
 
     (int, List<int>) jugPuntos = (0, new List<int>());
     // public (int, int) Gana(bool EnEquipo)
@@ -69,7 +68,7 @@ public class HastaX : IModo
 
     public (int, int) GetGanador(bool EnEquipo)
     {
-        return EnEquipo ? (ganadorEs.Item1%2, PuntosEquipo[ganadorEs.Item1%2]) : (ganadorEs.Item1, PuntosJugadores[ganadorEs.Item1]);
+        return EnEquipo ? (ganadorEs.Item1%2, PuntosJugadores[ganadorEs.Item1%2]) : (ganadorEs.Item1, PuntosJugadores[ganadorEs.Item1]);
     }
 
     public void TerminoUnaPratida(int ganador, List<int> puntosAcumulados)
@@ -80,9 +79,11 @@ public class HastaX : IModo
                 PuntosJugadores[i%2] += puntosAcumulados[i];    
         }
         else
-            PuntosJugadores[ganador] += puntosAcumulados[ganador];
-        
-        ganadorEs = (ganador, puntosAcumulados);
+        {
+            for(int i = 0; i < this.PuntosJugadores.Length; i++)
+                PuntosJugadores[i] += puntosAcumulados[i];
+        }        
+        ganadorEs = (ganador, PuntosJugadores.ToList());
     }
 
     public int CantidadJugadores => noJug;
@@ -90,6 +91,7 @@ public class HastaX : IModo
     public bool TerminoModo(int ganador, List<int> puntosAcumulados) 
     {
         if(puntosAcumulados is null) return false;
-        return this.EnEquipo ? PuntosEquipo[ganador%2] < cantidad : PuntosJugadores[ganador] < cantidad;//dice si ya se acabo el modo
+        if(ganador == -1) return false;
+        return this.EnEquipo ? PuntosJugadores[ganador%2] >= cantidad : PuntosJugadores[ganador] >= cantidad;//dice si ya se acabo el modo
     }
 }

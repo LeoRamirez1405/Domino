@@ -6,3 +6,11 @@ C:\Users\Naomi\Desktop\new proyecto\Leo\Domino\obj\Debug\net6.0\Domino.Generated
 C:\Users\Naomi\Desktop\new proyecto\Leo\Domino\obj\Debug\net6.0\Domino.AssemblyInfoInputs.cache
 C:\Users\Naomi\Desktop\new proyecto\Leo\Domino\obj\Debug\net6.0\Domino.AssemblyInfo.cs
 C:\Users\Naomi\Desktop\new proyecto\Leo\Domino\obj\Debug\net6.0\Domino.csproj.CoreCompileInputs.cache
+D:\Matcom\Segundo Año Cibernética\2022\Programación\prueba runtime\obj\Debug\net6.0\Domino.csproj.AssemblyReference.cache
+D:\Matcom\Segundo Año Cibernética\2022\Programación\prueba runtime\obj\Debug\net6.0\Interfaz.Domino.Form1.resources
+D:\Matcom\Segundo Año Cibernética\2022\Programación\prueba runtime\obj\Debug\net6.0\Domino.Interfaz.Domino.Interfaz.Domino.Properties.Resources.resources
+D:\Matcom\Segundo Año Cibernética\2022\Programación\prueba runtime\obj\Debug\net6.0\Domino.csproj.GenerateResource.cache
+D:\Matcom\Segundo Año Cibernética\2022\Programación\prueba runtime\obj\Debug\net6.0\Domino.GeneratedMSBuildEditorConfig.editorconfig
+D:\Matcom\Segundo Año Cibernética\2022\Programación\prueba runtime\obj\Debug\net6.0\Domino.AssemblyInfoInputs.cache
+D:\Matcom\Segundo Año Cibernética\2022\Programación\prueba runtime\obj\Debug\net6.0\Domino.AssemblyInfo.cs
+D:\Matcom\Segundo Año Cibernética\2022\Programación\prueba runtime\obj\Debug\net6.0\Domino.csproj.CoreCompileInputs.cache

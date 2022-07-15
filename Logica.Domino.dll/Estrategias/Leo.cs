@@ -1,7 +1,7 @@
 namespace Logica.domino.dll;
 
 
-public class Leo:Jugador
+public class Leo:Jugador,IEstrategias,IEstrategiasSalir
 {
     public Leo(int ID,string nombre,List<Ficha> fichas)
                    :base(ID,nombre,fichas)

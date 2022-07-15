@@ -1,24 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Naomi\\Desktop\\new proyecto\\Leo\\Domino\\Domino.csproj": {}
+    "D:\\Matcom\\Segundo Año Cibernética\\2022\\Programación\\prueba runtime\\Domino.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Naomi\\Desktop\\new proyecto\\Leo\\Domino\\Domino.csproj": {
+    "D:\\Matcom\\Segundo Año Cibernética\\2022\\Programación\\prueba runtime\\Domino.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Naomi\\Desktop\\new proyecto\\Leo\\Domino\\Domino.csproj",
+        "projectUniqueName": "D:\\Matcom\\Segundo Año Cibernética\\2022\\Programación\\prueba runtime\\Domino.csproj",
         "projectName": "Domino",
-        "projectPath": "C:\\Users\\Naomi\\Desktop\\new proyecto\\Leo\\Domino\\Domino.csproj",
-        "packagesPath": "C:\\Users\\Naomi\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Naomi\\Desktop\\new proyecto\\Leo\\Domino\\obj\\",
+        "projectPath": "D:\\Matcom\\Segundo Año Cibernética\\2022\\Programación\\prueba runtime\\Domino.csproj",
+        "packagesPath": "C:\\Users\\Leo-Laptop\\.nuget\\packages\\",
+        "outputPath": "D:\\Matcom\\Segundo Año Cibernética\\2022\\Programación\\prueba runtime\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Naomi\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\Leo-Laptop\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [

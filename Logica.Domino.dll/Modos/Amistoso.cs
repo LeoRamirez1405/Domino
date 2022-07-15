@@ -6,7 +6,7 @@ public class Amistoso : IModo
     int[] PuntosJugadores;
     bool EnEquipo;
     (int,List<int>) ganadorEs;
-    int cantPartidas;
+    bool terminoModo;
     int cantJugadores;
     public Amistoso(int noJug,bool EnEquipo)
     {
@@ -16,7 +16,7 @@ public class Amistoso : IModo
         //this.arbitro = new Arbitro(noJug,EnEquipo);
         this.PuntosJugadores = EnEquipo ? new int[noJug/2] : new int[noJug];
         this.ganadorEs = (-1, null);
-        this.cantPartidas = 0;
+        this.terminoModo = false;
     }
 
     public (int, int) GetGanador(bool EnEquipo)
@@ -35,14 +35,15 @@ public class Amistoso : IModo
 
     public void TerminoUnaPratida(int ganador, List<int> puntosAcumulados)
     {
-        this.cantPartidas++;
+        terminoModo = true;
         ganadorEs = (ganador, puntosAcumulados);
     }
 
     public bool TerminoModo(int ganador, List<int> puntosAcumulados)
     {
-        if(puntosAcumulados is null) return false;
-        return this.cantPartidas == 1;
+        if(puntosAcumulados is null) return false;//no ha empezado el juego
+        // System.Console.WriteLine("Resultado de TerminoModo {0} ",terminoModo);
+        return terminoModo;
     }
 
     public int CantidadJugadores => cantJugadores;
