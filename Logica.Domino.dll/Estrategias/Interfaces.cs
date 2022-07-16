@@ -33,13 +33,11 @@ public class Jugador
 public interface IEstrategiasSalir
 {
     Ficha Jugar(ref List<Ficha> Mano, IReglas reglas);
-    //Ficha Jugar(IReglas reglas);//devuelve una ficha y 0 si juega pos la primera ficha q recibe y 1 si juega x la 2da ficha q recibe
 }
 
 public interface IEstrategias
 {
     (Ficha, int) Jugar(ref List<Ficha> Mano,ParteFicha izquierda, ParteFicha derecha, IReglas reglas,int jugadorActual);
-    //(Ficha, int) Jugar(ParteFicha a, ParteFicha b, IReglas reglas);//devuelve una ficha y 0 si juega pos la primera ficha q recibe y 1 si juega x la 2da ficha q recibe
 }
 public interface IJuegaConMesa
 {

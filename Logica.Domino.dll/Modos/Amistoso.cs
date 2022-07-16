@@ -18,7 +18,6 @@ public class Amistoso : IModo
         this.ganadorEs = (-1, null);
         this.terminoModo = false;
     }
-
     public (int, int) GetGanador(bool EnEquipo)
     {
         if (ganadorEs.Item1 == -1) return (-1, -1);

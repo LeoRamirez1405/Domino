@@ -9,6 +9,7 @@ public class HastaX : IModo
     //Arbitro arbitro;
     bool EnEquipo;
     (int,List<int>) ganadorEs;
+
     public HastaX(int cantidad, int noJug, bool EnEquipo)
     {
         this.EnEquipo = EnEquipo;

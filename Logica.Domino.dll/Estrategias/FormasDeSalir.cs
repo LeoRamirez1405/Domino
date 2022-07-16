@@ -3,7 +3,6 @@ namespace Logica.domino.dll;
 public class ESAleatorio:IEstrategiasSalir
 {
     public Ficha Jugar(ref List<Ficha> Mano, IReglas reglas)
-    //public Ficha Jugar(IReglas reglas)
     {
         Random r = new Random();
         int num = r.Next(0, Mano.Count);
@@ -16,7 +15,6 @@ public class ESAleatorio:IEstrategiasSalir
 public class ESBotagorda:IEstrategiasSalir
 {
     public Ficha Jugar(ref List<Ficha> Mano, IReglas reglas)
-    //public Ficha Jugar(IReglas reglas)
     {
         Ficha gorda = Mano[0];
         Mano.RemoveAt(0);
@@ -27,7 +25,6 @@ public class ESBotagorda:IEstrategiasSalir
 public class ESMatematico:IEstrategiasSalir
 {
     public Ficha Jugar(ref List<Ficha> Mano, IReglas reglas)
-    //public Ficha Jugar(IReglas reglas)
     {
         Ficha gorda = Mano[0];
         int suelto = 0;
@@ -47,7 +44,6 @@ public class ESMatematico:IEstrategiasSalir
 public class ESLeo:IEstrategiasSalir
 {
     public Ficha Jugar(ref List<Ficha> Mano, IReglas reglas)
-    //public Ficha Jugar(IReglas reglas)
     {
         Ficha gorda = Mano[0];
         Mano.RemoveAt(0);
@@ -58,9 +54,13 @@ public class ESLeo:IEstrategiasSalir
 public class ESHumano:IEstrategiasSalir
 {
     public Ficha Jugar(ref List<Ficha> Mano, IReglas reglas)
-     //public Ficha Jugar(IReglas reglas)
     {
-        //Arbitro.imprimirMano(Mano);
+        foreach (Ficha fic in Mano)
+        {
+            System.Console.Write(fic.ToString() + " ");
+        }
+        System.Console.WriteLine();
+    
         System.Console.WriteLine("Cual desea jugar? (comienza por el 0)");   
         int respuesta = int.Parse(Console.ReadLine());
             Ficha ficha = Mano[0];

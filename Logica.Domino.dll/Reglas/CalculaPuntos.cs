@@ -18,7 +18,20 @@ public class CalcularPuntosGanoJugador_Clasico:ICalculaPuntos
             return totalPuntos;
     }
 }
-
+public class CalcularPuntosGanoJugador_Quincena:ICalculaPuntos
+{
+    public int CalcularPuntosGanoJugador(int jugadorGanador, List<int> puntosPorJugador,bool equipo)
+    {
+            int totalPuntos = puntosPorJugador[jugadorGanador];
+            if(totalPuntos%5 == 0)
+                totalPuntos*=2;
+            else
+                totalPuntos = totalPuntos - totalPuntos%5;
+            
+            System.Console.WriteLine("TotalPuntos"+totalPuntos);
+            return totalPuntos;
+    }
+}
 public class CalcularPuntosGanoJugador_SoloYo: ICalculaPuntos
 {
     public int CalcularPuntosGanoJugador(int jugadorGanador, List<int> puntosPorJugador, bool equipo)

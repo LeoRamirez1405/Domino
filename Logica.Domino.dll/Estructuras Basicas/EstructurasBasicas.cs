@@ -60,14 +60,14 @@ public class ParteFicha: IEquatable<ParteFicha>
     public static bool operator != (ParteFicha a,ParteFicha b) => !a.Equals(b);
 }
 
-public enum EstadoJuego
-{
-    Null,
-    ListoParaComenzar,
-    EnCurso,
-    EnPausa
+// public enum EstadoJuego
+// {
+//     Null,
+//     ListoParaComenzar,
+//     EnCurso,
+//     EnPausa
 
-}
+// }
 
 public enum ParametrosDefinenGanador
 {
@@ -78,70 +78,70 @@ public enum ParametrosDefinenGanador
     SeTrancoElJuego,
 }
 
-public enum CategoriasReglas
-{
-    Clasico,
-    Quincena,
-    Personalizada
-}
+// public enum CategoriasReglas
+// {
+//     Clasico,
+//     Quincena,
+//     Personalizada
+// }
 
-public enum ReglasPersonalizadas
-{
-    Repartir,
-    ValidarJugada,
-    ProximoJuagdor,
-    AccionDespuesDeLaJugada,
-    CalcularPuntos,
-    ContarPuntos,
-    FinalizarPartida,
-    Ganador
-}
+// public enum ReglasPersonalizadas
+// {
+//     Repartir,
+//     ValidarJugada,
+//     ProximoJuagdor,
+//     AccionDespuesDeLaJugada,
+//     CalcularPuntos,
+//     ContarPuntos,
+//     FinalizarPartida,
+//     Ganador
+// }
 
-public enum AccionDespueusDeLaJugada
-{
-    Quincena,
-    Clasico,
-    IvertirJugadores
-}
+// public enum AccionDespueusDeLaJugada
+// {
+//     Quincena,
+//     Clasico,
+//     IvertirJugadores
+// }
 
-public enum CalcularPuntosGanadosEnLaPartida
-{
-    Clasico,
-    SoloYo,
-    Comunista,
-    Capitalsita
-}
+// public enum CalcularPuntosGanadosEnLaPartida
+// {
+//     Clasico,
+//     SoloYo,
+//     Comunista,
+//     Capitalsita
+// }
 
-public enum ContarPuntos
-{
-    Clasico,
-    DobleDoble,
-    ManoDura
-}
+// public enum ContarPuntos
+// {
+//     Clasico,
+//     DobleDoble,
+//     ManoDura
+// }
 
-public enum FinalizarPartida
-{
-    Clasico,
-    Llegue_100
-}
+// public enum FinalizarPartida
+// {
+//     Clasico,
+//     Llegue_100
+// }
 
-public enum ProximoJugador
-{
-    Clasico,
-    Aleatorio
-}
+// public enum ProximoJugador
+// {
+//     Clasico,
+//     Aleatorio
+// }
 
-public enum ValidarJugada
-{
-    Menor,
-    Mayor
-}
+// public enum ValidarJugada
+// {
+//     Menor,
+//     Mayor
+// }
 
-public enum EstrategiasEnum
-{
-    Aleatorio,
-    Botagorda,
-    Leo,
-    Matematico,
-    //Humano//este no deberia esta
-}
+// public enum EstrategiasEnum
+// {
+//     Aleatorio,
+//     Botagorda,
+//     Leo,
+//     Matematico,
+//     //Humano//este no deberia esta
+// }

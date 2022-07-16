@@ -1,6 +1,9 @@
 ﻿using Logica.domino.dll;
+using System.Reflection;
+using System.Data;
 class Program
 {
+    static string eliminar ="Logica.domino.dll";
     public static void Main()
     {
         Console.Clear();
@@ -19,9 +22,8 @@ class Program
             string resp = Console.ReadLine();
             if (resp.ToLower() == "si") equipo = true;
         }
-
+        #region "Modo"
         IModo modo = null;
-#region "Modo"
         System.Console.WriteLine("Qué modo desea jugar ?: ");
         System.Console.WriteLine("1. Amistoso");
         System.Console.WriteLine("2. Hasta X");
@@ -74,7 +76,6 @@ class Program
                     System.Console.WriteLine("Jugó el jugador {0} ", arbitro.GetJugadores()[arbitro.JugadorActual].nombre);//dice el jugador que va a jugar
                     arbitro.ImprimirMesa();
                 }
-                //ImprimirTablero(arbitro.GetTablero);
                 numJugada = false;
             }
             System.Console.WriteLine();
@@ -96,19 +97,12 @@ class Program
                 System.Console.WriteLine("Hubo empate");
             else
             {
-                //if(resulPartida.Item2[resulPartida.Item1] == 0) 
-                //    System.Console.WriteLine("El ganador de la partida es el {0} {1} ", stringEquipo, arbitro.GetJugadores()[resulPartida.Item1].nombre);
-                //else
-                    System.Console.WriteLine("El ganador de la partida es el {0} {1} con {2} puntos", stringEquipo, arbitro.GetJugadores()[resulPartida.Item1].nombre , resulPartida.Item2[resulPartida.Item1]);
+                System.Console.WriteLine("El ganador de la partida es el {0} {1} con {2} puntos", stringEquipo, arbitro.GetJugadores()[resulPartida.Item1].nombre , resulPartida.Item2[resulPartida.Item1]);
             }
             System.Console.WriteLine();
         }
         
         (int, int) ganadorModo = modo.GetGanador(equipo);
-        // if (ganador.Item1 == -1) 
-        //     System.Console.WriteLine("El juego quedó empatado");
-        // else
-        //     System.Console.WriteLine($"El ganador es el jugador {ganadorModo.Item1} con {ganadorModo.Item2} puntos.");
         string stringEquipoModo = equipo ? "equipo" : "jugador";
         if (ganadorModo.Item1 == -1)
             System.Console.WriteLine("Hubo empate");
@@ -128,7 +122,7 @@ class Program
 #endregion
 
 #region Reglas
-    public static IReglas IniciaRegla(int cantJug, IDomino domino, bool EnEquipo)
+    static IReglas IniciaRegla(int cantJug, IDomino domino, bool EnEquipo)
     {
         System.Console.WriteLine("Hasta que doble desea jugar (9 máx)?: ");
         int FichasDomino;
@@ -156,14 +150,12 @@ class Program
         
         IReglas reglas = null;
         System.Console.WriteLine("Con qué reglas desea jugar ?: ");
-        System.Console.WriteLine("1. Clásicas \n2. Quincena\n3. Personalizadas");
+        System.Console.WriteLine("1. Clásicas \n2. Personalizadas");
 
         int reg = int.Parse(Console.ReadLine());
         if(reg == 1)
             {reglas = new ClasicoIndividual(cantJug,noFichPorJug,FichasDomino, EnEquipo);}
         if(reg == 2)
-            {reglas = new Quincena(cantJug,noFichPorJug,FichasDomino, EnEquipo);}
-        if(reg == 3)
         {
             //IRepartir repartir = new Repartir_Clasico();
             IGanador ganador = new Ganador_Clasico(); 
@@ -187,98 +179,201 @@ class Program
     public static void RellenarReglaPersonalizada(ref IAccionDespuesDeLaJugada adj, ref IGanador ganador, ref IProximoJugador proximoJugador,
                                     ref IValidarJugada validarPartida, ref ICalculaPuntos calcula, ref IContarPuntos ContarPuntos)
     {
+        #region Ganador
         Console.WriteLine("Como desea que se gane la partida: ");
-        Console.WriteLine("1. Clásico\n2. Inverso al Clásico\n3. Estilo Quincena\n4. Si se tranca se acumulan los puntos");
-        string resp = Console.ReadLine();
+        var creando = from t in Assembly.GetAssembly(typeof(IGanador)).GetTypes()
+                                    where t.GetInterfaces().Contains(typeof(IGanador))
+                                    && t.GetConstructor(Type.EmptyTypes) != null
+                                    select Activator.CreateInstance(t) as IGanador;
+
+            int x = 1;
+        foreach (var item in creando)
+        {
+            
+            System.Console.WriteLine(x+". "+item.ToString()[(eliminar.Length+".Ganador_".Length)..]);
+            x++;
+        }
         ganador = new Ganador_Clasico();
-
+        string resp = Console.ReadLine();
         try
         {
             int r = int.Parse(resp);
-            if (r == 2) { ganador = new Ganador_Inverso(); }
-            if (r == 3) { ganador = new Ganador_Quincena(); }
-            if (r == 4) { ganador = new Ganador_SiEmpataAcumulaSusPuntos(); }
+            int index = 0;
+                foreach (var item in creando)
+                {
+                    if(index == r) break;
+                    ganador = item;
+                    index ++;
+                }
         }
         catch { }
+        #endregion
 
-
-
+        #region Proximo Jugador
+    Console.WriteLine("Como desea que se escoja el próximo jugador: ");
        proximoJugador = new ProximoJugador_Clasico();
+        var creando2 = from t in Assembly.GetAssembly(typeof(IProximoJugador)).GetTypes()
+                                    where t.GetInterfaces().Contains(typeof(IProximoJugador))
+                                    && t.GetConstructor(Type.EmptyTypes) != null
+                                    select Activator.CreateInstance(t) as IProximoJugador;
 
-        Console.WriteLine("Como desea que se escoja el próximo jugador: ");
-        Console.WriteLine("1. Clásico\n2. Aleatorio");
-        resp = Console.ReadLine();
+            int x2 = 1;
+        foreach (var item in creando2)
+        {
+            System.Console.WriteLine(x2+". "+item.ToString()[(eliminar.Length+".ProximoJugador_".Length)..]);
+            x2++;
+        }
+        string resp2 = Console.ReadLine();
         try
         {
-            int r = int.Parse(resp);
-            if (r == 2) { proximoJugador = new ProximoJugador_Aleatorio(); }
+            int r = int.Parse(resp2);
+            int index = 0;
+                foreach (var item in creando2)
+                {
+                    if(index == r) break;
+                    proximoJugador = item;
+                    index ++;
+                }
         }
         catch { }
+        #endregion
+        
+        #region Validar Jugada
 
-        //validarPartida = new ValidarJugada_Clasico();
+        validarPartida = new ValidarJugada_Clasica();
 
-        Console.WriteLine("Como desea que se valide la jugada: ");
-        Console.WriteLine("1. Clásico(si las fichas son iguales )\n2. Si son menores o iguales\n3. Si son mayores o iguales");
-        resp = Console.ReadLine();
+        Console.WriteLine("Como desea que se valide la jugada: ");        
+         var creando3 = from t in Assembly.GetAssembly(typeof(IValidarJugada)).GetTypes()
+                                    where t.GetInterfaces().Contains(typeof(IValidarJugada))
+                                    && t.GetConstructor(Type.EmptyTypes) != null
+                                    select Activator.CreateInstance(t) as IValidarJugada;
+
+            int x3 = 1;
+        foreach (var item in creando3)
+        {
+            System.Console.WriteLine(x3+". "+item.ToString()[(eliminar.Length+".ValidarJugada_".Length)..]);
+            x3++;
+        }
+        string resp3 = Console.ReadLine();
         try
         {
-            int r = int.Parse(resp);
-            if (r == 2) { validarPartida = new ValidarJugada_Menor(); }
-            if (r == 3) { validarPartida = new ValidarJugada_Mayor(); }
+            int r = int.Parse(resp3);
+            int index = 0;
+                foreach (var item in creando3)
+                {
+                    if(index == r) break;
+                    validarPartida = item;
+                    index ++;
+                }
         }
-        catch { }
+        catch { }       
+        #endregion
 
-        ContarPuntos = new ContarPuntos_Clasico();
-
+        #region Calcular Mano
         Console.WriteLine("Como desea que se calcule la mano: ");
-        Console.WriteLine("1. Clásico\n2. Los dobles valen dobles\n3. Los puntos se multiplican por la cantidad de fichas en mano");
-        resp = Console.ReadLine();
+        ContarPuntos = new ContarPuntos_Clasico();
+                 var creando4 = from t in Assembly.GetAssembly(typeof(IContarPuntos)).GetTypes()
+                                    where t.GetInterfaces().Contains(typeof(IContarPuntos))
+                                    && t.GetConstructor(Type.EmptyTypes) != null
+                                    select Activator.CreateInstance(t) as IContarPuntos;
+
+            int x4 = 1;
+        foreach (var item in creando4)
+        {
+            System.Console.WriteLine(x4+". "+item.ToString()[(eliminar.Length+".ContarPuntos_".Length)..]);
+            x4++;
+        }
+        string resp4 = Console.ReadLine();
         try
         {
-            int r = int.Parse(resp);
-            if (r == 2) { ContarPuntos = new ContarPuntos_DobleDoble(); }
-            if (r == 3) { ContarPuntos = new ContarPuntos_ManoDura(); }
+            int r = int.Parse(resp4);
+            int index = 0;
+                foreach (var item in creando4)
+                {
+                    if(index == r) break;
+                    ContarPuntos = item;
+                    index ++;
+                }
         }
-        catch { }
+        catch { }       
 
-
+        #endregion
+       
+        #region Calcular Puntos Del Ganador
+  
+        
+  Console.WriteLine("Como desea que se calculen los puntos del ganador: ");
         calcula = new CalcularPuntosGanoJugador_Clasico();
 
-        Console.WriteLine("Como desea que se calculen los puntos del ganador: ");
-        Console.WriteLine("1. Clásico(suma todos menos el de él)\n2. Solo el de él\n3. El promedio de todo\n4.El total");
-        resp = Console.ReadLine();
+                 var creando5 = from t in Assembly.GetAssembly(typeof(ICalculaPuntos)).GetTypes()
+                                    where t.GetInterfaces().Contains(typeof(ICalculaPuntos))
+                                    && t.GetConstructor(Type.EmptyTypes) != null
+                                    select Activator.CreateInstance(t) as ICalculaPuntos;
+
+            int x5 = 1;
+        foreach (var item in creando5)
+        {
+            System.Console.WriteLine(x5+". "+item.ToString()[(eliminar.Length+".CalcularPuntosGanoJugador_".Length)..]);
+            x5++;
+        }
+        string resp5 = Console.ReadLine();
         try
         {
-            int r = int.Parse(resp);
-            if (r == 2) { calcula = new CalcularPuntosGanoJugador_SoloYo(); }
-            if (r == 3) { calcula = new CalcularPuntosGanoJugador_Comunista(); }
-            if (r == 4) { calcula = new CalcularPuntosGanoJugador_Capitalista(); }
+            int r = int.Parse(resp5);
+            int index = 0;
+                foreach (var item in creando5)
+                {
+                    if(index == r) break;
+                    calcula = item;
+                    index ++;
+                }
         }
-        catch { }
+        catch { }       
 
+        #endregion
+        
+        #region Accion Despues de la Jugada
+        Console.WriteLine("Que desea que pase luego de una jugada?: ");
         adj = new AccionDespuesDeLaJugada_Clasico();
 
-        Console.WriteLine("Que desea que pase luego de una jugada?: ");
-        Console.WriteLine("1. Clásico(nada)\n2.Si pasa el jugador se invierte la mesa\n3. Si es multipo de 5 la suma de las cabezas se reciben dichos puntos");
-        resp = Console.ReadLine();
+                 var creando6 = from t in Assembly.GetAssembly(typeof(IAccionDespuesDeLaJugada)).GetTypes()
+                                    where t.GetInterfaces().Contains(typeof(IAccionDespuesDeLaJugada))
+                                    && t.GetConstructor(Type.EmptyTypes) != null
+                                    select Activator.CreateInstance(t) as IAccionDespuesDeLaJugada;
+
+            int x6 = 1;
+        foreach (var item in creando6)
+        {
+            System.Console.WriteLine(x6+". "+item.ToString()[(eliminar.Length+".AccionDespuesDeLaJugada_".Length)..]);
+            x6++;
+        }
+        string resp6 = Console.ReadLine();
         try
         {
-            int r = int.Parse(resp);
-            if (r == 2) { adj = new AccionDespuesDeLaJugada_InvertirJugadores(); }
-            if (r == 3) { adj = new AccionDespuesDeLaJugada_Quincena(); }
+            int r = int.Parse(resp6);
+            int index = 0;
+                foreach (var item in creando6)
+                {
+                    if(index == r) break;
+                    adj = item;
+                    index ++;
+                }
         }
-        catch { }
+        catch { }       
 
-        System.Console.Clear();
+
+        #endregion
     }
-#endregion
 
+#endregion
+    
 #region CrearJugadores
     public static List<Jugador> IniciaJugadores(int noJug, IReglas reglas, IDomino domino)
     {
         List<Jugador> ListaJugadores = new List<Jugador>();
         int cantJugadores = noJug;
 
+        
         System.Console.WriteLine("1. Aleatorio");
         System.Console.WriteLine("2. Botagorda");
         System.Console.WriteLine("3. Leo");
@@ -313,19 +408,19 @@ class Program
     }
 #endregion
 
-#region Imprimir Tablero
-    public static void ImprimirTablero(Ficha[,] tablero)
-    {
-        for(int i = 0; i < tablero.GetLength(0); i++)
-        {
-            for(int j = 0; j < tablero.GetLength(1); j++)
-            {
-                if(tablero[i,j] is null) continue;
-                System.Console.WriteLine(tablero[i,j]);
-            }
-        }
-    }
-#endregion
+// #region Imprimir Tablero
+//     public static void ImprimirTablero(Ficha[,] tablero)
+//     {
+//         for(int i = 0; i < tablero.GetLength(0); i++)
+//         {
+//             for(int j = 0; j < tablero.GetLength(1); j++)
+//             {
+//                 if(tablero[i,j] is null) continue;
+//                 System.Console.WriteLine(tablero[i,j]);
+//             }
+//         }
+//     }
+// #endregion
 
 #region Crear fichas
     public static IDomino IniciaDomino()
