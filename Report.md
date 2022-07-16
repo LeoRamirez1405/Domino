@@ -153,7 +153,7 @@ var creando = from t in Assembly.GetAssembly(typeof(Interfaz que encapsula el as
             System.Console.WriteLine(x+". "+item.ToString()[(eliminar.Length+".Ganador_".Length)..]);
             x++;
         }
-        ganador = new (Interfaz que encapsula el aspecto a modificar)();
+        ``(Interfaz que encapsula el aspecto a modificar)`` ganador = new ``(Interfaz que encapsula el aspecto a modificar)``();
         string resp = Console.ReadLine();
         try
         {
