@@ -139,5 +139,36 @@
 \
 &nbsp;
 ## Consola
-La aplicacion de consola es la encargada arrancar el proyecto. Basandose en la interaccion con el usuario crea el modo las reglas y los jugadores 
+La aplicacion de consola es la encargada arrancar el proyecto. Basandose en la interaccion con el usuario crea el modo las reglas y los jugadores. Esto se hace por cada aspecto del juego que se pueda personalizar.
+```cs
+Console.WriteLine("Aspecto a personalizar");
+var creando = from t in Assembly.GetAssembly(typeof(Interfaz que encapsula el aspecto a modificar)).GetTypes()
+                                    where t.GetInterfaces().Contains(typeof(Interfaz que encapsula el aspecto a modificar))
+                                    && t.GetConstructor(Type.EmptyTypes) != null
+                                    select Activator.CreateInstance(t) as (Interfaz que encapsula el aspecto a modificar);
+  int x = 1;
+        foreach (var item in creando)
+        {
+            
+            System.Console.WriteLine(x+". "+item.ToString()[(eliminar.Length+".Ganador_".Length)..]);
+            x++;
+        }
+        ganador = new Ganador_Clasico();
+        string resp = Console.ReadLine();
+        try
+        {
+            int r = int.Parse(resp);
+            int index = 0;
+                foreach (var item in creando)
+                {
+                    if(index == r) break;
+                    ganador = item;
+                    index ++;
+                }
+        }
+        catch { }                       
 
+```
+En este metodo ``creando`` es un IEnumerable que contiene un objeto de a todas las clases que implementan la interfaz que encapsula el aspecto a personalizar en cuestión. Luego en dependencia de la selección del usuario se escoge un objeto u otro.
+
+Luego de creados el modo y el arbitro se comienza la primera partida del modo. Por cada partida se llama al metodo ``Jugar`` del arbitro mientras la partida no haya terminado. Al terminar cada partida se actualiza el estado del modo permitiendo así que si no son necesarias más partidas el modo se finalice y de el ganador.
