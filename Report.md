@@ -139,7 +139,7 @@
 \
 &nbsp;
 ## Consola
-La aplicacion de consola es la encargada arrancar el proyecto. Basandose en la interaccion con el usuario crea el modo las reglas y los jugadores. Esto se hace por cada aspecto del juego que se pueda personalizar.
+La aplicacion de consola es la encargada arrancar el proyecto. Basandose en la interaccion con el usuario crea el modo, las reglas y los jugadores. Permite al usuario modificar el juego (esto se hace por cada aspecto del juego que se pueda personalizar). Esto se hace tanto en el ``Main`` de Program.cs como en el metodo ``Arbitro CrearArbitro(int cantJugadores, IDomino domino, bool EnEquipo)//crear un arbitro``.
 ```cs
 Console.WriteLine("Aspecto a personalizar");
 var creando = from t in Assembly.GetAssembly(typeof(Interfaz que encapsula el aspecto a modificar)).GetTypes()
