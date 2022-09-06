@@ -2,7 +2,7 @@ namespace Logica.domino.dll;
 
 public interface IValidarJugada
 {
-    public bool ValidarJugada(ParteFicha fichaMesa, ParteFicha fichaMano);
+    bool ValidarJugada(ParteFicha fichaMesa, ParteFicha fichaMano);
 
 }
 

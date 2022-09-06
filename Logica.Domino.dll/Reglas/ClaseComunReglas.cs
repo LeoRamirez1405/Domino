@@ -10,11 +10,9 @@ public class ClaseComunReglas
     public List<int> puntosPorJugador;
     public bool invertido;
 
-    //public IContarPuntos contarPuntos;
 
     public ClaseComunReglas(int cantFichas, int cantJugadores, int valorMaximoFichaDomino, bool equipo)
     {
-        //this.contarPuntos = contarPuntos;
         this.cantMinJugadores = 2;
         this.cantMaxJugadores = 4;
         this.equipo = equipo;

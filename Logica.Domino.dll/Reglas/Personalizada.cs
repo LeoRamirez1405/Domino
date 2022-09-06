@@ -64,6 +64,5 @@ public class Personalizada : ClaseComunReglas, IReglas
     }
 
     public int CantidadJugadores => base.cantJugadoresEnJuego;
-    public (int, int) DimensionTablero => (5, 8);//5 filas 8 columnas
     public IContarPuntos contarPuntos => ContarPuntos;
 }

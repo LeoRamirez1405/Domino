@@ -11,12 +11,12 @@ public class ProximoJugador_Clasico:IProximoJugador
     {   
         if(invertido)
         {
-            if(jugadorActual == 0) return totalJugadores-1;//cantJugadores
+            if(jugadorActual == 0) return totalJugadores-1;
             return jugadorActual - 1;
         }
         else 
         {
-            if(jugadorActual == totalJugadores - 1) return 0;//cantJugadores
+            if(jugadorActual == totalJugadores - 1) return 0;
             return jugadorActual + 1;
         }
     }

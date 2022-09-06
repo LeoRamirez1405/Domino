@@ -2,7 +2,7 @@
 
 public interface IGanador
 {
-    public (int, List<int>) Ganador(Dictionary<ParametrosDefinenGanador, object> definenGanador, int cantidadJugadores, IContarPuntos contarPuntos, ICalculaPuntos calcularPuntosGanoJugador, bool equipo, List<int> puntosPorJugador,List<Jugador> jugadores);
+    (int, List<int>) Ganador(Dictionary<ParametrosDefinenGanador, object> definenGanador, int cantidadJugadores, IContarPuntos contarPuntos, ICalculaPuntos calcularPuntosGanoJugador, bool equipo, List<int> puntosPorJugador,List<Jugador> jugadores);
 }
 
 public class Ganador_Clasico : IGanador
