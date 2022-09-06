@@ -31,5 +31,10 @@ namespace Logica.domino.dll;
             }
             System.Console.WriteLine();
         }
+    
+        public (ParteFicha , ParteFicha) Extremos()
+        {
+            return (recorrido[0].Item1.Arriba,recorrido[(recorrido.Count -1)].Item1.Abajo);
+        }
     }
 
