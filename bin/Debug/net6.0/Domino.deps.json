@@ -6,15 +6,15 @@
   "compilationOptions": {},
   "targets": {
     ".NETCoreApp,Version=v6.0": {
-      "Logica.Domino.dll/1.0.0": {
+      "Domino/1.0.0": {
         "runtime": {
-          "Logica.Domino.dll.dll": {}
+          "Domino.dll": {}
         }
       }
     }
   },
   "libraries": {
-    "Logica.Domino.dll/1.0.0": {
+    "Domino/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

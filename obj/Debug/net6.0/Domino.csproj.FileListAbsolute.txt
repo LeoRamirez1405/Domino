@@ -1,16 +1,13 @@
-C:\Users\Naomi\Desktop\new proyecto\Leo\Domino\obj\Debug\net6.0\Domino.csproj.AssemblyReference.cache
-C:\Users\Naomi\Desktop\new proyecto\Leo\Domino\obj\Debug\net6.0\Interfaz.Domino.Form1.resources
-C:\Users\Naomi\Desktop\new proyecto\Leo\Domino\obj\Debug\net6.0\Domino.Interfaz.Domino.Interfaz.Domino.Properties.Resources.resources
-C:\Users\Naomi\Desktop\new proyecto\Leo\Domino\obj\Debug\net6.0\Domino.csproj.GenerateResource.cache
-C:\Users\Naomi\Desktop\new proyecto\Leo\Domino\obj\Debug\net6.0\Domino.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\Naomi\Desktop\new proyecto\Leo\Domino\obj\Debug\net6.0\Domino.AssemblyInfoInputs.cache
-C:\Users\Naomi\Desktop\new proyecto\Leo\Domino\obj\Debug\net6.0\Domino.AssemblyInfo.cs
-C:\Users\Naomi\Desktop\new proyecto\Leo\Domino\obj\Debug\net6.0\Domino.csproj.CoreCompileInputs.cache
-D:\Matcom\Segundo Año Cibernética\2022\Programación\prueba runtime\obj\Debug\net6.0\Domino.csproj.AssemblyReference.cache
-D:\Matcom\Segundo Año Cibernética\2022\Programación\prueba runtime\obj\Debug\net6.0\Interfaz.Domino.Form1.resources
-D:\Matcom\Segundo Año Cibernética\2022\Programación\prueba runtime\obj\Debug\net6.0\Domino.Interfaz.Domino.Interfaz.Domino.Properties.Resources.resources
-D:\Matcom\Segundo Año Cibernética\2022\Programación\prueba runtime\obj\Debug\net6.0\Domino.csproj.GenerateResource.cache
-D:\Matcom\Segundo Año Cibernética\2022\Programación\prueba runtime\obj\Debug\net6.0\Domino.GeneratedMSBuildEditorConfig.editorconfig
-D:\Matcom\Segundo Año Cibernética\2022\Programación\prueba runtime\obj\Debug\net6.0\Domino.AssemblyInfoInputs.cache
-D:\Matcom\Segundo Año Cibernética\2022\Programación\prueba runtime\obj\Debug\net6.0\Domino.AssemblyInfo.cs
-D:\Matcom\Segundo Año Cibernética\2022\Programación\prueba runtime\obj\Debug\net6.0\Domino.csproj.CoreCompileInputs.cache
+C:\Users\Leo-Laptop\Desktop\Nao\Domino\obj\Debug\net6.0\Domino.csproj.AssemblyReference.cache
+C:\Users\Leo-Laptop\Desktop\Nao\Domino\obj\Debug\net6.0\Domino.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Leo-Laptop\Desktop\Nao\Domino\obj\Debug\net6.0\Domino.csproj.CoreCompileInputs.cache
+C:\Users\Leo-Laptop\Desktop\Nao\Domino\bin\Debug\net6.0\Domino.exe
+C:\Users\Leo-Laptop\Desktop\Nao\Domino\bin\Debug\net6.0\Domino.deps.json
+C:\Users\Leo-Laptop\Desktop\Nao\Domino\bin\Debug\net6.0\Domino.runtimeconfig.json
+C:\Users\Leo-Laptop\Desktop\Nao\Domino\bin\Debug\net6.0\Domino.dll
+C:\Users\Leo-Laptop\Desktop\Nao\Domino\bin\Debug\net6.0\ref\Domino.dll
+C:\Users\Leo-Laptop\Desktop\Nao\Domino\bin\Debug\net6.0\Domino.pdb
+C:\Users\Leo-Laptop\Desktop\Nao\Domino\obj\Debug\net6.0\Domino.dll
+C:\Users\Leo-Laptop\Desktop\Nao\Domino\obj\Debug\net6.0\ref\Domino.dll
+C:\Users\Leo-Laptop\Desktop\Nao\Domino\obj\Debug\net6.0\Domino.pdb
+C:\Users\Leo-Laptop\Desktop\Nao\Domino\obj\Debug\net6.0\Domino.genruntimeconfig.cache

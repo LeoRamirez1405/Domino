@@ -370,57 +370,83 @@ class Program
 #region CrearJugadores
     public static List<Jugador> IniciaJugadores(int noJug, IReglas reglas, IDomino domino)
     {
-        List<Jugador> ListaJugadores = new List<Jugador>();
         int cantJugadores = noJug;
+        List<Jugador> ListaJugadores = new List<Jugador>();
 
-        
-        System.Console.WriteLine("1. Aleatorio");
-        System.Console.WriteLine("2. Botagorda");
-        System.Console.WriteLine("3. Leo");
-        System.Console.WriteLine("4. Matemático");
-        System.Console.WriteLine("5. Humano");
-        System.Console.WriteLine("6. Pasador");
+        var creando = from t in Assembly.GetAssembly(typeof(IEstrategias)).GetTypes()
+                                    where t.GetInterfaces().Contains(typeof(IEstrategias))
+                                    && t.GetConstructor(Type.EmptyTypes) != null
+                                    select Activator.CreateInstance(t) as IEstrategias;
+
+        int x = 1;
+        foreach (var item in creando)
+        {
+            System.Console.WriteLine(x+". "+item.ToString()[(eliminar.Length+".E".Length)..]);
+            x++;
+        } 
+
+
         //Aqui se empieza
         List<Ficha[]> fichasJugadores = reglas.Repartir(domino.fichas(reglas.CantFichasPorJugador()), cantJugadores, reglas.CantFichasPorJugador());
         for (int i = 0; i < cantJugadores; i++)
         {
             System.Console.WriteLine($"Escoja la estrategia del jugador {i}");
-            int jug = int.Parse(Console.ReadLine());
-
-            while (true)
+            string jugString = Console.ReadLine();
+            List<int> jug = new List<int>();
+            try
             {
-                if (jug == 1) { ListaJugadores.Add(new Aleatorio(i,$"Aleatorio{i}",fichasJugadores[i].ToList())); break; }
-                else if (jug == 2) { ListaJugadores.Add(new Botagorda(i,$"Botagorda{i}",fichasJugadores[i].ToList())); break; }
-                else if (jug == 3) { ListaJugadores.Add(new Leo(i,$"Leo{i}",fichasJugadores[i].ToList())); break; }
-                else if (jug == 4) { ListaJugadores.Add(new Matematico(i,$"Matemático{i}",fichasJugadores[i].ToList())); break; }
-                else if (jug == 5) { ListaJugadores.Add(new Humano(i,$"Humano{i}",fichasJugadores[i].ToList())); break; }
-                else if (jug == 6) { ListaJugadores.Add(new Pasador(i,$"Pasador{i}",fichasJugadores[i].ToList())); break; }
-                else
+                foreach (var item in jugString.Split(' ',StringSplitOptions.RemoveEmptyEntries))
                 {
-                    System.Console.WriteLine("Dato incorrecto. Vuelva a intentarlo: ");
-                    jug = int.Parse(Console.ReadLine());
+                    jug.Add(int.Parse(item));
+                }
+                if(jug.Max() >= creando.Count() || jug.Min() < 0)
+                {
+                    jug.Add(0); 
                 }
             }
+            catch { jug.Add(0);}
+            
+            //----EtrategiasSalir
+            var creandoSalir = from t in Assembly.GetAssembly(typeof(IEstrategiasSalir)).GetTypes()
+                                    where t.GetInterfaces().Contains(typeof(IEstrategiasSalir))
+                                    && t.GetConstructor(Type.EmptyTypes) != null
+                                    select Activator.CreateInstance(t) as IEstrategiasSalir;
+        int xSalir = 1;
+        foreach (var item in creandoSalir)
+        {
+            System.Console.WriteLine(xSalir+". "+item.ToString()[(eliminar.Length+".ES".Length)..]);
+            xSalir++;
+        } 
+            System.Console.WriteLine($"Escoja la estrategia de salir del jugador {i}");
+            string jugStringSalir = Console.ReadLine();
+            int jugSalir = 0;
+           
+
+        try
+        {
+            jugSalir = int.Parse(jugStringSalir);
+            if(jugSalir >= creandoSalir.Count() || jugSalir < 0)
+                jugSalir = 0;
+        }
+        catch{ jugSalir = 0;}
+
+            int y = 0;
+            string nombre = "";
+            List<IEstrategias> estrategiasjugador = new List<IEstrategias>();
+            IEstrategiasSalir estrategiasSalirjugador = creandoSalir.ElementAt(jugSalir);
+
+            foreach (var item in jug)
+            {
+                estrategiasjugador.Add(creando.ElementAt(item));
+                nombre += creando.ElementAt(item).ToString()[(eliminar.Length+".E".Length)..];
+            }
+                ListaJugadores.Add(new Jugador(y,nombre,fichasJugadores[i].ToList(),estrategiasjugador,estrategiasSalirjugador));
         }
 
         System.Console.Clear();
         return ListaJugadores;
     }
 #endregion
-
-// #region Imprimir Tablero
-//     public static void ImprimirTablero(Ficha[,] tablero)
-//     {
-//         for(int i = 0; i < tablero.GetLength(0); i++)
-//         {
-//             for(int j = 0; j < tablero.GetLength(1); j++)
-//             {
-//                 if(tablero[i,j] is null) continue;
-//                 System.Console.WriteLine(tablero[i,j]);
-//             }
-//         }
-//     }
-// #endregion
 
 #region Crear fichas
     public static IDomino IniciaDomino()

@@ -5,9 +5,14 @@
     - Una ``dll (Logica.domino.dll)`` donde esta implementada toda la logica de la aplicación.
     - Una ``aplicacion de consola`` encargada de hacer visible lo que ocurre en el juego asi como permitir la modificacion de los aspectos personalizabes del mismo.
 
+## Estructura de carpetas
+- Domino
+    - Consola : Contiene todo lo relacionado con la ineterfac grafica del proyecto
+    - Logica.Domino.dll : Contiene todo lo relacionado con la parte logica del proyecto. Cada subcarpeta de Logica.Domino.dll tiene asignado el nombre segun la funcionalidad que almacena, pues para casos como la carpeta Reglas no seria conveniente relacionar su contenido con el contenido de otra funcionalidad debido a la extension del mismo.
+
 ### Logica.domino.dll 
 - ### Interfaces y clases que las implementan
-    Las interfaces permiten imponer propiedades las las clases y sirven para agrupar las clases en dependecia de sus propiedades cuando no sabemos el comportamiento de dicha propiedad.
+    Las interfaces permiten imponer propiedades y las clases sirven para agrupar las caracteristicas y propiedades de un tipo.
 
     -  IModo : Cada Modo deteremina la cantidad de partidas a jugar, ya sea por puntos o simplemente por la cantidad de partidas jugadas. Tambien determina el ganador del juego. 
     ```cs

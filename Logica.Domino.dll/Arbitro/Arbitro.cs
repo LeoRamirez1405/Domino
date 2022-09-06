@@ -3,7 +3,7 @@ public class Arbitro
 {
     int cantJugadores;//la cant de jugadores debe estar en las reglas
     List<Jugador> jugadores;
-    Ficha[,] tablero; // ParteFicha[,] tablero;
+    Ficha[,] tablero;
     List<int> puntosPorJugadores;
     bool equipo;
     Mesa mesa = new Mesa();
@@ -20,7 +20,7 @@ public class Arbitro
     ParteFicha derechaParteFicha = null;
 
     (int,int)[] posFichasAJugar;
-    public Arbitro(int cantJug, bool equipo, IReglas reglas, List<Jugador> jugadores)//IReglas reglas
+    public Arbitro(int cantJug, bool equipo, IReglas reglas, List<Jugador> jugadores)
     {
         this.equipo = equipo;
         this.puntosPorJugadores = new int[cantJug].ToList();
@@ -28,7 +28,7 @@ public class Arbitro
         this.reglas = reglas;
         this.jugadores = jugadores;
         this.tablero = new Ficha[4,8];
-        // this.jugadorActual = reglas.JugadorInicial();
+     
         this.posFichasAJugar = new (int, int)[2];
         this.turnosSinJugar = 0;
     }
@@ -151,20 +151,6 @@ public class Arbitro
                     mesa.AddDer(jugada.Item1,jugadorActual);
                     derechaParteFicha = jugada.Item1.Abajo;
                 }
-                // ((int, int), bool) jugadaPos = PonerFichaTablero(posFichasAJugar[posParaJugar], jugada.Item1, 1);
-                // if(jugadaPos.Item2)
-                //     posFichasAJugar[posParaJugar] = jugadaPos.Item1;
-                // else 
-                // {
-                //     jugadaPos = PonerFichaTablero(posFichasAJugar[posParaJugar], jugada.Item1, -1);
-                //     if(jugadaPos.Item2)
-                //         posFichasAJugar[posParaJugar] = jugadaPos.Item1;
-                //     else
-                //     {
-                //         AgrandarTablero();
-                //         //Aqui faltan cosas..esto se soluciona si nunk hay q agrandar el tablero
-                //     }
-                // }
                 turnosSinJugar = 0;
             }
         }
@@ -201,7 +187,6 @@ public class Arbitro
             argumentos.Add(ParametrosDefinenGanador.SeTrancoElJuego, false);
 
         return this.reglas.Ganador(argumentos, cantJugadores, reglas.contarPuntos, reglas.calculaPuntos, equipo,puntosPorJugadores,jugadores);
-        //return this.reglas.Ganador(argumentos,cantJugadores,reglas.contarPuntos);    
     }
 }
 
