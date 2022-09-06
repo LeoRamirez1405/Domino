@@ -16,7 +16,6 @@ public class Arbitro
     int turnosSinJugar;
 
 
-    (int,int)[] posFichasAJugar;
     public Arbitro(int cantJug, bool equipo, IReglas reglas, List<Jugador> jugadores)
     {
         this.equipo = equipo;
@@ -25,7 +24,6 @@ public class Arbitro
         this.reglas = reglas;
         this.jugadores = jugadores;
      
-        this.posFichasAJugar = new (int, int)[2];
         this.turnosSinJugar = 0;
     }
 
