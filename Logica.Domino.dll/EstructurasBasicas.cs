@@ -21,8 +21,6 @@ public class Ficha
     {
         string ar = arriba.parte.ToString(); 
         string ab = abajo.parte.ToString(); 
-        // if(arriba.Valor == abajo.Valor)
-            // return $"[{ar}]\n[{ab}]";
         return $"[{ar}|{ab}]";
     }
 }
@@ -60,88 +58,10 @@ public class ParteFicha: IEquatable<ParteFicha>
     public static bool operator != (ParteFicha a,ParteFicha b) => !a.Equals(b);
 }
 
-// public enum EstadoJuego
-// {
-//     Null,
-//     ListoParaComenzar,
-//     EnCurso,
-//     EnPausa
-
-// }
-
 public enum ParametrosDefinenGanador
 {
     TurnosSinJugar,
     IndexJugadorActual,
-    // FichasJugadorActual,
     FichasJugadores, // aqui se pasarian las fichas cada jugador en una lista d listas, luego con el index jugadore actual puedo ver las fichas del jugador actual
     SeTrancoElJuego,
 }
-
-// public enum CategoriasReglas
-// {
-//     Clasico,
-//     Quincena,
-//     Personalizada
-// }
-
-// public enum ReglasPersonalizadas
-// {
-//     Repartir,
-//     ValidarJugada,
-//     ProximoJuagdor,
-//     AccionDespuesDeLaJugada,
-//     CalcularPuntos,
-//     ContarPuntos,
-//     FinalizarPartida,
-//     Ganador
-// }
-
-// public enum AccionDespueusDeLaJugada
-// {
-//     Quincena,
-//     Clasico,
-//     IvertirJugadores
-// }
-
-// public enum CalcularPuntosGanadosEnLaPartida
-// {
-//     Clasico,
-//     SoloYo,
-//     Comunista,
-//     Capitalsita
-// }
-
-// public enum ContarPuntos
-// {
-//     Clasico,
-//     DobleDoble,
-//     ManoDura
-// }
-
-// public enum FinalizarPartida
-// {
-//     Clasico,
-//     Llegue_100
-// }
-
-// public enum ProximoJugador
-// {
-//     Clasico,
-//     Aleatorio
-// }
-
-// public enum ValidarJugada
-// {
-//     Menor,
-//     Mayor
-// }
-
-// public enum EstrategiasEnum
-// {
-//     Aleatorio,
-//     Botagorda,
-//     Leo,
-//     Matematico,
-//     //Humano//este no deberia esta
-// }

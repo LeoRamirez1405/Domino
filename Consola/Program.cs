@@ -496,6 +496,7 @@ class Program
 #endregion
 
 #region "Desarrollar el modo escogido"
+//Esta funcion es la encargada de dessarrollar el modo .. o sea cada partida del modo 
     public static void DesarrollarModo(IModo modo, bool equipo)
     {
         (int, List<int>) ganador = (-1, null);
@@ -518,6 +519,7 @@ class Program
                 }
                 numJugada = false;
             }
+
             System.Console.WriteLine();
             foreach (var jugador in arbitro.GetJugadores())
             {

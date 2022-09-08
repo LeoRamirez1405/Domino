@@ -3,12 +3,12 @@
 ## Partes 
 - La aplicacion cuenta con dos partes :
     - Una ``dll (Logica.domino.dll)`` donde esta implementada toda la logica de la aplicación.
-    - Una ``aplicacion de consola`` encargada de hacer visible lo que ocurre en el juego asi como permitir la modificacion de los aspectos personalizabes del mismo.
+    - Una aplicaion de consola encargada de mostrar lo que ocurre en el juego asi como permitir la modificacion de los aspectos personalizabes del mismo.
 
 ## Estructura de carpetas
 - Domino
     - Consola : Contiene todo lo relacionado con la ineterfac grafica del proyecto
-    - Logica.Domino.dll : Contiene todo lo relacionado con la parte logica del proyecto. Cada subcarpeta de Logica.Domino.dll tiene asignado el nombre segun la funcionalidad que almacena, pues para casos como la carpeta Reglas no seria conveniente relacionar su contenido con el contenido de otra funcionalidad debido a la extension del mismo.
+    - Logica.Domino.dll : Contiene todo lo relacionado con la parte logica del proyecto. Cada subcarpeta de Logica.Domino.dll tiene asignado el nombre segun la funcionalidad que almacena, pues para casos como la carpeta Reglas no seria conveniente relacionar su contenido con el contenido de otra funcionalidad debido a la extension del mismo. Algunos fichero no estan contenidos en una subcarpeta debido a que no tienen nigun otro fichero relacionado con su funcionalidad; tal es el caso de ``Mesa.cs``.
 
 ### Logica.domino.dll 
 - ### Interfaces y clases que las implementan
@@ -144,7 +144,7 @@
 \
 &nbsp;
 ## Consola
-La aplicacion de consola es la encargada arrancar el proyecto. Basandose en la interaccion con el usuario crea el modo, las reglas y los jugadores. Permite al usuario modificar el juego (esto se hace por cada aspecto del juego que se pueda personalizar). Esto se hace tanto en el ``Main`` de Program.cs como en el metodo ``Arbitro CrearArbitro(int cantJugadores, IDomino domino, bool EnEquipo)//crear un arbitro``.
+La aplicacion de consola es la encargada arrancar el proyecto. Basandose en la interaccion con el usuario crea el modo, las reglas y los jugadores. Permite al usuario modificar el juego (esto se hace por cada aspecto del juego que se pueda personalizar).
 ```cs
 Console.WriteLine("Aspecto a personalizar");
 var creando = from t in Assembly.GetAssembly(typeof(Interfaz que encapsula el aspecto a modificar)).GetTypes()

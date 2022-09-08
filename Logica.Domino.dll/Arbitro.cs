@@ -32,7 +32,7 @@ public class Arbitro
     public int JugadorActual => this.jugadorActual;
     
     
-
+//Sabiendo si es la priemra jugada o no esta funcion es la encargada de ejecutar la jugada del proximo jugador que pasa a ser el jugador actual
     public Ficha Jugar(bool esLaPrimeraJugada)
     {
         (Ficha,int) jugada;
@@ -46,10 +46,11 @@ public class Arbitro
         }
         else
         {
-            jugadorActual = reglas.ProximoJugador(jugadorActual, cantJugadores,((ClaseComunReglas)reglas).invertido);
+            jugadorActual = reglas.ProximoJugador(jugadorActual, cantJugadores,((ClaseComunReglas)reglas).invertido);//dice a que jugador le toca jugar
+            //esta variable (jugada) almacena la ficha que va jugar el jugador y por que parte de la mesa va a  jugar
             jugada = ((IEstrategias)jugadores[jugadorActual]).Jugar(ref jugadores[jugadorActual].fichas, mesa.Extremos().Item1, mesa.Extremos().Item2, this.reglas, jugadorActual);
 
-            if(jugada.Item2 == -1)
+            if(jugada.Item2 == -1)//si el -1 por convencion es que el jugadore no lleva
             {
                 turnosSinJugar ++;
                 huboJugada = false;
@@ -60,15 +61,17 @@ public class Arbitro
                 int posParaJugar = jugada.Item2 == 0 ? 0 : 1;
                 if(posParaJugar == 0)
                 {
+                    //En la dos proximas lineas se ajuta la ficha (se crea una nueva) para hacer conicidir el extremo correspondiente de la ficha jugada con la ficha qu esta en la mesa
                     if( jugada.Item1.Abajo  != mesa.recorrido[0].Item1.Arriba )
                         jugada.Item1 = new Ficha(jugada.Item1.Abajo,jugada.Item1.Arriba);
-                    mesa.AddIzq(jugada.Item1,jugadorActual);
+                    mesa.AddIzq(jugada.Item1,jugadorActual);//se coloca la ficha en la mesa
                 }
                 else if(posParaJugar == 1)
                 {
+                    //En la dos proximas lineas se ajuta la ficha (se crea una nueva) para hacer conicidir el extremo correspondiente de la ficha jugada con la ficha qu esta en la mesa
                     if( mesa.recorrido[mesa.recorrido.Count-1].Item1.Abajo != jugada.Item1.Arriba )
                         jugada.Item1 = new Ficha(jugada.Item1.Abajo,jugada.Item1.Arriba);
-                    mesa.AddDer(jugada.Item1,jugadorActual);
+                    mesa.AddDer(jugada.Item1,jugadorActual);//se coloca la ficha en la mesa
                 }
                 turnosSinJugar = 0;
             }
@@ -77,6 +80,7 @@ public class Arbitro
         reglas.AccionDespuesDeLaJugada(jugadorActual, huboJugada, mesa.Extremos().Item1,mesa.Extremos().Item2, ref puntosPorJugadores, ref jugadores, ref ((ClaseComunReglas)reglas).invertido);
         foreach (var item in jugadores)
         {
+            //Existe una estrategia que usa las fichas puestas en la mesa hasta el momento para dedcidir la proxima jugada. En l aproxima linea se proporciona la informacion necesarian para esa estrategia
             if(item is IJuegaConMesa) ((IJuegaConMesa)item).juegaConMesa(mesa,mesa.fichaActual_jugador,huboJugada);
         }
         return jugada.Item1;
@@ -95,7 +99,7 @@ public class Arbitro
         argumentos.Add(ParametrosDefinenGanador.TurnosSinJugar,turnosSinJugar);
         argumentos.Add(ParametrosDefinenGanador.IndexJugadorActual, jugadorActual);
 
-        List<List<Ficha>> fichasJugadores = new List<List<Ficha>>();
+        List<List<Ficha>> fichasJugadores = new List<List<Ficha>>();//En esta lista se guardaran las fichas pertenecientes a cada jugador luego de haber terminado la partida
         foreach(var x in jugadores)
             fichasJugadores.Add(x.fichas);
         argumentos.Add(ParametrosDefinenGanador.FichasJugadores, fichasJugadores);
