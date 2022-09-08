@@ -7,7 +7,7 @@ class Program
 
     public static void Main()
     {
-        //Console.Clear();
+        Console.Clear();
         int noJugadores = AsignandoCantidadJugadores();
         bool juegoEnEquipo = ChequeandoJuegoEnEquipo(noJugadores);
         DesarrollarModo(CreandoModo(noJugadores , juegoEnEquipo), juegoEnEquipo);
