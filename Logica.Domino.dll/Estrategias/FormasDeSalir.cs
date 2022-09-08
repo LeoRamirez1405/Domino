@@ -1,6 +1,6 @@
 namespace Logica.domino.dll;
 
-public class ESAleatorio:IEstrategiasSalir
+public class ESAleatorio : IEstrategiasSalir
 {
     public Ficha Jugar(ref List<Ficha> Mano, IReglas reglas)
     {

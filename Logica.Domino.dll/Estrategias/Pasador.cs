@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Logica.domino.dll;
 
-public class EPasador : IEstrategias ,IJuegaConMesa
+public class Pasador : IEstrategias ,IJuegaConMesa
 {
     public Dictionary<int, List<int>> pases = new Dictionary<int, List<int>>();
     public (Ficha, int) Jugar(ref List<Ficha> Mano,ParteFicha izquierda, ParteFicha derecha, IReglas reglas,int jugadorActual)

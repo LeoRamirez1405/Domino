@@ -57,62 +57,6 @@ public class Ganador_Clasico : IGanador
         }
 
         return (jugadorGanador, valorFichasPorJugador);//Ojo buscar los tipos de excepciones
-
-    //     int jugadorGanador = -1;
-    //     List<int> valorFichasPorJugador = new List<int>();
-    //     if (definenGanador.ContainsKey(ParametrosDefinenGanador.FichasJugadores) && definenGanador.ContainsKey(ParametrosDefinenGanador.IndexJugadorActual))
-    //     {
-    //         List<List<Ficha>> fichasJugadores = (List<List<Ficha>>)definenGanador[ParametrosDefinenGanador.FichasJugadores];
-    //         int jugadorActual = (int)definenGanador[ParametrosDefinenGanador.IndexJugadorActual];
-
-    //         valorFichasPorJugador = contarPuntos.ContarPuntos(fichasJugadores);
-    //         for (int i = 0; i < cantidadJugadores; i++)//this.cantJugadores
-    //         {
-    //             valorFichasPorJugador[i] += puntosPorJugador[i];
-    //         }
-
-    //         //estas condiciones no son necesarias 
-
-
-    //         if (fichasJugadores[jugadorActual].Count == 0)//esto seria equivalente a ver si al jugador actual le quedan 0 fichas
-    //         {
-    //             jugadorGanador = jugadores[jugadorActual].ID;
-    //             // IGanador.ADevolver(jugadorGanador, ref valorFichasPorJugador);
-    //             valorFichasPorJugador[jugadorGanador] = calcularPuntosGanoJugador.CalcularPuntosGanoJugador(jugadorGanador, valorFichasPorJugador, equipo);
-    //         }
-    //         else if (definenGanador.ContainsKey(ParametrosDefinenGanador.TurnosSinJugar))//else
-    //         {
-    //             int min = int.MaxValue;
-    //             for (int i = 0; i < cantidadJugadores; i++)//this.cantJugadores
-    //             {
-    //                 if (valorFichasPorJugador[i] < min)
-    //                 {
-    //                     min = valorFichasPorJugador[i];
-    //                     jugadorGanador = jugadores[i].ID;
-    //                 }
-    //             }
-    //             bool empate = false;
-    //             for (int i = 0; i < cantidadJugadores; i++)
-    //             {
-    //                 if (valorFichasPorJugador[i] == min)
-    //                 {
-    //                     if (empate == true)
-    //                         return (-1, new int[cantidadJugadores].ToList());
-    //                     else
-    //                         empate = true;
-    //                 }
-    //             }
-
-    //             // IGanador.ADevolver(jugadorGanador, ref valorFichasPorJugador);
-    //             valorFichasPorJugador[jugadorGanador] = calcularPuntosGanoJugador.CalcularPuntosGanoJugador(jugadorGanador, valorFichasPorJugador, equipo);
-
-    //         }
-
-
-    //         return (jugadorGanador, valorFichasPorJugador);
-    //     }
-
-    //     return (jugadorGanador, valorFichasPorJugador);//Ojo buscar los tipos de excepciones
     }
 }
 public class Ganador_Quincena : IGanador
@@ -164,13 +108,13 @@ public class Ganador_Inverso : IGanador
                 jugadorGanador = jugadores[jugadorActual].ID;
 
                 valorFichasPorJugador[jugadorGanador] = calcularPuntosGanoJugador.CalcularPuntosGanoJugador(jugadorGanador, valorFichasPorJugador, equipo);
-                // IGanador.ADevolver(jugadorGanador, ref valorFichasPorJugador);
+                
                 return (jugadorGanador, valorFichasPorJugador);
             }
-            else if (definenGanador.ContainsKey(ParametrosDefinenGanador.TurnosSinJugar))//else
+            else if (definenGanador.ContainsKey(ParametrosDefinenGanador.TurnosSinJugar))
             {
                 int max = int.MinValue;
-                for (int i = 0; i < cantidadJugadores; i++)//this.cantJugadores
+                for (int i = 0; i < cantidadJugadores; i++)
                 {
                     if (valorFichasPorJugador[i] > max)
                     {
@@ -194,7 +138,6 @@ public class Ganador_Inverso : IGanador
             }
         }
         valorFichasPorJugador[jugadorGanador] = calcularPuntosGanoJugador.CalcularPuntosGanoJugador(jugadorGanador, valorFichasPorJugador, equipo);
-        // IGanador.ADevolver(jugadorGanador, ref valorFichasPorJugador);
         return (jugadorGanador, valorFichasPorJugador);//Ojo buscar los tipos de excepciones
     }
 

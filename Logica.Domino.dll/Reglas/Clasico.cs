@@ -14,7 +14,6 @@ public class ClasicoIndividual : ClaseComunReglas, IReglas
     public ICalculaPuntos calculaPuntos => new CalcularPuntosGanoJugador_Clasico();
     public ClasicoIndividual(int cantJugadores, int cantFichas, int valorMaxFichas,bool equipo) : base(cantFichas,cantJugadores,valorMaxFichas,equipo){}//aqui se deberia incializar de con valores
     public int CantidadJugadores => base.cantJugadoresEnJuego;
-    public (int, int) DimensionTablero => (5,8);//5 filas 8 columnas
     public void AccionDespuesDeLaJugada(int jugadorActual, bool huboJugada, ParteFicha izquierda, ParteFicha derecha, ref List<int> puntosPorJugador, ref List<Jugador> jugadores, ref bool invertido)
     {
         adj.AccionDespuesDeLaJugada(jugadorActual,huboJugada,izquierda,derecha,ref puntosPorJugador,ref jugadores,ref invertido);

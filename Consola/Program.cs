@@ -449,7 +449,7 @@ class Program
         System.Console.WriteLine("Estas son las estrategias disponibles para cada jugadpr. Usted puede escoger mas de 1 estrategia");
         foreach (var item in creando)
         {
-            System.Console.WriteLine(x+". "+item.ToString()[(eliminar.Length+".E".Length)..]);
+            System.Console.WriteLine(x+". "+item.ToString()[(eliminar.Length+".".Length)..]);
             x++;
         }
         System.Console.WriteLine();

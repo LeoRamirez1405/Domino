@@ -1,6 +1,6 @@
 namespace Logica.domino.dll;
 
-public class EMatematico : IEstrategias
+public class Matematico : IEstrategias
 {
     public (Ficha, int) Jugar(ref List<Ficha> Mano,ParteFicha izquierda, ParteFicha derecha, IReglas reglas,int jugadorActual)
     //public (Ficha, int) Jugar(ParteFicha izquierda, ParteFicha derecha, IReglas reglas)

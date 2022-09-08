@@ -1,5 +1,5 @@
 namespace Logica.domino.dll;
-public class EHumano: IEstrategias
+public class Humano: IEstrategias
 {
     public (Ficha, int) Jugar(ref List<Ficha> Mano,ParteFicha izquierda, ParteFicha derecha, IReglas reglas,int jugadorActual)
     {

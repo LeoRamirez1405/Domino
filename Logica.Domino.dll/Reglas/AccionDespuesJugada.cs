@@ -32,8 +32,6 @@ public class AccionDespuesDeLaJugada_InvertirJugadores: IAccionDespuesDeLaJugada
         if(!huboJugada)
         {
             invertido = !invertido;
-            // puntosPorJugador.Reverse();
-            // jugadores.Reverse();
         }
     }
 }

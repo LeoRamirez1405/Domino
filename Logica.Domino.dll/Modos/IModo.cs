@@ -1,7 +1,6 @@
 namespace Logica.domino.dll;
 public interface IModo
 {
-   //(int,int) Gana(bool EnEquipo);
    int CantidadJugadores{get;}
    bool TerminoModo(int ganador, List<int> puntosAcumulados);
    void TerminoUnaPratida(int ganador, List<int> puntosAcumulados);

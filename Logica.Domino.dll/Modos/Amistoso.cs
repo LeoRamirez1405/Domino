@@ -1,8 +1,6 @@
 ﻿namespace Logica.domino.dll;
 public class Amistoso : IModo
 {
-    // List<IJugar> jugadores;
-    //Arbitro arbitro;
     int[] PuntosJugadores;
     bool EnEquipo;
     (int,List<int>) ganadorEs;
@@ -13,7 +11,6 @@ public class Amistoso : IModo
         this.EnEquipo = EnEquipo;
         this.EnEquipo = EnEquipo;
         this.cantJugadores = noJug;
-        //this.arbitro = new Arbitro(noJug,EnEquipo);
         this.PuntosJugadores = EnEquipo ? new int[noJug/2] : new int[noJug];
         this.ganadorEs = (-1, null);
         this.terminoModo = false;
@@ -41,10 +38,8 @@ public class Amistoso : IModo
     public bool TerminoModo(int ganador, List<int> puntosAcumulados)
     {
         if(puntosAcumulados is null) return false;//no ha empezado el juego
-        // System.Console.WriteLine("Resultado de TerminoModo {0} ",terminoModo);
         return terminoModo;
     }
 
     public int CantidadJugadores => cantJugadores;
-    //public bool TerminoModo => this.cantPartidas == 1;
 }

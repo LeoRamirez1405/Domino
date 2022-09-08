@@ -2,7 +2,7 @@ namespace Logica.domino.dll;
 
 public interface IRepartir
 {
-    public List<Ficha[]> Repartir(List<Ficha> todasFichas, int CantidadJugadores, int cantFichasPorJugador);//la lista de fichas que se recibe como paarametro son todas las fichas del juego
+    List<Ficha[]> Repartir(List<Ficha> todasFichas, int CantidadJugadores, int cantFichasPorJugador);//la lista de fichas que se recibe como paarametro son todas las fichas del juego
 }
 
 public class Repartir_Clasico: IRepartir

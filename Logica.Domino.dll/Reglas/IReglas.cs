@@ -1,5 +1,5 @@
 ﻿namespace Logica.domino.dll;
-public interface IReglas:IAccionDespuesDeLaJugada,IFinalizarJugada,IGanador,IProximoJugador,IRepartir,IValidarJugada
+public interface IReglas : IAccionDespuesDeLaJugada, IFinalizarJugada, IGanador, IProximoJugador, IRepartir, IValidarJugada
 {
     bool equipo { get; }
     bool invertido{get;}

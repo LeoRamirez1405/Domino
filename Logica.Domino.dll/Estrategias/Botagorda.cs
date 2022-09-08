@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Logica.domino.dll;
 
-    class EBotagorda: IEstrategias
+    class Botagorda: IEstrategias
     {
         public (Ficha, int) Jugar(ref List<Ficha> Mano,ParteFicha izquierda, ParteFicha derecha, IReglas reglas,int jugadorActual)
         {
