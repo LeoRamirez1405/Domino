@@ -35,7 +35,7 @@ public class Arbitro
 
     public Ficha Jugar(bool esLaPrimeraJugada)
     {
-            (Ficha,int) jugada;
+        (Ficha,int) jugada;
         bool huboJugada = true;
         if(esLaPrimeraJugada)
         {

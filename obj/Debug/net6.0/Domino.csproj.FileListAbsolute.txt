@@ -11,3 +11,16 @@ C:\Users\Leo-Laptop\Desktop\Nao\Domino\obj\Debug\net6.0\Domino.dll
 C:\Users\Leo-Laptop\Desktop\Nao\Domino\obj\Debug\net6.0\ref\Domino.dll
 C:\Users\Leo-Laptop\Desktop\Nao\Domino\obj\Debug\net6.0\Domino.pdb
 C:\Users\Leo-Laptop\Desktop\Nao\Domino\obj\Debug\net6.0\Domino.genruntimeconfig.cache
+C:\Users\Naomi\Desktop\Ultimos cambios Domino\Domino\bin\Debug\net6.0\Domino.exe
+C:\Users\Naomi\Desktop\Ultimos cambios Domino\Domino\bin\Debug\net6.0\Domino.deps.json
+C:\Users\Naomi\Desktop\Ultimos cambios Domino\Domino\bin\Debug\net6.0\Domino.runtimeconfig.json
+C:\Users\Naomi\Desktop\Ultimos cambios Domino\Domino\bin\Debug\net6.0\Domino.dll
+C:\Users\Naomi\Desktop\Ultimos cambios Domino\Domino\bin\Debug\net6.0\ref\Domino.dll
+C:\Users\Naomi\Desktop\Ultimos cambios Domino\Domino\bin\Debug\net6.0\Domino.pdb
+C:\Users\Naomi\Desktop\Ultimos cambios Domino\Domino\obj\Debug\net6.0\Domino.csproj.AssemblyReference.cache
+C:\Users\Naomi\Desktop\Ultimos cambios Domino\Domino\obj\Debug\net6.0\Domino.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Naomi\Desktop\Ultimos cambios Domino\Domino\obj\Debug\net6.0\Domino.csproj.CoreCompileInputs.cache
+C:\Users\Naomi\Desktop\Ultimos cambios Domino\Domino\obj\Debug\net6.0\Domino.dll
+C:\Users\Naomi\Desktop\Ultimos cambios Domino\Domino\obj\Debug\net6.0\ref\Domino.dll
+C:\Users\Naomi\Desktop\Ultimos cambios Domino\Domino\obj\Debug\net6.0\Domino.pdb
+C:\Users\Naomi\Desktop\Ultimos cambios Domino\Domino\obj\Debug\net6.0\Domino.genruntimeconfig.cache
