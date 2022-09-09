@@ -45,6 +45,9 @@ class Program
     }
 #endregion
 
+#region "Hasta que doble desea jugar"
+#endregion
+
 #region "Creando modo"
     public static IModo CreandoModo(int noJug, bool equipo)
     {
@@ -52,31 +55,37 @@ class Program
         System.Console.WriteLine("1. Amistoso");
         System.Console.WriteLine("2. Hasta X");
         System.Console.WriteLine("3. Match");
-        int respuesta = int.Parse(Console.ReadLine());
        
-        if (respuesta == 2)
+        try
         {
-            System.Console.WriteLine("Hasta cuantos puntos desea jugar ?");
-            int result = int.Parse(Console.ReadLine());
-            if (result > 0) 
+            int respuesta = int.Parse(Console.ReadLine());
+            if (respuesta == 2)
             {
-                System.Console.WriteLine();
-                return new HastaX(result, noJug, equipo);
+                System.Console.WriteLine("Hasta cuantos puntos desea jugar ?");
+                int result = int.Parse(Console.ReadLine());
+                if (result > 0) 
+                {
+                    System.Console.WriteLine();
+                    return new HastaX(result, noJug, equipo);
+                }
+                else 
+                {
+                    System.Console.WriteLine("Se escogio la cantidad de puntos a terminar por defecto. Cantidad de puntos a terminar : {0}", 100);
+                    System.Console.WriteLine();
+                    return new HastaX(100, noJug, equipo);
+                }
             }
-            else 
+            else if (respuesta == 3)
             {
-                System.Console.WriteLine("Se escogio la cantidad de puntos a terminar por defecto. Cantidad de puntos a terminar : {0}", 100);
+                System.Console.WriteLine("Hasta cuantos partidos desea jugar ?");
+                int result = int.Parse(Console.ReadLine());
                 System.Console.WriteLine();
-                return new HastaX(100, noJug, equipo);
+                return result > 0 ? new Match(result, noJug, equipo) : new Match(2, noJug, equipo);
             }
         }
-        else if (respuesta == 3)
-        {
-            System.Console.WriteLine("Hasta cuantos partidos desea jugar ?");
-            int result = int.Parse(Console.ReadLine());
-            System.Console.WriteLine();
-            return result > 0 ? new Match(result, noJug, equipo) : new Match(2, noJug, equipo);
-        }
+        catch{
+            System.Console.WriteLine("Se escogio por defecto el modo Amistos \n");
+            return new Amistoso(noJug, equipo);}
         
         System.Console.WriteLine();
         //Aqui llega si la respuesta es 1 o si la respuesta no es valida
@@ -87,8 +96,10 @@ class Program
 #region Crear Arbitro
     static Arbitro CrearArbitro(int cantJugadores, IDomino domino, bool EnEquipo)//crear un arbitro
     {
-        IReglas reglas = IniciaRegla(cantJugadores, domino, EnEquipo);
-        List<Jugador> jugadores = IniciaJugadores(cantJugadores, reglas, domino);
+        
+        int FichasDomino = EscogiendoHastaQueDobleJugar(domino);
+        IReglas reglas = IniciaRegla(cantJugadores, domino, EnEquipo, FichasDomino);
+        List<Jugador> jugadores = IniciaJugadores(cantJugadores, reglas, domino, FichasDomino);
         return new Arbitro(cantJugadores, EnEquipo, reglas, jugadores);//provisional 
     }
 #endregion
@@ -101,7 +112,7 @@ class Program
         try
         {
             FichasDomino = int.Parse(Console.ReadLine());
-            if(FichasDomino > domino.maxFichas()  || FichasDomino < 6) 
+            if(FichasDomino > domino.maxFichas()  || FichasDomino < 2) 
             {
                 FichasDomino = domino.maxFichas();
                 System.Console.WriteLine("Se escogio el doble maximo por defecto. Doble Maximo : {0} ", domino.maxFichas());
@@ -115,19 +126,21 @@ class Program
 #endregion
 
 #region "Escogiendo la cantidad de fichas por jugador"
-    public static int EscogiendoCantidadFichasPorJugador(int FichasDomino)
+    public static int EscogiendoCantidadFichasPorJugador(int FichasDomino, int cantJugadores)
     {
         System.Console.WriteLine("Con cuantas fichas por jugador?: ");
+        int totalDeFichasJuegoActual = ((FichasDomino + 1) * (FichasDomino + 2)) / 2;
+        int cantMaxFichas = (int)(totalDeFichasJuegoActual / cantJugadores);
         int noFichPorJug;
         try
         {
             noFichPorJug = int.Parse(Console.ReadLine());
-            if(noFichPorJug > FichasDomino+1  || noFichPorJug < 2) 
+            if(noFichPorJug >  cantMaxFichas || noFichPorJug < 2) 
             {
-                System.Console.WriteLine("Se escogio la cantidad de fichas por defecto. Cantidad de fichas : {0} ", FichasDomino + 1);
-                noFichPorJug = FichasDomino+1;
+                System.Console.WriteLine("Se escogio la cantidad de fichas por defecto. Cantidad de fichas : {0} ", cantMaxFichas);
+                noFichPorJug = cantMaxFichas;
             }
-        } catch{noFichPorJug = FichasDomino+1;}
+        } catch{noFichPorJug = cantMaxFichas;}
 
         System.Console.WriteLine();
         return noFichPorJug;
@@ -135,28 +148,34 @@ class Program
 #endregion
 
 #region Reglas
-    static IReglas IniciaRegla(int cantJug, IDomino domino, bool EnEquipo)
+    static IReglas IniciaRegla(int cantJug, IDomino domino, bool EnEquipo, int FichasDomino)
     {
-        int FichasDomino = EscogiendoHastaQueDobleJugar(domino);
-        int noFichPorJug = EscogiendoCantidadFichasPorJugador(FichasDomino);
+        //int FichasDomino = EscogiendoHastaQueDobleJugar(domino);
+        int noFichPorJug = EscogiendoCantidadFichasPorJugador(FichasDomino, cantJug);
         
-        IReglas reglas = new ClasicoIndividual(cantJug,noFichPorJug,FichasDomino, EnEquipo);//este es el por defecto
+        IReglas reglas = new ClasicoIndividual(cantJug, noFichPorJug, FichasDomino, EnEquipo);//este es el por defecto
         System.Console.WriteLine("Con qué reglas desea jugar ?: ");
         System.Console.WriteLine("1. Clásicas \n2. Personalizadas");
 
-        int reg = int.Parse(Console.ReadLine());
-        if(reg == 2)
+        try
         {
-            IGanador ganador = new Ganador_Clasico(); 
-            IProximoJugador proximoJugador = new ProximoJugador_Clasico();
-            IValidarJugada validarJugada = new ValidarJugada_Clasica();
-            ICalculaPuntos calcula = new CalcularPuntosGanoJugador_Clasico();
-            IContarPuntos ContarPuntos = new ContarPuntos_Clasico();
-            IAccionDespuesDeLaJugada adj = new AccionDespuesDeLaJugada_Clasico();
-            
-            System.Console.WriteLine();
-            RellenarReglaPersonalizada(ref adj,ref ganador,ref proximoJugador,ref validarJugada,ref calcula,ref ContarPuntos);
-            reglas = new Personalizada(cantJug, noFichPorJug, FichasDomino, EnEquipo,ContarPuntos, ganador, proximoJugador,validarJugada, calcula, adj);
+            int reg = int.Parse(Console.ReadLine());
+            if(reg == 2)
+            {
+                IGanador ganador = new Ganador_Clasico(); 
+                IProximoJugador proximoJugador = new ProximoJugador_Clasico();
+                IValidarJugada validarJugada = new ValidarJugada_Clasica();
+                ICalculaPuntos calcula = new CalcularPuntosGanoJugador_Clasico();
+                IContarPuntos ContarPuntos = new ContarPuntos_Clasico();
+                IAccionDespuesDeLaJugada adj = new AccionDespuesDeLaJugada_Clasico();
+                
+                System.Console.WriteLine();
+                RellenarReglaPersonalizada(ref adj,ref ganador,ref proximoJugador,ref validarJugada,ref calcula,ref ContarPuntos);
+                reglas = new Personalizada(cantJug, noFichPorJug, FichasDomino, EnEquipo,ContarPuntos, ganador, proximoJugador,validarJugada, calcula, adj);
+            }
+        }
+        catch{
+            System.Console.WriteLine("Se escogioron las regls clasicas por defecto \n");
         }
         
         System.Console.WriteLine();
@@ -164,10 +183,10 @@ class Program
     }
 #endregion
 
-#region Cuando desea que se gane la partida en las reglas personalizadas
+#region Cuando desea escoger el ganador la partida en las reglas personalizadas
     public static void ComoEscogerGanador( ref IGanador ganador)
     {
-        Console.WriteLine("Como desea que se gane la partida: ");
+        Console.WriteLine("Como desea escoger el ganador de la partida: ");
         var creando = from t in Assembly.GetAssembly(typeof(IGanador)).GetTypes()
                                     where t.GetInterfaces().Contains(typeof(IGanador))
                                     && t.GetConstructor(Type.EmptyTypes) != null
@@ -330,7 +349,7 @@ class Program
     }
 #endregion
 
-#region Que hacer despues de cada jugada enlas reglas personalizadas
+#region Que hacer despues de cada jugada en las reglas personalizadas
     public static void QueHacerDespuesdeCadaJugada(ref IAccionDespuesDeLaJugada adj)
     {
         Console.WriteLine("Que desea que pase luego de una jugada?: ");
@@ -378,7 +397,7 @@ class Program
 #endregion
     
 #region CrearJugadores
-    public static List<Jugador> IniciaJugadores(int noJug, IReglas reglas, IDomino domino)
+    public static List<Jugador> IniciaJugadores(int noJug, IReglas reglas, IDomino domino, int dobleMax)
     {
         int cantJugadores = noJug;
         List<Jugador> ListaJugadores = new List<Jugador>();
@@ -387,7 +406,7 @@ class Program
         var creandoSalir = ImprimirEstrategiasJugadaInicial();
 
         //Aqui se empieza
-        List<Ficha[]> fichasJugadores = reglas.Repartir(domino.fichas(reglas.CantFichasPorJugador()), cantJugadores, reglas.CantFichasPorJugador());
+        List<Ficha[]> fichasJugadores = reglas.Repartir(domino.fichas(dobleMax), cantJugadores, reglas.CantFichasPorJugador());
         for (int i = 0; i < cantJugadores; i++)
         {
             System.Console.WriteLine($"Escoja la estrategia del jugador {i}");
@@ -488,7 +507,9 @@ class Program
             else if(dom == 2)
                 {domino = new Emojis();}
         }
-        catch{ domino = new Doble9();}
+        catch{
+            System.Console.WriteLine("Se escogieron las fichas de numeros"); 
+            domino = new Doble9();}
 
         System.Console.WriteLine();
         return domino;

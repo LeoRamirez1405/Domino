@@ -4,8 +4,8 @@ public class Jugador:IEstrategias,IEstrategiasSalir
     public string nombre { get; }
     public int ID { get; }
     public List<Ficha> fichas;
-    public IEstrategiasSalir estrategiaSalir ;// = new List<IEstrategiasSalir>{ new ESAleatorio(),new ESBotagorda(),new ESLeo(),new ESMatematico(),new ESHumano() };
-    public List<IEstrategias> estrategias ;//= new List<IEstrategias>{ new EAleatorio(),new EBotagorda(),new ELeo(),new EMatematico(),new EHumano(), new EPasador() };
+    public IEstrategiasSalir estrategiaSalir ;
+    public List<IEstrategias> estrategias ;
     public static void Ordena(ref List<Ficha> mano)
     {
         for (int i = 0; i < mano.Count - 1; i++)

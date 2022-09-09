@@ -9,9 +9,10 @@ public interface IEstrategias
 {
     (Ficha, int) Jugar(ref List<Ficha> Mano,ParteFicha izquierda, ParteFicha derecha, IReglas reglas,int jugadorActual);
 }
+
 public interface IJuegaConMesa
 {
-    public void juegaConMesa(Mesa mesa, (Ficha, int) ultimaJugada,bool huboJugada);
+    void juegaConMesa(Mesa mesa, (Ficha, int) ultimaJugada,bool huboJugada);
 }
 
 
