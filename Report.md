@@ -145,6 +145,43 @@
 &nbsp;
 ## Consola
 La aplicacion de consola es la encargada arrancar el proyecto. Basandose en la interaccion con el usuario crea el modo, las reglas y los jugadores. Permite al usuario modificar el juego (esto se hace por cada aspecto del juego que se pueda personalizar).
+
+Luego de creados el modo y el arbitro se comienza la primera partida del modo. Por cada partida se llama al metodo ``Jugar`` del arbitro mientras la partida no haya terminado. Al terminar cada partida se actualiza el estado del modo permitiendo así que si no son necesarias más partidas el modo se finalice y de el ganador.
+\
+&nbsp;
+## Ciclo de flujo del programa
+Antes de comenzar una partaida es necesario especificar cada aspecto personalizable de esta; el modo, las reglas, las estrategias de cada jugador. Esto se hace en la aplicación de consola, donde luego de elegir el número de jugadores y decidir si se juega en equipo mediente funciones sencillas, se crea el modo de juego y comienza el mismo; desarrollandose en el método 
+```cs
+public static void DesarrollarModo(IModo modo, bool equipo){...}
+```
+&nbsp;
+### ``Método`` 
+```cs 
+DesarrollarModo (IModo modo, bool equipo)
+```
+Debido a la variedad en número de los juegos necesarios para terminar un ``IModo``, cada paratida se crea y desarrolla de forma cíclica hasta llegar a la cantidad de partidas requeridas por el modo.
+```cs
+...
+ while (!modo.TerminoModo("jugador actual", "puntos acumulados por cada jugador"))
+ {
+        IDomino domino = IniciaDomino();//Crea las fichas con las que el usuario desea jugar
+        Arbitro arbitro = CrearArbitro(modo.CantidadJugadores, domino, equipo);//(1)
+        ...
+ }
+```
+(1)
+```cs
+#region Crear Arbitro
+    static Arbitro CrearArbitro(int cantJugadores, IDomino domino, bool EnEquipo)//crear un arbitro
+    {
+        ...
+        IReglas reglas = IniciaRegla(cantJugadores, domino, EnEquipo, FichasDomino);
+        List<Jugador> jugadores = IniciaJugadores(cantJugadores, reglas, domino, FichasDomino);
+        return new Arbitro(cantJugadores, EnEquipo, reglas, jugadores);//provisional 
+    }
+#endregion
+```
+En el método anterior se inicializan las reglas a utilizar en el juego y las estrategias de cada jugador mediante funciones que tienen como principal componente el fragmento de código siguiente, donde ``creando`` es un IEnumerable que contiene un objeto de cada tipo que implementa la interfaz que encapsula el aspecto a personalizar en cuestión. Luego, en dependencia de la selección del usuario se escoge un objeto u otro :
 ```cs
 Console.WriteLine("Aspecto a personalizar");
 var creando = from t in Assembly.GetAssembly(typeof(Interfaz que encapsula el aspecto a modificar)).GetTypes()
@@ -174,6 +211,46 @@ var creando = from t in Assembly.GetAssembly(typeof(Interfaz que encapsula el as
         catch { }                       
 
 ```
-En este metodo ``creando`` es un IEnumerable que contiene un objeto de a todas las clases que implementan la interfaz que encapsula el aspecto a personalizar en cuestión. Luego en dependencia de la selección del usuario se escoge un objeto u otro.
+\
+&nbsp;
+``` cs 
+DesarrollarModo (IModo modo, bool equipo) (continuacion)
+```
+Luego de creado el arbitro se comienza la partida
+```cs
+    while(!arbitro.TerminoPartida())
+        {
+            System.Console.WriteLine();
+            Ficha fichaActual = arbitro.Jugar(numJugada);
+            if(fichaActual is null)
+                System.Console.WriteLine("El jugador "+arbitro.GetJugadores()[arbitro.JugadorActual].nombre+" no lleva.");
+            else 
+            {   
+                System.Console.WriteLine("Jugó el jugador {0} ", arbitro.GetJugadores()[arbitro.JugadorActual].nombre);//dice el jugador que va a jugar
+                arbitro.ImprimirMesa();
+            }
+            numJugada = false;
 
-Luego de creados el modo y el arbitro se comienza la primera partida del modo. Por cada partida se llama al metodo ``Jugar`` del arbitro mientras la partida no haya terminado. Al terminar cada partida se actualiza el estado del modo permitiendo así que si no son necesarias más partidas el modo se finalice y de el ganador.
+                ...
+            }
+```
+Para saber si una partida ha acabado, el arbitro poseedor de las reglas, verifica si en estas la partida sigue o se finaliza. 
+En caso de continuar la partida el arbitro es el encargado de elegir el proximo jugador (apoyandose en las reglas) y de brindar la ficha jugada por el mismo. 
+Esto se hace en el método 
+```cs
+public Ficha Jugar(bool esLaPrimeraJugada)
+```
+de la clase ``Arbitro``. En este método se le pide a las reglas el próximo jugador y se le ordena a este que juegue. Luego en dependecia de la ficha a poner en mesa esta se reordena para poder darle inequívoca ubicación en ``Mesa``.
+\
+Por convenio cuando la ficha entregada por el jugador para poner en la mesa es ``null`` se asume que el jugador ``no lleva``, hecho que se muestra en pantalla, en caso contrario se muestra la ficha seleccionada por el jugador.
+\
+Luego se verifica la acción a realizar en pos de la jugada en dependencia del estado del juego y se retorna la ficha que se puso en la mesa en ese turno.
+\
+&nbsp;
+
+Al terminar la partida se muestran las fichas que no fueron jugadas pertenecientes a cada jugador y se anuncia el resultado de la partida (ganador y puntos).
+
+#### ``Este ciclo se repite hasta que no queden partidas por jugar.`` 
+
+Luego se anuncian los resultados del ``Modo`` (ganador y puntos) y concluye el juego.
+
