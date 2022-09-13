@@ -442,7 +442,7 @@ class Program
             foreach (var item in jug)
             {
                 estrategiasjugador.Add(creando.ElementAt(item));
-                nombre += creando.ElementAt(item).ToString()[(eliminar.Length+".E".Length)..];
+                nombre += creando.ElementAt(item).ToString()[(eliminar.Length+".".Length)..];
             }
 
             ListaJugadores.Add(new Jugador(y,nombre,fichasJugadores[i].ToList(),estrategiasjugador,estrategiasSalirjugador));
