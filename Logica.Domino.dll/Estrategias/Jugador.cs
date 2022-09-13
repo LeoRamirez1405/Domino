@@ -1,5 +1,5 @@
 namespace Logica.domino.dll;
-public class Jugador:IEstrategias,IEstrategiasSalir
+public class Jugador : IEstrategias, IEstrategiasSalir
 {
     public string nombre { get; }
     public int ID { get; }

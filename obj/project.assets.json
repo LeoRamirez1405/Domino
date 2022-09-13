@@ -14,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Naomi\\Desktop\\Ultimos cambios Domino\\Domino\\Domino.csproj",
+      "projectUniqueName": "C:\\Users\\Naomi\\Desktop\\Nueva carpeta\\Ultimos cambios Domino\\Domino\\Domino.csproj",
       "projectName": "Domino",
-      "projectPath": "C:\\Users\\Naomi\\Desktop\\Ultimos cambios Domino\\Domino\\Domino.csproj",
+      "projectPath": "C:\\Users\\Naomi\\Desktop\\Nueva carpeta\\Ultimos cambios Domino\\Domino\\Domino.csproj",
       "packagesPath": "C:\\Users\\Naomi\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Naomi\\Desktop\\Ultimos cambios Domino\\Domino\\obj\\",
+      "outputPath": "C:\\Users\\Naomi\\Desktop\\Nueva carpeta\\Ultimos cambios Domino\\Domino\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
