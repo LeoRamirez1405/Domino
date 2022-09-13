@@ -28,8 +28,8 @@
         - ``Amistoso`` : Se juega una sola vez. Gana el que se oegue o tenga menos fichas (ya sea en equipo o individualmenet).
         - ``Match`` : se juegan n partidas a ganar n - k partidas (n, k son enteros positivos, k < n).
         - ``HatsaX`` : Se juegan las partidas acumulando puntos hasta llegar a X puntos (X > 0).
-    \
-    &nbsp;
+        \
+        &nbsp;
     - IReglas 
     ```csharp
     public interface IReglas : IAccionDespuesDeLaJugada, IFinalizarJugada, IGanador,IProximoJugador, IRepartir, IValidarJugada
@@ -73,8 +73,8 @@
             - *CalcularPuntosGanoJugador_Comunista* : Las fichas de todos los jugadores daran puntos al ganador, pero este solo se quedara con la cuarta parte de los puntos acumulados.
             - *CalcularPuntosGanoJugador_Capitalista* : Todas las fichas cuantan.
             - *Quincena* : Los puntos de todos cuentan. Si la suma 
-    \
-    &nbsp;
+            \
+            &nbsp;
     - IEstrategias : Las clases que implementan estrategias contiene un metodo que de un conjunto de fichas elige cual es la mejor candidata para la jugada actual una vez luego de haberse hecho la primera jugada en la partida.
     ```csharp
     public interface IEstrategias
@@ -89,8 +89,8 @@
         - ``ELeo`` : Juga en dependencia de la ficha que mas lleve.
         - ``EMatematico`` : Juega de forma tal que en la mesa la suma de las fichas por donde se puede jugar es un multiplo de 5. En caso de no poder lograr esto juega como Botagorda.
         - ``Pasador`` : Juega fijandose en el historial de los pases que se han dado en el juego y trata de pasar su secesor jugador.
-    \
-    &nbsp;
+        \
+        &nbsp;
     - EstrategiasSalir
     ```csharp
     public interface IEstrategiasSalir
@@ -103,8 +103,8 @@
         - ``ESMatematico`` : Sale con la ficha que mayor multiplo de 5 sumen sus valores por partes.
         - ``ESLeo`` : La que mas tenga.
         - 
-    \
-    &nbsp;
+        \
+        &nbsp;
     - IJuegaConMesa : En dependecia del historial de jugadas decide la forma de jugar
     ```cs
     public interface IJuegaConMesa
@@ -114,15 +114,15 @@
     ```
     - Clases que implementan IJuegaConMesa : Son los jugadores.
         - *Pasador* : Trata de pasar al proximo jugador.
-\
-&nbsp;
+        \
+        &nbsp;
 #### Clases 
 - ``Arbitro`` : Cada partida necesita un ``Arbitro`` y su vez el arbitro necesita unas regls y las coleccion de jugadores(y otros datos) para poder desarrollar la partida. 
     - Metodos :
         - ``Jugar``
         ```cs
         public Ficha Jugar(bool esLaPrimeraJugada) 
-        ``` 
+        ```
         Devuelve la ficha que va juagr el jugador actual(esta solo se utiliza para saber si se paso o no). 
         De forma general elige al proximo jugador, juega, pone la ficha en la mesa y actualiza la fichas por donde puede jugar el proximo jugador. Luego llama al metodo ``AccionDespuesDeLaJugada()`` de reglas. 
         - ``TerminoPartida``
@@ -135,8 +135,8 @@
         public (int, List<int>) GetGanador()
         ```
         Da el ganador y una lista con los puntos acumulados por cada jugador en la partida actual.
-\
-&nbsp;
+        \
+        &nbsp;
 ### Tenemos implementadas unas estructuras que son la base del juego : 
 - ``Ficha`` : Clase que encapsula la el concepto de ficha. Cuenta con 2 ParteFicha y un valor. El valor representa el valor de las fichas. Tiene tambien un nombre. Redefine el metodo ``ToString()`` para poder ser impresas en consola.
     - ``ParteFicha`` : Clase que tiene un argumento que determina el valor de esa  parte de la ficha y un argumento parte. Redefine el metodo ``Equals()``.
@@ -241,11 +241,8 @@ Esto se hace en el método
 public Ficha Jugar(bool esLaPrimeraJugada)
 ```
 de la clase ``Arbitro``. En este método se le pide a las reglas el próximo jugador y se le ordena a este que juegue. Luego en dependecia de la ficha a poner en mesa esta se reordena para poder darle inequívoca ubicación en ``Mesa``.
-\
 Por convenio cuando la ficha entregada por el jugador para poner en la mesa es ``null`` se asume que el jugador ``no lleva``, hecho que se muestra en pantalla, en caso contrario se muestra la ficha seleccionada por el jugador.
-\
 Luego se verifica la acción a realizar en pos de la jugada en dependencia del estado del juego y se retorna la ficha que se puso en la mesa en ese turno.
-\
 &nbsp;
 
 Al terminar la partida se muestran las fichas que no fueron jugadas pertenecientes a cada jugador y se anuncia el resultado de la partida (ganador y puntos).
